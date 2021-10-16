@@ -16,7 +16,7 @@ CORS(app)
 class Employee(db.Model):
     __tablename__ = 'employee'
 
-    staffID = db.Column(db.Integer, primary_key=True)
+    StaffID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(200))
     Username = db.Column(db.String(50))
     Email = db.Column(db.String(50))
@@ -45,7 +45,7 @@ class Employee(db.Model):
 class Learner(Employee):
     __tablename__ = 'learner'
 
-    learnerID= db.Column(db.Integer, db.ForeignKey('employee.staffID'),primary_key=True)
+    id= db.Column(db.Integer, db.ForeignKey('employee.StaffID'),primary_key=True)
     CoursesTaking = db.Column(db.String(50))
     CompletedCourses = db.Column(db.String(50))
 
@@ -57,7 +57,7 @@ class Learner(Employee):
 class Trainer(Employee):
     __tablename__ = 'trainer'
 
-    trainerID= db.Column(db.Integer, db.ForeignKey('employee.staffID'),primary_key=True)
+    id= db.Column(db.Integer, db.ForeignKey('employee.StaffID'),primary_key=True)
     coursesTeaching = db.Column(db.String(50))
 
     __mapper_args__ = {
@@ -69,7 +69,7 @@ class Trainer(Employee):
 class Administrator(Employee):
     __tablename__ = 'administrator'
 
-    administratorID= db.Column(db.Integer, db.ForeignKey('employee.staffID'),primary_key=True)
+    id= db.Column(db.Integer, db.ForeignKey('employee.StaffID'),primary_key=True)
 
     __mapper_args__ = {
         'polymorphic_identity': 'administrator'
