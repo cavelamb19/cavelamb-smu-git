@@ -106,9 +106,7 @@ CREATE TABLE `Trainer` (
 --
 
 INSERT INTO `Trainer` (`trainerID`, `coursesTeaching`) VALUES
-(1, 'IS212'),
-(2, 'IS213'),
-(3, 'IS214');
+(2, 'IS212');
 
 -- --------------------------------------------------------
 
@@ -127,9 +125,7 @@ CREATE TABLE `Learner` (
 --
 
 INSERT INTO `Learner` (`learnerID`, `CoursesTaking`, `CompletedCourses`) VALUES
-(1, 'IS212,IS213', 'IS214'),
-(2, 'IS212', 'IS213,IS214'),
-(3, 'IS214', 'IS212,IS213');
+(3, 'IS212', 'IS214');
 
 -- --------------------------------------------------------
 
