@@ -74,14 +74,7 @@ class Administrator(Employee):
     __mapper_args__ = {
         'polymorphic_identity': 'administrator'
     }
-
-    def __init__(self, administratorID):
-        self.administratorID = administratorID
-       
-
-    def json(self):
-        return {"administratorID": self.administratorID}
-
+    
 class Course(db.Model):
 
     __tablename__ = 'course'
