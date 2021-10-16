@@ -152,32 +152,17 @@ INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignatio
 (2, 'Arnold de Mari', 'Dr','Dr@gmail.com','trainer','Training','82329832'),
 (3, 'Constance Wilkinson', 'cons','cons@gmail.com','learner','Learning','92130843');
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `course`
---
 ALTER TABLE `Course`
   ADD PRIMARY KEY (`courseID`),
   ADD KEY `classesID` (`classesID`);
 
---
--- Indexes for table `classes`
---
-ALTER TABLE `classes`
+ALTER TABLE `Classes`
   ADD PRIMARY KEY (`classesID`);
 
---
--- Indexes for table `Lesson`
---
 ALTER TABLE `Lesson`
   ADD PRIMARY KEY (`lessonID`);
 
---
--- Indexes for table `Quiz`
---
 ALTER TABLE `Quiz`
   ADD PRIMARY KEY (`quizID`);
 
@@ -185,15 +170,29 @@ ALTER TABLE `Quiz`
 ALTER TABLE `Course`
   ADD CONSTRAINT `Course_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes` (`classesID`);
   
-
---
--- Constraints for table `Classes`
---
 ALTER TABLE `Classes`
   ADD CONSTRAINT `Classes_ibfk_1` FOREIGN KEY (`lessonID`) REFERENCES `Lesson`(`lessonID`);
 
---
--- Constraints for table `Quiz`
---
 ALTER TABLE `Lesson`
   ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz` (`quizID`);
+
+ALTER TABLE `Employee`
+  ADD PRIMARY KEY (`staffID`);
+
+ALTER TABLE `Learner`
+  ADD PRIMARY KEY (`learnerID`);
+
+ALTER TABLE `Trainer`
+  ADD PRIMARY KEY (`trainerID`);
+
+ALTER TABLE `Administrator`
+  ADD PRIMARY KEY (`administratorID`);
+
+ALTER TABLE `Learner`
+  ADD CONSTRAINT `learner_ibfk_1` FOREIGN KEY (`learnerID`) REFERENCES `Employee` (`staffID`);
+
+ALTER TABLE `Trainer`
+  ADD CONSTRAINT `trainer_ibfk_1` FOREIGN KEY (`trainerID`) REFERENCES `Employee` (`staffID`);
+
+ALTER TABLE `Administrator`
+  ADD CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`administratorID`) REFERENCES `Employee` (`staffID`);
