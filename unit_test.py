@@ -1,5 +1,5 @@
 import unittest
-from app import Employee, Learner, Trainer
+from app import Administrator, Employee, Learner, Trainer
 
 
 class TestEmployee(unittest.TestCase):
@@ -50,6 +50,20 @@ class TestTrainer(unittest.TestCase):
             'coursesTeaching' : 'IS212'
         })
 
+class TestAdministrator(unittest.TestCase):
+    def testadministrator(self):
+        trainer = Administrator(StaffID = 1, Name = 'Phris Coskitt', Username = 'csok', Email = 'coski@gmail.com',
+        CurrentDesignation = 'administrator', Department = 'hr', ContactNo = '90227823')
+        self.assertEqual(trainer.to_dict(), {
+            'StaffID' : 1,
+            'id' : None,
+            'Name' : 'Phris Coskitt',
+            'Username' : 'csok',
+            'Email' : 'coski@gmail.com',
+            'CurrentDesignation' : 'administrator',
+            'Department': 'hr',
+            'ContactNo' : '90227823'
+        })
 
 
 
