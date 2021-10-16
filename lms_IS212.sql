@@ -81,14 +81,14 @@ CREATE TABLE `Quiz` (
 --
 
 CREATE TABLE `Administrator` (
-  `administratorID` int(11) NOT NULL  
+  `id` int(11) NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Administrator`
 --
 
-INSERT INTO `Administrator` (`administratorID`) VALUES
+INSERT INTO `Administrator` (`id`) VALUES
 (1);
 
 -- --------------------------------------------------------
@@ -96,7 +96,7 @@ INSERT INTO `Administrator` (`administratorID`) VALUES
 --
 
 CREATE TABLE `Trainer` (
-  `trainerID` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `coursesTeaching` varchar(50) DEFAULT NULL
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -105,7 +105,7 @@ CREATE TABLE `Trainer` (
 -- Dumping data for table `Trainer`
 --
 
-INSERT INTO `Trainer` (`trainerID`, `coursesTeaching`) VALUES
+INSERT INTO `Trainer` (`id`, `coursesTeaching`) VALUES
 (2, 'IS212');
 
 -- --------------------------------------------------------
@@ -115,7 +115,7 @@ INSERT INTO `Trainer` (`trainerID`, `coursesTeaching`) VALUES
 --
 
 CREATE TABLE `Learner` (
-  `learnerID` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `CoursesTaking` varchar(50)  DEFAULT NULL,
   `CompletedCourses` varchar(50)  DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -124,7 +124,7 @@ CREATE TABLE `Learner` (
 -- Dumping data for table `Learner`
 --
 
-INSERT INTO `Learner` (`learnerID`, `CoursesTaking`, `CompletedCourses`) VALUES
+INSERT INTO `Learner` (`id`, `CoursesTaking`, `CompletedCourses`) VALUES
 (3, 'IS212', 'IS214');
 
 -- --------------------------------------------------------
@@ -134,7 +134,7 @@ INSERT INTO `Learner` (`learnerID`, `CoursesTaking`, `CompletedCourses`) VALUES
 --
 
 CREATE TABLE `Employee` (
-  `staffID` int(11) NOT NULL,
+  `StaffID` int(11) NOT NULL,
   `Name` varchar(50) DEFAULT NULL,
   `Username` varchar(50) DEFAULT NULL,
   `Email` varchar(50) DEFAULT NULL,
@@ -177,22 +177,22 @@ ALTER TABLE `Lesson`
   ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz` (`quizID`);
 
 ALTER TABLE `Employee`
-  ADD PRIMARY KEY (`staffID`);
+  ADD PRIMARY KEY (`StaffID`);
 
 ALTER TABLE `Learner`
-  ADD PRIMARY KEY (`learnerID`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `Trainer`
-  ADD PRIMARY KEY (`trainerID`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `Administrator`
-  ADD PRIMARY KEY (`administratorID`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `Learner`
-  ADD CONSTRAINT `learner_ibfk_1` FOREIGN KEY (`learnerID`) REFERENCES `Employee` (`staffID`);
+  ADD CONSTRAINT `learner_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Employee` (`StaffID`);
 
 ALTER TABLE `Trainer`
-  ADD CONSTRAINT `trainer_ibfk_1` FOREIGN KEY (`trainerID`) REFERENCES `Employee` (`staffID`);
+  ADD CONSTRAINT `trainer_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Employee` (`StaffID`);
 
 ALTER TABLE `Administrator`
-  ADD CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`administratorID`) REFERENCES `Employee` (`staffID`);
+  ADD CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Employee` (`StaffID`);
