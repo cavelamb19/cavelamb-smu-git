@@ -189,7 +189,7 @@ class Quiz(db.Model):
 
 @app.route("/Employee/<int:staffid>")
 def staffid(staffid):
-    employee = Employee.query.filter_by(staffID=staffid).first()
+    employee = Employee.query.filter_by(StaffID=staffid).first()
     if employee:
         return jsonify({
             "data": employee.to_dict()
@@ -201,4 +201,4 @@ def staffid(staffid):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug = True)
