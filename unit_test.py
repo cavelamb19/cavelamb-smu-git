@@ -1,5 +1,5 @@
 import unittest
-from app import Administrator, Employee, Learner, Trainer
+from app import Administrator, Employee, Learner, Trainer, Course, Classes 
 
 
 class TestEmployee(unittest.TestCase):
@@ -50,21 +50,31 @@ class TestTrainer(unittest.TestCase):
             'coursesTeaching' : 'IS212'
         })
 
-class TestAdministrator(unittest.TestCase):
-    def testadministrator(self):
-        trainer = Administrator(StaffID = 1, Name = 'Phris Coskitt', Username = 'csok', Email = 'coski@gmail.com',
-        CurrentDesignation = 'administrator', Department = 'hr', ContactNo = '90227823')
-        self.assertEqual(trainer.to_dict(), {
-            'StaffID' : 1,
-            'id' : None,
-            'Name' : 'Phris Coskitt',
-            'Username' : 'csok',
-            'Email' : 'coski@gmail.com',
-            'CurrentDesignation' : 'administrator',
-            'Department': 'hr',
-            'ContactNo' : '90227823'
+class TestCourse(unittest.TestCase):
+    def testcourse(self):
+        course = Course(courseID = 1, courseName = 'Software Project Management', courseDesc = 'agile methods',
+        preRequisites = 'NULL' ,classesID = '1')
+        self.assertEqual(course.json(), {
+            'courseID' : 1,
+            'courseName' : 'Software Project Management',
+            'courseDesc' : 'agile methods',
+            'preRequisites' : 'NULL',
+            'classesID' : 1
         })
 
+class Testclasses(unittest.TestCase):
+      def testclasses(self):
+          classes= Classes(classesID= 1, startDate="2021-10-18", startTime="2021-10-18 06:30:00", 
+          endDate="2021-11-18", endTime="2021-11-18 06:30:00", classesSize= 50, trainerAssigned="Arnold de Mari")
+          self.assertEqual(classes.json(), {
+              'classesID' : 1,
+              'startDate' : '2021-10-18',
+              'startTime' : '2021-10-18 06:30:00',
+              'endDate' : '2021-11-18',
+              "endTime" : '2021-11-18 06:30:00',
+              "classesSize" : 50,
+              "trainerAssigned" : 'Arnold de Mari',
+          })
 
 
     
