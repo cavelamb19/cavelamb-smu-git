@@ -129,6 +129,5 @@ class Classes(db.Model):
         "endTime": self.endTime,"classesSize": self.classesSize,"trainerAssigned": self.trainerAssigned,
         "lessonID": self.lessonID}
 
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
