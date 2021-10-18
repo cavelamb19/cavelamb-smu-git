@@ -51,8 +51,7 @@ class Learner(Employee):
 
     __mapper_args__ = {
         'polymorphic_identity': 'learner'
-    }
-
+    }  
     
 class Trainer(Employee):
     __tablename__ = 'trainer'
@@ -83,7 +82,7 @@ class Course(db.Model):
     courseName = db.Column(db.String(50))
     courseDesc = db.Column(db.String(50))
     preRequisites = db.Column(db.String(50))
-    classesID= db.Column(db.Integer, db.ForeignKey('classes.classesID'),primary_key=True)
+    classesID= db.Column(db.Integer, db.ForeignKey('classes.classesID'))
 
     def __init__(self, courseID,courseName,courseDesc,preRequisites,classesID):
         self.courseID = courseID
@@ -109,9 +108,9 @@ class Classes(db.Model):
     endTime= db.Column(db.TIMESTAMP)
     classesSize = db.Column(db.Integer)
     trainerAssigned = db.Column(db.String(50))
-    lessonID = db.Column(db.Integer, db.ForeignKey('lesson.lessonID'),primary_key=True)
+    
 
-    def __init__(self, classesID,startDate,startTime,endDate,endTime,classesSize,trainerAssigned,lessonID):
+    def __init__(self, classesID,startDate,startTime,endDate,endTime,classesSize,trainerAssigned):
         self.classesID = classesID
         self.startDate = startDate
         self.startTime = startTime
@@ -119,15 +118,87 @@ class Classes(db.Model):
         self.endTime = endTime
         self.classesSize = classesSize
         self.trainerAssigned = trainerAssigned
-        self.lessonID = lessonID
-
-       
+             
 
     def json(self):
         return {"classesID": self.classesID, "startDate": self.startDate,
         "startTime": self.startTime, "endDate": self.endDate,
-        "endTime": self.endTime,"classesSize": self.classesSize,"trainerAssigned": self.trainerAssigned,
-        "lessonID": self.lessonID}
+        "endTime": self.endTime,"classesSize": self.classesSize,"trainerAssigned": self.trainerAssigned}
+
+
+class Lesson(db.Model):
+
+    __tablename__ = 'Lesson'
+
+    lessonID = db.Column(db.Integer, primary_key=True)
+    courseMaterial = db.Column(db.String(50))
+    quizID = db.Column(db.Integer)
+    classesID = db.Column(db.Integer)
+    
+    
+
+    def __init__(self, lessonID,courseMaterial,quizID,classesID):
+        self.lessonID = lessonID
+        self.courseMaterial = courseMaterial
+        self.quizID = quizID
+        self.classesID = classesID
+    
+             
+
+    def json(self):
+        return {"lessonID": self.lessonID, "courseMaterial": self.courseMaterial,
+        "quizID": self.quizID, "classesID": self.classesID}
+
+class Quiz(db.Model):
+
+    __tablename__ = 'Quiz'
+
+    quizID = db.Column(db.Integer, primary_key=True)
+    qn = db.Column(db.String(50))
+    qnID = db.Column(db.Integer)
+    ansID = db.Column(db.Integer)
+    qnType = db.Column(db.String(50))
+    StartTime = db.Column(db.TIMESTAMP)
+    EndTime = db.Column(db.TIMESTAMP)
+    qnDuration = db.Column(db.TIMESTAMP)
+    attemptNo = db.Column(db.Integer)
+    quizScore = db.Column(db.Integer)
+
+    
+    
+
+    def __init__(self, quizID,qn,qnID,ansID,qnType,StartTime,EndTime,qnDuration,attemptNo,quizScore):
+        self.quizID = quizID
+        self.qn = qn
+        self.qnID = qnID
+        self.ansID = ansID
+        self.qnType = qnType
+        self.StartTime = StartTime
+        self.EndTime = EndTime
+        self.qnDuration = qnDuration
+        self.attemptNo = attemptNo
+        self.quizScore = quizScore
+    
+             
+
+    def json(self):
+        return {"quizID": self.quizID, "qn": self.qn,
+        "qnID": self.qnID, "ansID": self.ansID, "qnType": self.qnType, "StartTime": self.StartTime,
+        "EndTime": self.EndTime, "qnDuration": self.qnDuration, "attemptNo": self.attemptNo, "quizScore": self.quizScore}
+
+
+@app.route("/Employee/<int:staffid>")
+def staffid(staffid):
+    employee = Employee.query.filter_by(staffID=staffid).first()
+    if employee:
+        return jsonify({
+            "data": employee.to_dict()
+        }), 200
+    else:
+        return jsonify({
+            "message": "Person not found."
+        }), 404
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
