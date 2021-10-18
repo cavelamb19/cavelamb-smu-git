@@ -186,8 +186,8 @@ class Quiz(db.Model):
         "qnID": self.qnID, "ansID": self.ansID, "qnType": self.qnType, "StartTime": self.StartTime,
         "EndTime": self.EndTime, "qnDuration": self.qnDuration, "attemptNo": self.attemptNo, "quizScore": self.quizScore}
 
-
-@app.route("/Employee/<int:staffid>")
+#For login
+@app.route("/employee/<int:staffid>")
 def staffid(staffid):
     employee = Employee.query.filter_by(StaffID=staffid).first()
     if employee:
@@ -196,7 +196,33 @@ def staffid(staffid):
         }), 200
     else:
         return jsonify({
-            "message": "Person not found."
+            "message": "employee not found."
+        }), 404
+
+#
+@app.route("/trainer/<int:trainerid>")
+def trainerid(trainerid):
+    trainer = Trainer.query.filter_by(id=trainerid).first()
+    if trainer:
+        return jsonify({
+            "data": trainer.to_dict()
+        }), 200
+    else:
+        return jsonify({
+            "message": "trainer not found."
+        }), 404
+
+#
+@app.route("/learner/<int:learnerid>")
+def learnerid(learnerid):
+    learner = Learner.query.filter_by(id=learnerid).first()
+    if learner:
+        return jsonify({
+            "data": learner.to_dict()
+        }), 200
+    else:
+        return jsonify({
+            "message": "learner not found."
         }), 404
 
 
