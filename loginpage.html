@@ -24,7 +24,7 @@
         <button id="learner" type="button" class="btn btn-dark" value="3" onclick="Login()">Learner</button>
         <button id="trainer" type="button" class="btn btn-dark" value="2" onclick="">Trainer</button>
         <button id="admin" type="button" class="btn btn-dark" value="1" onclick="">Administrator</button>
-        <button id></button>
+        
 </div>
       
  
@@ -37,7 +37,7 @@
         var id =document.getElementById("learner").value;
        
         
-        var service_URL="http://localhost:5000/Employee/" + id
+        var service_URL="http://localhost:5000/employee/" + id
          $.ajax({
             url: service_URL,
             type: 'get',
@@ -52,7 +52,9 @@
                     console.log("hi");
                   
                 
-                } 
+                } else{
+                  alert("something went wrong");
+                }
 
             },  
            
