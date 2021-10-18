@@ -30,6 +30,10 @@ CREATE TABLE `Course` (
   `classesID` int(11)  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `course` (`courseID`, `courseName`, `courseDesc`, `preRequisites`, `classesID`) VALUES
+(1, 'Software Project Management', 'agile methods', 'NULL', 1);
+
+
 -- --------------------------------------------------------
 -- Table structure for table `Classes`
 --
@@ -41,9 +45,12 @@ CREATE TABLE `Classes` (
   `endDate` date  DEFAULT NULL,
   `endTime` timestamp  DEFAULT NULL,
   `classesSize` int(11) DEFAULT NULL,
-  `trainerAssigned` varchar(50)  DEFAULT NULL,
-  `lessonID` int(11)  NOT NULL
+  `trainerAssigned` varchar(50)  DEFAULT NULL
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`) VALUES
+(1, '2021-10-18', '2021-10-18 06:30:00', '2021-11-18', '2021-11-18 06:30:00', 50, 'Arnold de Mari');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -53,9 +60,12 @@ CREATE TABLE `Classes` (
 CREATE TABLE `Lesson` (
   `lessonID` int(11)  NOT NULL,
   `courseMaterial` varchar(50) DEFAULT NULL,
-  `quizID` int(11) DEFAULT NULL
+  `quizID` int(11) DEFAULT NULL,
+  `classesID` int(11)  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `lesson` (`lessonID`, `courseMaterial`, `quizID`, `classesID`) VALUES
+(1, 'Week1a-Introduction', 1, 1);
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 -- Table structure for table `Quiz`
@@ -167,14 +177,11 @@ ALTER TABLE `Quiz`
   ADD PRIMARY KEY (`quizID`);
 
 
-ALTER TABLE `Course`
-  ADD CONSTRAINT `Course_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes` (`classesID`);
   
-ALTER TABLE `Classes`
-  ADD CONSTRAINT `Classes_ibfk_1` FOREIGN KEY (`lessonID`) REFERENCES `Lesson`(`lessonID`);
-
 ALTER TABLE `Lesson`
-  ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz` (`quizID`);
+  ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes`(`classesID`);
+
+
 
 ALTER TABLE `Employee`
   ADD PRIMARY KEY (`StaffID`);
