@@ -192,12 +192,16 @@ def staffid(staffid):
     employee = Employee.query.filter_by(StaffID=staffid).first()
     if employee:
         return jsonify({
+            "code":200,
             "data": employee.to_dict()
         }), 200
     else:
         return jsonify({
+            "code" : 404,
             "message": "employee not found."
         }), 404
+        
+         
 
 #
 @app.route("/trainer/<int:trainerid>")
