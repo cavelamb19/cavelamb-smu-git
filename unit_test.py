@@ -1,5 +1,5 @@
 import unittest
-from app import Administrator, Employee, Learner, Trainer, Course, Classes 
+from app import Administrator, Employee, Learner, Trainer, Course, Classes, Lesson
 
 
 class TestEmployee(unittest.TestCase):
@@ -53,7 +53,7 @@ class TestTrainer(unittest.TestCase):
 class TestCourse(unittest.TestCase):
     def testcourse(self):
         course = Course(courseID = 1, courseName = 'Software Project Management', courseDesc = 'agile methods',
-        preRequisites = 'NULL' ,classesID = '1')
+        preRequisites = 'NULL' ,classesID = 1)
         self.assertEqual(course.json(), {
             'courseID' : 1,
             'courseName' : 'Software Project Management',
@@ -73,9 +73,19 @@ class Testclasses(unittest.TestCase):
               'endDate' : '2021-11-18',
               "endTime" : '2021-11-18 06:30:00',
               "classesSize" : 50,
-              "trainerAssigned" : 'Arnold de Mari',
+              "trainerAssigned" : 'Arnold de Mari'
           })
 
+class Testlesson(unittest.TestCase):
+      def testlesson(self):
+          classes= Lesson(lessonID= 1, courseMaterial="Week1a-Introduction", quizID= 1, 
+          classesID= 1)
+          self.assertEqual(classes.json(), {
+              'lessonID' : 1,
+              'courseMaterial' : 'Week1a-Introduction',
+              'quizID' : 1,
+              'classesID' : 1,
+          })
 
     
         
