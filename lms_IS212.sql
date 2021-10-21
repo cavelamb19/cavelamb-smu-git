@@ -46,7 +46,7 @@ CREATE TABLE `Classes` (
   `endTime` timestamp  DEFAULT NULL,
   `classesSize` int(11) DEFAULT NULL,
   `trainerAssigned` varchar(50)  DEFAULT NULL,
-  
+  `currentEnrolled` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`) VALUES
