@@ -49,7 +49,7 @@ CREATE TABLE `Classes` (
   `currentEnrolled` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`) VALUES
+INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`, `currentEnrolled`) VALUES
 (1, '2021-10-18', '2021-10-18 06:30:00', '2021-11-18', '2021-11-18 06:30:00', 50, 'Arnold de Mari', 0);
 
 -- --------------------------------------------------------
