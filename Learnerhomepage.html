@@ -264,7 +264,7 @@ function availablecourse(){
                                   <p class="card-text">Start: ${starttime}</p>
                                   <p class="card-text">End : ${endtime}
                                   <br>
-                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i>
+                                 <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse()" ></i>
                                   <br>
                                   <br>
                                   <button type="button" class="btn btn-primary" style="margin-left:80px;">Enroll</button>
@@ -306,7 +306,16 @@ function availablecourse(){
     }
 
 
+function viewcourse(){
 
+      let params = new URLSearchParams(location.search);
+      params.get('id');
+      var staffID = params.get('id');
+      //console.log(staffID);
+
+       location.href="viewcourse.html?id="+ staffID;
+
+}
 
 </script>
   
