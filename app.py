@@ -97,6 +97,9 @@ class Course(db.Model):
         return {"courseID": self.courseID, "courseName": self.courseName,
         "courseDesc": self.courseDesc, "preRequisites": self.preRequisites, "classesID": self.classesID}
 
+    
+
+
 class Classes(db.Model):
 
     __tablename__ = 'classes'
@@ -124,6 +127,9 @@ class Classes(db.Model):
         return {"classesID": self.classesID, "startDate": self.startDate,
         "startTime": self.startTime, "endDate": self.endDate,
         "endTime": self.endTime,"classesSize": self.classesSize,"trainerAssigned": self.trainerAssigned}
+    
+    
+    
 
 
 class Lesson(db.Model):
@@ -230,7 +236,45 @@ def learnerid(learnerid):
         return jsonify({
             "message": "learner not found."
         }), 404
+        
+        
+@app.route("/course/")
+def getallCourse():
+    
+    courselist = Course.query.all()
+    if courselist:
+        return jsonify({
+            "code": 200,
+            "data": {
+               "course": [course.json() for course in courselist]
+            }
+        }), 200
+    
+    else:
+        return jsonify({
+            "message": "All courses not found."
+        }), 404
+        
+        
+@app.route("/classes/<int:classesID>")
+def classes(classesID):
 
+    classes = Classes.query.filter_by(classesID=classesID).first()
+    if classes:
+        return jsonify({
+            "code": 200,
+            "data": classes.json()
+                
+            
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "class not found."
+        }), 404
+
+    
+    
 
 if __name__ == '__main__':
     app.run(debug = True)
