@@ -16,14 +16,16 @@
 <body>
 
 <div >
-    <h2 style>Login as a </h2>
+    <h2 style="text-align: center; padding-right: 40px;">Login as a </h2>
 </div>
 
-<div>
+<br>
+<br>
+<div style="text-align: center;">
     
-        <button id="learner" type="button" class="btn btn-dark" value="3" onclick="Login()">Learner</button>
-        <button id="trainer" type="button" class="btn btn-dark" value="2" onclick="">Trainer</button>
-        <button id="admin" type="button" class="btn btn-dark" value="1" onclick="">Administrator</button>
+        <button style="margin-right:30px;" id="learner" type="button" class="btn btn-dark" value="3" onclick="Loginlearner()">Learner</button>
+        <button style="margin-right:30px;" id="trainer" type="button" class="btn btn-dark" value="2" onclick="Logintrainer()">Trainer</button>
+        <button style="margin-right:30px;" id="admin" type="button" class="btn btn-dark" value="1" onclick="Loginadmin()">Administrator</button>
         
 </div>
       
@@ -33,7 +35,7 @@
 
 <script>
 
-    function Login() {
+    function Loginlearner() {
         var id =document.getElementById("learner").value;
        
         
@@ -51,7 +53,7 @@
                  
                     //console.log(staffid);
 
-                    location.href="home.html?id="+ staffid;
+                    location.href="Learnerhomepage.html?id="+ staffid;
                   
                 
                 } else{
@@ -64,6 +66,68 @@
         });
     }
 
+    function Logintrainer() {
+        var id =document.getElementById("trainer").value;
+       
+        
+        var service_URL="http://localhost:5000/employee/" + id
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                 
+                    //console.log(staffid);
+
+                    location.href="trainerhomepage.html?id="+ staffid;
+                  
+                
+                } else{
+                  alert("something went wrong");
+                }
+
+            },  
+           
+
+        });
+    }
+
+
+    function Loginadmin() {
+        var id =document.getElementById("admin").value;
+       
+        
+        var service_URL="http://localhost:5000/employee/" + id
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                 
+                    //console.log(staffid);
+
+                    location.href="adminhomepage.html?id="+ staffid;
+                  
+                
+                } else{
+                  alert("something went wrong");
+                }
+
+            },  
+           
+
+        });
+    }
   
 </script>
 

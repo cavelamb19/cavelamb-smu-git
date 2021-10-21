@@ -209,6 +209,7 @@ def trainerid(trainerid):
     trainer = Trainer.query.filter_by(id=trainerid).first()
     if trainer:
         return jsonify({
+            "code": 200,
             "data": trainer.to_dict()
         }), 200
     else:
@@ -222,6 +223,7 @@ def learnerid(learnerid):
     learner = Learner.query.filter_by(id=learnerid).first()
     if learner:
         return jsonify({
+            "code": 200,
             "data": learner.to_dict()
         }), 200
     else:
