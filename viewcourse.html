@@ -16,7 +16,7 @@
 
   </head>
 
-<body >
+<body onload="viewcourse()">
    <!--- <i class="fa fa-home" style="padding-left: 50px; font-size: 40px;"></i> -->
     <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome</h1>
 
@@ -39,13 +39,13 @@
       
         <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 80px; padding-top: 40px;" href="#" onclick="mycourses()">My Courses</a>
+                  <a class="nav-link" style="padding-left: 80px; padding-top: 40px;" href="#" onclick="mycourse()">My Courses</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link " style="padding-left: 70px; padding-top: 40px;" href="#">Class Schedule</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#">Available Courses</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#" onclick="availablecourse()">Available Courses</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link"style="padding-left: 70px; padding-top: 40px;"  href="#">Courses Completed</a>
@@ -66,13 +66,17 @@
           
           <br>
 
+          
           <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;" id="mycourses">
+        
+          </div>
+      </div>
+
+          <div class="container" id="coursedetailscontainer">
             <div id="coursesdetails" style="border-radius:25px; border:solid; border-color: gray;">
-              <h4 style="padding-left: 450px;">IS211: Design Architecture G7</h4>
-              <br>
-              <br>
-              <p style="padding-left:450px;">startDate: 18 june 2021</p>
-              <p style="padding-left:450px;">EndDate: 18 august 2021</p>
+             
+        
             
             </div>
 
@@ -80,20 +84,13 @@
             <br>
             <div id="coursedescription" style="border-radius:25px; border:solid; border-color: gray;">
               <h4 style="padding-left: 450px;">Course Description</h4>
-              <br>
-              <br>
-              <p style="padding-left:450px;">Sample</p>
-              
-              
-        </div>
+          
+            </div>
 
         <br>
         <br>
-        <div id="coursedescription" style="border-radius:25px; border:solid; border-color: gray;">
+        <div id="preRequisites" style="border-radius:25px; border:solid; border-color: gray;">
               <h4 style="padding-left:450px;">Pre Requisites</h4>
-              <br>
-              <br>
-              <p style="padding-left:450px;">Nil</p>
               
         </div>
 
@@ -101,18 +98,17 @@
         <br>
         <div id="classsize" style="border-radius:25px; border:solid; border-color: gray;">
               <h4 style="padding-left:450px;">Class Size</h4>
-              <br>
-              <br>
-              <p style="padding-left:450px;">35/35</p>
+              
               
         </div>
 
         <br>
         <br>
+        <div id="enroll">
         <button type="button" class="btn btn-primary" style="margin-left:500px;">Enroll</button>
-          
+        </div>
        
-         <i class="fa fa-eye" onClick="console.log('Clicked')"></i>
+        
 
   </div>
 
@@ -121,12 +117,139 @@
 
 <script>
 
-  function Mycourses(){
+  function viewcourse(){
 
-      let params = new URLSearchParams(location.search);
-      params.get('id');
-      var staffID = params.get('id');
-      console.log(staffID);
+      let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+      var staffID= obj['id']; 
+      var classid= obj['classid'];
+
+      
+      var service_URL="http://localhost:5000/learner/" + staffID
+   
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                    var name= data.Name
+                    //console.log(name);
+
+                  document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
+                  
+                } else{
+                  alert("something went wrong");
+                }
+
+            },  
+           
+
+        });
+
+        var class_URL="http://localhost:5000/course/classesID/" + classid
+
+         $.ajax({
+            url: class_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    
+                    var coursename= data.courseName;
+                    var coursedesc= data.courseDesc;
+                    var preRequisites= data.preRequisites;
+                    
+
+                    var class_URL="http://localhost:5000/classes/" + classid
+                        $.ajax({
+
+                          url: class_URL,
+                          type: 'get',
+                          dataType: "json",
+                          success: function (response) {
+
+                             // console.log(response)
+
+                            if(response.code == "200"){
+
+                              var classdata=response.data ;
+
+                              var starttime= classdata.startTime ;
+                              var startdate= classdata.startDate;
+                              var enddate= classdata.endDate;
+                              var endtime= classdata.endTime;
+                              var classid= classdata.classesID;
+                              var classsize=classdata.classesSize;
+                              var trainer= classdata.trainerAssigned;
+                              
+
+                        
+                      var coursedetails= ` <h4 style="padding-left: 450px;">${coursename}</h4> 
+                                            <br>
+                                            <br>
+                                            <p style="padding-left:450px;">Start: ${starttime}</p>
+                                            <p style="padding-left:450px;">End:  ${startdate}</p> 
+                                            <p style="padding-left:450px;">Trainer:  ${trainer}</p>`  
+                                          
+                      document.getElementById("coursesdetails").innerHTML += coursedetails;  
+                      
+                      
+                      var coursedescription= `<br>
+                                              <br>
+                                              <p style="padding-left:450px;">${coursedesc}</p> `
+                              
+                            
+                      document.getElementById("coursedescription").innerHTML += coursedescription;  
+
+                      var preReq= `<br>
+                                    <br>
+                                    <p style="padding-left:450px;">${preRequisites}</p>`
+
+                      
+                      document.getElementById("preRequisites").innerHTML += preReq;
+                      
+                      
+
+                      var csize= `<br>
+                                  <br>
+                                  <p style="padding-left:450px;">${classsize}</p>`
+                                  
+                                  
+                      document.getElementById("classsize").innerHTML+= csize;
+
+                                                  
+                      }else{
+                        alert("something went wrong");
+
+
+                    }
+                },
+                  });
+                    
+              } else{
+                  alert("something went wrong");
+                }
+
+            },  
+           
+
+        });
+ }
+
+  function mycourse(){
+
+     
+      let obj = Object.fromEntries(new URLSearchParams(location.search));
+      var staffID= obj['id']; 
+      
 
       var service_URL="http://localhost:5000/learner/" + staffID
    
@@ -146,24 +269,34 @@
                   document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
                   
                     var CoursesTaking=data.CoursesTaking
-                    
                   
                 var courses ="";
 
                   courses += `
 
-               <div class="col-sm-6"> 
-               <div class="card-group ">
-                <div class="card" style="margin-right: 30px;">
-                  <div class="card-body">
-                    <h5 class="card-title">${CoursesTaking}</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <button type="button" class="btn btn-primary" style="float:right;">Enroll</button>
-                  </div>
+              <div class="col">
+            <div class="card" style="border-radius: 25px;">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title" style="text-align:center;">${CoursesTaking}</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i>
                 </div>
-                </div>`
+            </div>
+          </div> `
 
+
+                document.getElementById("section").innerHTML = "" ;
+                document.getElementById("mycourses").innerHTML ="" ;
+
+                //reset the container for course details to empty string
+                document.getElementById("coursedetailscontainer").innerHTML ="";
+             
+
+
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
                 document.getElementById("mycourses").innerHTML+=courses;
+                
                 
                 } else{
                   alert("something went wrong");
@@ -173,10 +306,130 @@
            
 
         });
+}
+
+ function availablecourse(){
+
+          
+         var service_URL="http://localhost:5000/course/" 
+   
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+                    
+                    var courselist=response.data.course
+                    //console.log(courselist)
+
+                    for(course of courselist){
+
+                      var preRequisites= course.preRequisites;
+                      //console.log(preRequisites);
+                      
+                      var coursename=course.courseName;
+                      var coursedesc= course.courseDesc
+                      var courseid= course.courseID;
+                      var classesid=course.classesID
+                      
+                      //console.log(classesid);
+                      if( preRequisites == "NULL" ){
+
+                        
+                        var class_URL="http://localhost:5000/classes/" + classesid
+                        $.ajax({
+
+                          url: class_URL,
+                          type: 'get',
+                          dataType: "json",
+                          success: function (response) {
+
+                             // console.log(response)
+
+                            if(response.code == "200"){
+
+                              var classdata=response.data ;
+
+                              var starttime= classdata.startTime ;
+                              var startdate= classdata.startDate;
+                              var enddate= classdata.endDate;
+                              var endtime= classdata.endTime;
+                              var classid= classdata.classesID;
+
+                              
+                            var courses ="";
+
+                            courses += `
+
+                            <div class="col">
+                              <div class="card" style="border-radius: 25px;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title" style="text-align:center;">${coursename}</h5>
+                                  <br>
+                                  <br>
+                                  <p class="card-text">Start: ${starttime}</p>
+                                  <p class="card-text">End : ${endtime}
+                                  <br>
+                                 <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="view(${classid})" ></i>
+                                  <br>
+                                  <br>
+                                  <button type="button" class="btn btn-primary" style="margin-left:80px;">Enroll</button>
+                                  </div>
+                              </div>
+                            </div> `
+
+                          
+                          document.getElementById("section").innerHTML = "";
+                          document.getElementById("mycourses").innerHTML = "";
+                          
+
+                        //reset the container for course details to empty string
+                          document.getElementById("coursedetailscontainer").innerHTML ="";
+                          document.getElementById("section").innerHTML += `<h2> Available Courses </h2>`;
+                          document.getElementById("mycourses").innerHTML+=courses;
+                          
+                              
+                      }else{
+                        alert("something went wrong");
 
 
+                    }
+                },
+                  });
+
+                }
+              }
+                
+                
+                } else{
+                  alert("something went wrong");
+                }
+
+            },  
+    });
 
   }
+
+  function view(classid){
+
+      let params = new URLSearchParams(location.search);
+      var staffID = params.get('id');
+      //console.log(staffID);
+
+      var url= "viewcourse.html?id="+ staffID +"&classid=" + classid;
+
+
+
+       location.href=url;
+
+       
+
+}
+
+</script>
 
 
 </script>

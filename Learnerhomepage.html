@@ -83,7 +83,6 @@
   function load(){
 
       let params = new URLSearchParams(location.search);
-      params.get('id');
       var staffID = params.get('id');
       console.log(staffID);
 
@@ -141,7 +140,6 @@
   function mycourse(){
 
     let params = new URLSearchParams(location.search);
-      params.get('id');
       var staffID = params.get('id');
       console.log(staffID);
 
@@ -214,7 +212,7 @@ function availablecourse(){
                 if (response.code == "200") {
                     
                     var courselist=response.data.course
-                    //console.log(courselist)
+                    console.log(courselist)
 
                     for(course of courselist){
 
@@ -248,6 +246,7 @@ function availablecourse(){
                               var startdate= classdata.startDate;
                               var enddate= classdata.endDate;
                               var endtime= classdata.endTime;
+                              var classid= classdata.classesID;
 
                               
                             var courses ="";
@@ -264,7 +263,7 @@ function availablecourse(){
                                   <p class="card-text">Start: ${starttime}</p>
                                   <p class="card-text">End : ${endtime}
                                   <br>
-                                 <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse()" ></i>
+                                 <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse(${classid})" ></i>
                                   <br>
                                   <br>
                                   <button type="button" class="btn btn-primary" style="margin-left:80px;">Enroll</button>
@@ -306,14 +305,19 @@ function availablecourse(){
     }
 
 
-function viewcourse(){
+function viewcourse(classid){
 
       let params = new URLSearchParams(location.search);
-      params.get('id');
       var staffID = params.get('id');
       //console.log(staffID);
 
-       location.href="viewcourse.html?id="+ staffID;
+      var url= "viewcourse.html?id="+ staffID +"&classid=" + classid;
+
+
+
+       location.href=url;
+
+       
 
 }
 

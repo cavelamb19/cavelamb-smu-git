@@ -255,7 +255,25 @@ def getallCourse():
             "message": "All courses not found."
         }), 404
         
-        
+
+@app.route("/course/classesID/<int:classesID>") 
+def find_course_by_classesid(classesID):
+    
+    course = Course.query.filter_by(classesID=classesID).first()
+    if course:
+        return jsonify(
+            {
+                "code": 200,
+                "data": course.json()
+            }
+        )
+    return jsonify(
+        {
+        "code": 404,
+        "message": "No Course found."
+        }
+), 404
+       
 @app.route("/classes/<int:classesID>")
 def classes(classesID):
 
