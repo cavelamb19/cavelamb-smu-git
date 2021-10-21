@@ -45,7 +45,7 @@ CREATE TABLE `Classes` (
   `endDate` date  DEFAULT NULL,
   `endTime` timestamp  DEFAULT NULL,
   `classesSize` int(11) DEFAULT NULL,
-  `trainerAssigned` varchar(50)  DEFAULT NULL
+  `trainerAssigned` varchar(50)  DEFAULT NULL,
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -135,12 +135,12 @@ CREATE TABLE `Learner` (
 --
 
 INSERT INTO `Learner` (`id`, `CoursesTaking`, `CompletedCourses`) VALUES
-(3, 'IS212', 'IS214');
+(3, 'IS212 Software Project Management', 'IS214 System Design');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `person`
+-- Table structure for table `Employee`
 --
 
 CREATE TABLE `Employee` (
