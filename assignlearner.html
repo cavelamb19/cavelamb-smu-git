@@ -59,11 +59,12 @@
             </div>
        </div>
 
-
+        <br>
+        <br>
         <div class="container" id="coursedetailscontainer">
             <div id="pre-Requisites">
              
-            
+              
             </div>
        </div>
 
@@ -177,10 +178,12 @@
                     
                               
                       document.getElementById("coursesdetails").innerHTML += coursedetails;  
+                      
 
+                      var preReqinfo= `<b>Pre-Requisites of this course:</b> ${preRequisites} `
 
                       
-                      
+                      document.getElementById("pre-Requisites").innerHTML +=preReqinfo
                    
                       
                     }else{
