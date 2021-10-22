@@ -18,7 +18,7 @@
 
 <body onload="load()">
    <!--- <i class="fa fa-home" style="padding-left: 50px; font-size: 40px;"></i> -->
-    <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Learner Homepage</h1>
+    <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Admin Homepage</h1>
 
 <hr>
   
@@ -39,17 +39,9 @@
       
         <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 80px; padding-top: 40px;" href="#">My Courses</a>
+                  <a class="nav-link" style="padding-left: 80px; padding-top: 40px;" href="#">All Courses</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link " style="padding-left: 70px; padding-top: 40px;" href="#">Class Schedule</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#">Available Courses</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link"style="padding-left: 70px; padding-top: 40px;"  href="#">Courses Completed</a>
-                </li>
+               
               </ul>
     </div>
   </div>      
@@ -59,47 +51,27 @@
          
             
 <div class="main" style="margin-left : 360px">
+          
+          <div id="section" style="text-align: center;">
+            
+
+          </div>
+          
+          <br>
+          <br>
+          <br>
 
           <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 90%;" id="mycourses">
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;" id="allcourses">
+        
+      
+       
+         
         </div>
-  </div>
+
+       
+    </div>
+  </div> 
 
 <script>
 
@@ -110,7 +82,7 @@
       var staffID = params.get('id');
       console.log(staffID);
 
-      var service_URL="http://localhost:5000/learner/" + staffID
+      var service_URL="http://localhost:5000/employee/" + staffID
    
          $.ajax({
             url: service_URL,
@@ -127,40 +99,94 @@
 
                   document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
                   
-                    var CoursesTaking=data.CoursesTaking
+            
+            $.ajax({
+            url: "http://localhost:5000/course/",
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
                     
-                  
-                var courses ="";
+                    var courselist=response.data.course
+                    //console.log(courselist)
+                    
+                    var courses = "";
+                    for(course of courselist){
 
-                  courses += `
+                      
 
-               <div class="col-sm-6"> 
-               <div class="card-group ">
-                <div class="card" style="margin-right: 30px;">
-                  <div class="card-body">
-                    <h5 class="card-title">${CoursesTaking}</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <button type="button" class="btn btn-primary" style="float:right;">Enroll</button>
-                  </div>
-                </div>
-                </div>`
+                      var preRequisites= course.preRequisites;
+                      //console.log(preRequisites);
+                      
+                      var coursename=course.courseName;
+                      var coursedesc= course.courseDesc
+                      var courseid= course.courseID;
+                      var classesid=course.classesID
+                      
+                      //console.log(courseid);
+                      //console.log(classesid);
 
-                document.getElementById("mycourses").innerHTML+=courses;
+                      courses += `
+
+                            <div class="col">
+                              <div class="card" style="border-radius: 25px;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title" style="text-align:center;">${coursename}</h5>
+                                  <br>
+                                  <br>
+                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="assignlearner(${classesid})" ></i>
+                                  </div>
+                              </div>
+                            </div> `
+                        
+                           
+                              
+                      
+
+
+                    }
+
+                  document.getElementById("section").innerHTML = "";
+                  document.getElementById("allcourses").innerHTML = "";
+              
+                  document.getElementById("section").innerHTML += `<h2> All Available Courses </h2>`;
+                  document.getElementById("allcourses").innerHTML += courses;
+
+                }else{
+                  alert("something went wrong");
+              }
+                       
                 
-                } else{
+          },
+                      
+    });
+
+       } else{
                   alert("something went wrong");
                 }
 
             },  
-           
+      });
 
-        });
+ }
 
-
-
-  }
+function assignlearner(classesid){
 
 
+      let params = new URLSearchParams(location.search);
+      var staffID = params.get('id');
+      //console.log(staffID);
+
+      var url= "assignlearner.html?id="+ staffID +"&classid=" + classesid;
+
+
+
+       location.href=url;
+
+
+}
 </script>
   
 
