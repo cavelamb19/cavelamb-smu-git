@@ -59,6 +59,19 @@
          
 <div class="main" style="margin-left : 360px">
           
+          <div id="section" style="text-align: center;">
+            
+
+          </div>
+          
+          <br>
+
+          
+          <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;" id="mycourses">
+        
+          </div>
+      </div>
 
           <div class="container" id="coursedetailscontainer">
             <div id="coursesdetails" style="border-radius:25px; border:solid; border-color: gray;">
@@ -251,7 +264,231 @@
         });
  }
 
+  function mycourse(){
 
+     
+      let obj = Object.fromEntries(new URLSearchParams(location.search));
+      var staffID= obj['id']; 
+      
+
+      var service_URL="http://localhost:5000/learner/" + staffID
+   
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                    var name= data.Name
+                    //console.log(name);
+
+                  document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
+                  
+                    var CoursesTaking=data.CoursesTaking
+                  
+                var courses ="";
+
+                  courses += `
+
+              <div class="col">
+            <div class="card" style="border-radius: 25px;">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title" style="text-align:center;">${CoursesTaking}</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i>
+                </div>
+            </div>
+          </div> `
+
+
+                document.getElementById("section").innerHTML = "" ;
+                document.getElementById("mycourses").innerHTML ="" ;
+
+                //reset the container for course details to empty string
+                document.getElementById("coursedetailscontainer").innerHTML ="";
+             
+
+
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
+                document.getElementById("mycourses").innerHTML+=courses;
+                
+                
+                } else{
+                  alert("something went wrong");
+                }
+
+            },  
+           
+
+        });
+}
+
+ function availablecourse(){
+
+
+         var service_URL="http://localhost:5000/course/" 
+   
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+                    
+                    var courselist=response.data.course
+                    //console.log(courselist)
+                    
+                    var courses = "";
+                    for(course of courselist){
+
+                      
+
+                      var preRequisites= course.preRequisites;
+                      //console.log(preRequisites);
+                      
+                      var coursename=course.courseName;
+                      var coursedesc= course.courseDesc
+                      var courseid= course.courseID;
+                      var classesid=course.classesID
+                      
+                      //console.log(courseid);
+                      //console.log(classesid);
+
+                      if( preRequisites == "NULL" ){
+
+                      
+
+                            courses += `
+
+                            <div class="col">
+                              <div class="card" style="border-radius: 25px;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title" style="text-align:center;">${coursename}</h5>
+                                  <br>
+                                  <br>
+                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse(${classesid})" ></i>
+                                  <br>
+                                  <br>
+                                  <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="enrollcourse('${coursename}', '${classesid}')">Enroll</button>
+                                  </div>
+                              </div>
+                            </div> `
+                        
+                           
+                              
+                      }
+
+
+                    }
+
+                  document.getElementById("section").innerHTML = "";
+                  document.getElementById("mycourses").innerHTML = "";
+                  
+                  //reset the container for course details to empty string
+                document.getElementById("coursedetailscontainer").innerHTML ="";
+
+                  document.getElementById("section").innerHTML += `<h2> Available Courses </h2>`;
+                  document.getElementById("mycourses").innerHTML += courses;
+
+                }else{
+                  alert("something went wrong");
+              }
+                       
+                
+          },
+                
+
+            
+    });
+
+  }
+
+  function view(classid){
+
+      let params = new URLSearchParams(location.search);
+      var staffID = params.get('id');
+      //console.log(staffID);
+
+      var url= "viewcourse.html?id="+ staffID +"&classid=" + classid;
+
+
+
+       location.href=url;
+
+}
+
+function enrollcourse(enrollname, classesid){
+
+        
+        let params = new URLSearchParams(location.search);
+        var staffID = params.get('id');
+        //console.log(staffID);
+
+        var classesid= classesid;
+        //console.log(classesid);
+         
+        var enrolledcourse= enrollname;
+       // console.log(enrolledcourse);
+
+      
+    
+ 
+
+      $.ajax({
+          url: 'http://localhost:5000/classes/' + classesid,
+          type: 'get',
+          dataType: "json",
+          success: function (response) {
+           // console.log(response)
+            if (response.code == "200") {
+
+
+                var data = response.data;
+                var currentEnrolled= data.currentEnrolled;
+                var classsize= data.classesSize;
+
+               
+              if (currentEnrolled < classsize ){
+
+              var data = { "learnerid":staffID, "enrolledCourses": enrolledcourse }
+
+                //console.log(JSON.stringify(data)),
+
+                $.ajax({
+                  url: 'http://localhost:5000/enrolledCourses',
+                  type: 'post',
+                  data: JSON.stringify(data),
+                  contentType: "application/json; charset=utf-8",
+                  processData: "json",
+                  success: function (response) {
+                  // console.log(response)
+                    if (response.code == "200") {
+                      //alert("success")
+                    } else {
+                      //alert('failed');
+                    }
+                  },
+                });
+              } else{
+
+                alert("Class is fully enrolled")
+              }
+                
+            } else {
+              alert("something went wrong");
+            }
+          },
+        });
+
+
+}
 
 
 

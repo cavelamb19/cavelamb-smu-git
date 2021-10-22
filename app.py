@@ -48,7 +48,7 @@ class Learner(Employee):
     id= db.Column(db.Integer, db.ForeignKey('employee.StaffID'),primary_key=True)
     CoursesTaking = db.Column(db.String(50))
     CompletedCourses = db.Column(db.String(50))
-    enrolledCourses= db.Column(db.String(50))
+    CoursesEnrolled= db.Column(db.String(50))
 
     __mapper_args__ = {
         'polymorphic_identity': 'learner'
@@ -112,9 +112,10 @@ class Classes(db.Model):
     endTime= db.Column(db.TIMESTAMP)
     classesSize = db.Column(db.Integer)
     trainerAssigned = db.Column(db.String(50))
+    currentEnrolled= db.Column(db.Integer)
     
 
-    def __init__(self, classesID,startDate,startTime,endDate,endTime,classesSize,trainerAssigned):
+    def __init__(self, classesID,startDate,startTime,endDate,endTime,classesSize,trainerAssigned,currentEnrolled):
         self.classesID = classesID
         self.startDate = startDate
         self.startTime = startTime
@@ -122,12 +123,13 @@ class Classes(db.Model):
         self.endTime = endTime
         self.classesSize = classesSize
         self.trainerAssigned = trainerAssigned
+        self.currentEnrolled = currentEnrolled
              
 
     def json(self):
         return {"classesID": self.classesID, "startDate": self.startDate,
         "startTime": self.startTime, "endDate": self.endDate,
-        "endTime": self.endTime,"classesSize": self.classesSize,"trainerAssigned": self.trainerAssigned}
+        "endTime": self.endTime,"classesSize": self.classesSize,"trainerAssigned": self.trainerAssigned, "currentEnrolled": self.currentEnrolled}
     
     
     
@@ -264,7 +266,7 @@ def self_enrolled():
             
         
         
-        learner.enrolledCourses = enrollcourse['enrolledCourses']
+        learner.CoursesEnrolled = enrollcourse['enrolledCourses']
         #print(learner.enrolledCourses)
         db.session.commit()
         return jsonify(
@@ -342,7 +344,7 @@ def find_course(courseName):
     
     
     
-#
+#class
 @app.route("/classes/<int:classesID>")
 def classes(classesID):
 

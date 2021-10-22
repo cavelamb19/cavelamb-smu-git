@@ -30,8 +30,8 @@ class TestLearner(unittest.TestCase):
             'Department': 'Learning',
             'ContactNo' : '92130843',
             'CoursesTaking' : 'IS212',
-            'CompletedCourses' : 'IS214'
-            
+            'CompletedCourses' : 'IS214',
+                       
         })
 
 class TestTrainer(unittest.TestCase):
@@ -65,7 +65,7 @@ class TestCourse(unittest.TestCase):
 class Testclasses(unittest.TestCase):
       def testclasses(self):
           classes= Classes(classesID= 1, startDate="2021-10-18", startTime="2021-10-18 06:30:00", 
-          endDate="2021-11-18", endTime="2021-11-18 06:30:00", classesSize= 50, trainerAssigned="Arnold de Mari")
+          endDate="2021-11-18", endTime="2021-11-18 06:30:00", classesSize= 50, trainerAssigned="Arnold de Mari", currentEnrolled="0")
           self.assertEqual(classes.json(), {
               'classesID' : 1,
               'startDate' : '2021-10-18',
@@ -74,6 +74,7 @@ class Testclasses(unittest.TestCase):
               "endTime" : '2021-11-18 06:30:00',
               "classesSize" : 50,
               "trainerAssigned" : 'Arnold de Mari'
+              "currentEnrolled" : '0'
           })
 
 class Testlesson(unittest.TestCase):
