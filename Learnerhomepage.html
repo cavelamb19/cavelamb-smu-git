@@ -76,7 +76,9 @@
        
          
         </div>
-  </div>
+
+       
+   </div>
 
 <script>
 
@@ -121,8 +123,11 @@
               </div> `
 
 
-                    document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
-                    document.getElementById("mycourses").innerHTML+=courses;
+         
+
+
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
+                document.getElementById("mycourses").innerHTML+=courses;
                 
                 } else{
                   alert("something went wrong");
@@ -180,6 +185,7 @@
 
                 document.getElementById("section").innerHTML = "" ;
                 document.getElementById("mycourses").innerHTML ="" ;
+              
 
                 document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
                 document.getElementById("mycourses").innerHTML+=courses;
@@ -212,9 +218,12 @@ function availablecourse(){
                 if (response.code == "200") {
                     
                     var courselist=response.data.course
-                    console.log(courselist)
-
+                    //console.log(courselist)
+                    
+                    var courses = "";
                     for(course of courselist){
+
+                      
 
                       var preRequisites= course.preRequisites;
                       //console.log(preRequisites);
@@ -224,32 +233,12 @@ function availablecourse(){
                       var courseid= course.courseID;
                       var classesid=course.classesID
                       
+                      //console.log(courseid);
                       //console.log(classesid);
+
                       if( preRequisites == "NULL" ){
 
-                        
-                        var class_URL="http://localhost:5000/classes/" + classesid
-                        $.ajax({
-
-                          url: class_URL,
-                          type: 'get',
-                          dataType: "json",
-                          success: function (response) {
-
-                             // console.log(response)
-
-                            if(response.code == "200"){
-
-                              var classdata=response.data ;
-
-                              var starttime= classdata.startTime ;
-                              var startdate= classdata.startDate;
-                              var enddate= classdata.endDate;
-                              var endtime= classdata.endTime;
-                              var classid= classdata.classesID;
-
-                              
-                            var courses ="";
+                      
 
                             courses += `
 
@@ -260,49 +249,39 @@ function availablecourse(){
                                   <h5 class="card-title" style="text-align:center;">${coursename}</h5>
                                   <br>
                                   <br>
-                                  <p class="card-text">Start: ${starttime}</p>
-                                  <p class="card-text">End : ${endtime}
-                                  <br>
-                                 <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse(${classid})" ></i>
+                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse(${classesid})" ></i>
                                   <br>
                                   <br>
-                                  <button type="button" class="btn btn-primary" style="margin-left:80px;">Enroll</button>
+                                  <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="enrollcourse('${coursename}')">Enroll</button>
                                   </div>
                               </div>
                             </div> `
-
-                          
-                          document.getElementById("section").innerHTML = "";
-                          document.getElementById("mycourses").innerHTML = "";
-
-                          document.getElementById("section").innerHTML += `<h2> Available Courses </h2>`;
-                          document.getElementById("mycourses").innerHTML+=courses;
+                        
+                           
                               
-                      }else{
-                        alert("something went wrong");
+                      }
 
 
                     }
-                },
-                  });
 
-                }
-              }
-                
-                
-                } else{
+                  document.getElementById("section").innerHTML = "";
+                  document.getElementById("mycourses").innerHTML = "";
+              
+                  document.getElementById("section").innerHTML += `<h2> Available Courses </h2>`;
+                  document.getElementById("mycourses").innerHTML += courses;
+
+                }else{
                   alert("something went wrong");
-                }
+              }
+                       
+                
+          },
+                
 
-            },  
+            
     });
 
-  
-
- 
-
-
-    }
+  }
 
 
 function viewcourse(classid){
@@ -320,6 +299,39 @@ function viewcourse(classid){
        
 
 }
+
+
+function enrollcourse(enrollname){
+
+        
+        let params = new URLSearchParams(location.search);
+        var staffID = params.get('id');
+        //console.log(staffID);
+         
+        var enrolledcourse= enrollname;
+       // console.log(enrolledcourse);
+        
+        var data = { "learnerid":staffID, "enrolledCourses": enrolledcourse }
+
+        //console.log(JSON.stringify(data)),
+
+         $.ajax({
+          url: 'http://localhost:5000/enrolledCourses',
+          type: 'post',
+          data: JSON.stringify(data),
+          contentType: "application/json; charset=utf-8",
+          processData: "json",
+          success: function (response) {
+            console.log(response)
+            if (response.code == "200") {
+              //alert("success")
+            } else {
+              //alert('failed');
+            }
+          },
+        });
+
+      }
 
 </script>
   
