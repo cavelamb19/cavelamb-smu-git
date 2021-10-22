@@ -241,9 +241,51 @@ def learnerid(learnerid):
         }), 404
 
 
+
+#The following withdraw learner from course  - POST
+@app.route("/withdrawCourses", methods=['POST'])
+def withdraw_course():
+    
+       
+    try:   
+        
+        enrollcourse = request.get_json()
+        
+        #print(enrollcourse)
+        if not all(key in enrollcourse.keys() for
+                   key in ('learnerid','enrolledCourses')):
+            return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+        
+        learnerid= enrollcourse['learnerid']
+        learner = Learner.query.filter_by(id=learnerid).first()
+        if not learner:
+            return jsonify({
+                "message": "learner not valid."
+            }), 500
+            
+        
+        
+        learner.CoursesEnrolled = ""
+        #print(learner.enrolledCourses)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": learner.to_dict()
+            }
+        ), 200
+        
+   
+    except Exception as e:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+    
 #The following add data to self enrolled in learner - POST
 @app.route("/enrolledCourses", methods=['POST'])
-
 def self_enrolled():
    
     try:   

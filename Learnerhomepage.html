@@ -105,7 +105,8 @@
 
                     document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
                   
-                    var CoursesTaking=data.CoursesTaking
+                    var CoursesTaking=data.CoursesTaking ;
+                    var CoursesEnrolled= data.CoursesEnrolled;
                   
                     var courses ="";
 
@@ -123,6 +124,24 @@
               </div> `
 
 
+              if (CoursesEnrolled != ""){
+
+                    courses += `
+
+              <div class="col">
+                <div class="card" style="border-radius: 25px;">
+                  <img src="..." class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align:center;">${CoursesEnrolled}</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <a href="your link here"><i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
+                    <br>
+                    <br>
+                    <button type="button" class="btn btn-primary" style="margin-left:80px;"  onClick="withdraw('${CoursesEnrolled}')">Withdraw</button>
+                  </div>
+                </div>
+              </div> `
+              }
          
 
 
@@ -143,8 +162,8 @@
   }
 
   function mycourse(){
-
-    let params = new URLSearchParams(location.search);
+      
+      let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
       console.log(staffID);
 
@@ -163,31 +182,50 @@
                     var name= data.Name
                     //console.log(name);
 
-                  document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
+                    document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
                   
-                    var CoursesTaking=data.CoursesTaking
+                    var CoursesTaking=data.CoursesTaking ;
+                    var CoursesEnrolled= data.CoursesEnrolled;
                   
-                var courses ="";
+                    var courses ="";
 
-                  courses += `
+                    courses += `
 
               <div class="col">
-            <div class="card" style="border-radius: 25px;">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title" style="text-align:center;">${CoursesTaking}</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i>
+                <div class="card" style="border-radius: 25px;">
+                  <img src="..." class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align:center;">${CoursesTaking}</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <a href="your link here"><i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
+                  </div>
                 </div>
-            </div>
-          </div> `
+              </div> `
 
 
-                document.getElementById("section").innerHTML = "" ;
+              if (CoursesEnrolled != ""){
+
+                    courses += `
+
+              <div class="col">
+                <div class="card" style="border-radius: 25px;">
+                  <img src="..." class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align:center;">${CoursesEnrolled}</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <a href="your link here"><i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
+                    <br>
+                    <br>
+                    <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="withdraw('${CoursesEnrolled}')">Withdraw</button>
+                  </div>
+                </div>
+              </div> `
+              }
+         
+                document.getElementById("section").innerHTML  = "" ;
                 document.getElementById("mycourses").innerHTML ="" ;
-              
 
-                document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
                 document.getElementById("mycourses").innerHTML+=courses;
                 
                 } else{
@@ -203,7 +241,6 @@
 
   }
   
-
 function availablecourse(){
 
 
@@ -316,9 +353,28 @@ function enrollcourse(enrollname, classesid){
 
       
     
- 
-
       $.ajax({
+
+        url:'http://localhost:5000/learner/'+ staffID,
+        type: 'get',
+        dataType: "json",
+         success: function (response) {
+
+          if(response.code== "200"){
+
+            var learnerdata =response.data;
+            var coursesEnrolled= learnerdata.CoursesEnrolled;
+            //console.log(coursesEnrolled);
+
+
+            if (coursesEnrolled == enrolledcourse){
+
+              alert("You have already enrolled in the course");
+            }
+
+            else{
+
+              $.ajax({
           url: 'http://localhost:5000/classes/' + classesid,
           type: 'get',
           dataType: "json",
@@ -347,7 +403,7 @@ function enrollcourse(enrollname, classesid){
                   success: function (response) {
                   // console.log(response)
                     if (response.code == "200") {
-                      //alert("success")
+                      alert("You have successfully enrolled in the class")
                     } else {
                       //alert('failed');
                     }
@@ -364,9 +420,48 @@ function enrollcourse(enrollname, classesid){
           },
         });
 
+            }
+
+
+          }else{
+            alert("Something went wrong");
+          }
+        },
+
+      });
+               
+
+      
+  }
+
+
+function withdraw(enrollname){
+
+        let params = new URLSearchParams(location.search);
+        var staffID = params.get('id');
+        //console.log(staffID);
+
+        var enrolledcourse= enrollname;
+
+        var data = { "learnerid":staffID, "enrolledCourses": enrolledcourse }
+
+        $.ajax({
+                  url: 'http://localhost:5000/withdrawCourses',
+                  type: 'post',
+                  data: JSON.stringify(data),
+                  contentType: "application/json; charset=utf-8",
+                  processData: "json",
+                  success: function (response) {
+                  // console.log(response)
+                    if (response.code == "200") {
+                      alert("You have successfully withdraw from Course")
+                    } else {
+                      //alert('failed');
+                    }
+                  },
+                });
 
 }
-         
 
 </script>
   
