@@ -48,6 +48,7 @@ class Learner(Employee):
     id= db.Column(db.Integer, db.ForeignKey('employee.StaffID'),primary_key=True)
     CoursesTaking = db.Column(db.String(50))
     CompletedCourses = db.Column(db.String(50))
+    enrolledCourses= db.Column(db.String(50))
 
     __mapper_args__ = {
         'polymorphic_identity': 'learner'
@@ -223,7 +224,7 @@ def trainerid(trainerid):
             "message": "trainer not found."
         }), 404
 
-#
+#Learner
 @app.route("/learner/<int:learnerid>")
 def learnerid(learnerid):
     learner = Learner.query.filter_by(id=learnerid).first()
@@ -236,13 +237,58 @@ def learnerid(learnerid):
         return jsonify({
             "message": "learner not found."
         }), 404
+
+
+#The following add data to self enrolled in learner - POST
+@app.route("/enrolledCourses", methods=['POST'])
+
+def self_enrolled():
+   
+    try:   
+        
+        enrollcourse = request.get_json()
+        
+        #print(enrollcourse)
+        if not all(key in enrollcourse.keys() for
+                   key in ('learnerid','enrolledCourses')):
+            return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+        
+        learnerid= enrollcourse['learnerid']
+        learner = Learner.query.filter_by(id=learnerid).first()
+        if not learner:
+            return jsonify({
+                "message": "learner not valid."
+            }), 500
+            
         
         
+        learner.enrolledCourses = enrollcourse['enrolledCourses']
+        #print(learner.enrolledCourses)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": learner.to_dict()
+            }
+        ), 200
+        
+   
+    except Exception as e:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+  
+     
+# course        
 @app.route("/course/")
 def getallCourse():
     
     courselist = Course.query.all()
-    if courselist:
+    if len(courselist):
         return jsonify({
             "code": 200,
             "data": {
@@ -273,7 +319,30 @@ def find_course_by_classesid(classesID):
         "message": "No Course found."
         }
 ), 404
-       
+    
+@app.route("/course/courseName/<string:courseName>")    
+def find_course(courseName):
+    courselist = Course.query.filter(Course.courseName.like('%' + courseName + '%')).all()
+    #petlist = Pet_app.query.filter_by(Pet_type=petType).all()
+    if len(courselist):
+        return jsonify(
+            {
+                "code": 200,
+                "data": {
+                    "pet": [course.json() for course in courselist]
+                }
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "No pets in this category not found."
+        }
+    ), 404
+    
+    
+    
+#
 @app.route("/classes/<int:classesID>")
 def classes(classesID):
 

@@ -310,7 +310,7 @@
 
  function availablecourse(){
 
-          
+
          var service_URL="http://localhost:5000/course/" 
    
          $.ajax({
@@ -323,8 +323,11 @@
                     
                     var courselist=response.data.course
                     //console.log(courselist)
-
+                    
+                    var courses = "";
                     for(course of courselist){
+
+                      
 
                       var preRequisites= course.preRequisites;
                       //console.log(preRequisites);
@@ -334,32 +337,12 @@
                       var courseid= course.courseID;
                       var classesid=course.classesID
                       
+                      //console.log(courseid);
                       //console.log(classesid);
+
                       if( preRequisites == "NULL" ){
 
-                        
-                        var class_URL="http://localhost:5000/classes/" + classesid
-                        $.ajax({
-
-                          url: class_URL,
-                          type: 'get',
-                          dataType: "json",
-                          success: function (response) {
-
-                             // console.log(response)
-
-                            if(response.code == "200"){
-
-                              var classdata=response.data ;
-
-                              var starttime= classdata.startTime ;
-                              var startdate= classdata.startDate;
-                              var enddate= classdata.endDate;
-                              var endtime= classdata.endTime;
-                              var classid= classdata.classesID;
-
-                              
-                            var courses ="";
+                    
 
                             courses += `
 
@@ -370,45 +353,38 @@
                                   <h5 class="card-title" style="text-align:center;">${coursename}</h5>
                                   <br>
                                   <br>
-                                  <p class="card-text">Start: ${starttime}</p>
-                                  <p class="card-text">End : ${endtime}
-                                  <br>
-                                 <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="view(${classid})" ></i>
+                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="view(${classesid})" ></i>
                                   <br>
                                   <br>
                                   <button type="button" class="btn btn-primary" style="margin-left:80px;">Enroll</button>
                                   </div>
                               </div>
                             </div> `
-
-                          
-                          document.getElementById("section").innerHTML = "";
-                          document.getElementById("mycourses").innerHTML = "";
-                          
-
-                        //reset the container for course details to empty string
-                          document.getElementById("coursedetailscontainer").innerHTML ="";
-                          document.getElementById("section").innerHTML += `<h2> Available Courses </h2>`;
-                          document.getElementById("mycourses").innerHTML+=courses;
-                          
+                        
+                           
                               
-                      }else{
-                        alert("something went wrong");
+                      }
 
 
                     }
-                },
-                  });
 
-                }
-              }
-                
-                
-                } else{
+                  document.getElementById("section").innerHTML = "";
+                  document.getElementById("mycourses").innerHTML = "";
+                  //reset the container for course details to empty string
+                document.getElementById("coursedetailscontainer").innerHTML ="";
+              
+                  document.getElementById("section").innerHTML += `<h2> Available Courses </h2>`;
+                  document.getElementById("mycourses").innerHTML += courses;
+
+                }else{
                   alert("something went wrong");
-                }
+              }
+                       
+                
+          },
+                
 
-            },  
+            
     });
 
   }
