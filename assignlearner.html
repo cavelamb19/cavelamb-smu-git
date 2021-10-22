@@ -54,6 +54,14 @@
 
           <div class="container" id="coursedetailscontainer">
             <div id="coursesdetails">
+             <p><b>Trainer</b>: ${trainer} | <b>Start</b>: ${starttime}  | <b>End</b>:${enddate}  | <b>Class-size</b>: ${classsize} | <b>Current-enrolled</b>: ${currentenroll}</p>
+            
+            </div>
+       </div>
+
+
+        <div class="container" id="coursedetailscontainer">
+            <div id="pre-Requisites">
              
             
             </div>
@@ -93,6 +101,8 @@
       var staffID= obj['id']; 
       var classid= obj['classid'];
 
+      
+      document.getElementById("coursesdetails").innerHTML = "";
       
       var service_URL="http://localhost:5000/employee/" + staffID
    
@@ -163,8 +173,13 @@
 
                         
                       var coursedetails= `<p><b>Trainer</b>: ${trainer} | <b>Start</b>: ${starttime}  | <b>End</b>:${enddate}  | <b>Class-size</b>: ${classsize} | <b>Current-enrolled</b>: ${currentenroll}</p>`  
-                                          
+                      
+                    
+                              
                       document.getElementById("coursesdetails").innerHTML += coursedetails;  
+
+
+                      
                       
                    
                       
