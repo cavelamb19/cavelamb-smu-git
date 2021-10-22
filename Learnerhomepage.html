@@ -83,7 +83,7 @@
 <script>
 
   function load(){
-
+      
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
       console.log(staffID);
@@ -103,31 +103,36 @@
                     var name= data.Name
                     //console.log(name);
 
-                  document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
+                    document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
                   
                     var CoursesTaking=data.CoursesTaking
                   
-                var courses ="";
+                    var courses ="";
 
-                  courses += `
+                    courses += `
 
               <div class="col">
-            <div class="card" style="border-radius: 25px;">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title" style="text-align:center;">${CoursesTaking}</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i>
+                <div class="card" style="border-radius: 25px;">
+                  <img src="..." class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align:center;">${CoursesTaking}</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <a href="your link here"><i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
+                  </div>
                 </div>
-            </div>
-          </div> `
+              </div> `
 
 
+<<<<<<< HEAD
          
 
 
                 document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
                 document.getElementById("mycourses").innerHTML+=courses;
+=======
+                    document.getElementById("section").innerHTML += `<h2> My Courses </h2>`
+                    document.getElementById("mycourses").innerHTML+=courses;
+>>>>>>> ec65546b0429de5ed18b28b5a2861095180f8b6e
                 
                 } else{
                   alert("something went wrong");
