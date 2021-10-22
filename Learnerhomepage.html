@@ -273,11 +273,7 @@ function availablecourse(){
                       //console.log(courseid);
                       //console.log(classesid);
 
-                      if( preRequisites == "NULL" ){
-
-                      
-
-                            courses += `
+                      courses += `
 
                             <div class="col">
                               <div class="card" style="border-radius: 25px;">
@@ -289,14 +285,14 @@ function availablecourse(){
                                   <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse(${classesid})" ></i>
                                   <br>
                                   <br>
-                                  <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="enrollcourse('${coursename}', '${classesid}')">Enroll</button>
+                                  <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="enrollcourse('${coursename}')">Enroll</button>
                                   </div>
                               </div>
                             </div> `
                         
                            
                               
-                      }
+                      
 
 
                     }
@@ -338,14 +334,14 @@ function viewcourse(classid){
 }
 
 
-function enrollcourse(enrollname, classesid){
+function enrollcourse(enrollname){
 
         
         let params = new URLSearchParams(location.search);
         var staffID = params.get('id');
         //console.log(staffID);
 
-        var classesid= classesid;
+        //var classesid= classesid;
         //console.log(classesid);
          
         var enrolledcourse= enrollname;
@@ -364,6 +360,7 @@ function enrollcourse(enrollname, classesid){
 
             var learnerdata =response.data;
             var coursesEnrolled= learnerdata.CoursesEnrolled;
+            var CompletedCourses= learnerdata.CompletedCourses;
             //console.log(coursesEnrolled);
 
 
@@ -373,12 +370,30 @@ function enrollcourse(enrollname, classesid){
             }
 
             else{
-
+                
               $.ajax({
-          url: 'http://localhost:5000/classes/' + classesid,
-          type: 'get',
-          dataType: "json",
-          success: function (response) {
+                url:'http://localhost:5000/course/courseName/'+ enrolledcourse,
+                type: 'get',
+                dataType: "json",
+                success: function (response) {
+                //console.log(response);
+                  if (response.code =="200"){
+
+                var coursedata=response.data.course;
+                
+                var classesid= coursedata.classesID;
+                var preRequisites= coursedata.preRequisites;
+            
+                
+               // console.log(preRequisites);
+                
+                if(preRequisites == CompletedCourses || preRequisites =="NULL"){
+
+                $.ajax({
+                url: 'http://localhost:5000/classes/' + classesid,
+                type: 'get',
+                dataType: "json",
+                success: function (response) {
            // console.log(response)
             if (response.code == "200") {
 
@@ -386,6 +401,7 @@ function enrollcourse(enrollname, classesid){
                 var data = response.data;
                 var currentEnrolled= data.currentEnrolled;
                 var classsize= data.classesSize;
+
 
                
               if (currentEnrolled < classsize ){
@@ -420,19 +436,36 @@ function enrollcourse(enrollname, classesid){
           },
         });
 
-            }
+                }
 
+                else{
+                  alert("You have not fully the course preRequisites")
+                }
+                
+      
+              }else{ 
+                alert("something went wrong")
+              }
+      
+      },
+    
+      });
+            
 
-          }else{
+    }
+
+      }else{
             alert("Something went wrong");
           }
         },
 
       });
-               
-
-      
+                   
   }
+
+
+
+
 
 
 function withdraw(enrollname){

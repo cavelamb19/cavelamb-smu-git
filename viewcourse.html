@@ -91,6 +91,13 @@
 
         <br>
         <br>
+        <div id="currentenroll" style="border-radius:25px; border:solid; border-color: gray;">
+              <h4 style="padding-left:450px;">Currently Enrolled</h4>
+              
+              
+        </div>
+        <br>
+        <br>
         <div id="enroll">
         
         </div>
@@ -113,7 +120,7 @@
 
         //console.log(staffID);
 
-          var url= "Learnerhomepage.html?id="+ staffID +"&classid=" + classid;
+          var url= "Learnerhomepage.html?id="+ staffID;
 
 
 
@@ -192,6 +199,7 @@
                               var classid= classdata.classesID;
                               var classsize=classdata.classesSize;
                               var trainer= classdata.trainerAssigned;
+                              var currentenroll= classdata.currentEnrolled;
                               
 
                         
@@ -223,11 +231,19 @@
 
                       var csize= `<br>
                                   <br>
-                                  <p style="padding-left:450px;">${classsize}</p>`
+                                  <p style="padding-left:450px;">${classsize} Students</p>`
                                   
                                   
                       document.getElementById("classsize").innerHTML+= csize;
                     
+                    
+
+
+                      var enrollno= `<br>
+                                     <br>
+                                      <p style="padding-left:450px;">${currentenroll} Students </p>`
+
+                      document.getElementById("currentenroll").innerHTML+= enrollno;
 
                     var enrollbutton= `<button type="button" class="btn btn-primary" onClick="enrollcourse('${coursename}', '${classesid}')" style="margin-left:500px;">Enroll</button>`
                       

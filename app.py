@@ -366,14 +366,14 @@ def find_course_by_classesid(classesID):
     
 @app.route("/course/courseName/<string:courseName>")    
 def find_course(courseName):
-    courselist = Course.query.filter(Course.courseName.like('%' + courseName + '%')).all()
+    courselist = Course.query.filter(Course.courseName.like('%' + courseName + '%')).first()
     #petlist = Pet_app.query.filter_by(Pet_type=petType).all()
-    if len(courselist):
+    if courselist:
         return jsonify(
             {
                 "code": 200,
                 "data": {
-                    "pet": [course.json() for course in courselist]
+                    "course": courselist.json() 
                 }
             }
         )
