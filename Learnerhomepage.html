@@ -47,7 +47,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#" >Completed Courses</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#" onclick="completedcourse()">Completed Courses</a>
                 </li>
                 
                 <li class="nav-item">
@@ -98,7 +98,7 @@
             type: 'get',
             dataType: "json",
             success: function (response) {
-            //console.log(response)
+            console.log(response)
                 if (response.code == "200") {
 
                     var data = response.data;
@@ -363,7 +363,6 @@ function availablecourse(){
                 if (response.code == "200") {
                     
                     var courselist=response.data.course
-                    //console.log(courselist)
                     
                     var courses = "";
                     for(course of courselist){
@@ -388,6 +387,7 @@ function availablecourse(){
                                 <img src="..." class="card-img-top" alt="...">
                                 <div class="card-body">
                                   <h5 class="card-title" style="text-align:center;">${coursename}</h5>
+                                  <h5 class="card-title" style="text-align:center;">Class Size</h5>
                                   <br>
                                   <br>
                                   <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse(${classesid})" ></i>
@@ -423,7 +423,6 @@ function availablecourse(){
     });
 
   }
-
 
 function viewcourse(classid){
 
@@ -572,11 +571,6 @@ function enrollcourse(enrollname){
       });
                    
   }
-
-
-
-
-
 
 function withdraw(enrollname){
 
