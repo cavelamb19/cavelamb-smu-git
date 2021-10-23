@@ -135,7 +135,7 @@ CREATE TABLE `Learner` (
 -- Dumping data for table `Learner`
 --
 
-INSERT INTO `Learner` (`id`, `CoursesTaking`, `CompletedCourses`,`CoursesEnrolled`) VALUES
+INSERT INTO `Learner` (`id`, `CoursesAssigned`, `CompletedCourses`,`CoursesEnrolled`) VALUES
 (3, '', 'IS214 System Design', 'IS216 Software Design');
 
 -- --------------------------------------------------------
