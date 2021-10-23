@@ -195,7 +195,28 @@ class Quiz(db.Model):
         "qnID": self.qnID, "ansID": self.ansID, "qnType": self.qnType, "StartTime": self.StartTime,
         "EndTime": self.EndTime, "qnDuration": self.qnDuration, "attemptNo": self.attemptNo, "quizScore": self.quizScore}
 
-#For login
+
+
+
+#For Employee
+@app.route("/employee/")
+def getallemployee():
+    
+    employeelist = Employee.query.all()
+    if len(employeelist):
+        return jsonify({
+            "code": 200,
+            "data": {
+                "course": [employee.to_dict() for employee in employeelist]
+            }
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "All courses not found."
+        }), 404
+        
+        
 @app.route("/employee/<int:staffid>")
 def staffid(staffid):
     employee = Employee.query.filter_by(StaffID=staffid).first()
@@ -209,6 +230,9 @@ def staffid(staffid):
             "code" : 404,
             "message": "employee not found."
         }), 404
+        
+        
+
         
          
 
@@ -227,6 +251,24 @@ def trainerid(trainerid):
         }), 404
 
 #Learner
+@app.route("/learner/")
+def getalllearner():
+
+    learnerlist = Learner.query.all()
+    if len(learnerlist):
+        return jsonify({
+            "code": 200,
+            "data": {
+                "course": [learner.to_dict() for learner in learnerlist]
+            }
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "All courses not found."
+        }), 404
+
+    
 @app.route("/learner/<int:learnerid>")
 def learnerid(learnerid):
     learner = Learner.query.filter_by(id=learnerid).first()
