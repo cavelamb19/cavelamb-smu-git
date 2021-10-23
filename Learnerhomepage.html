@@ -113,7 +113,11 @@
                   
                     var courses ="";
 
-                    if(CoursesAssigned != ""){
+                    if(CoursesAssigned != "" ){
+
+
+
+                      
                     
                     courses += `
 
@@ -136,7 +140,7 @@
                       document.getElementById("mycourses").innerHTML ="" ;
 
                       document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
-                      document.getElementById("mycourses").innerHTML+=courses;
+                      
 
 
                     }
@@ -465,10 +469,12 @@ function enrollcourse(enrollname){
             var learnerdata =response.data;
             var coursesEnrolled= learnerdata.CoursesEnrolled;
             var CompletedCourses= learnerdata.CompletedCourses;
+            var CoursesAssigned=learnerdata.CoursesAssigned;
             //console.log(coursesEnrolled);
+            //console.log(CoursesAssigned);
 
 
-            if (coursesEnrolled == enrolledcourse){
+            if (coursesEnrolled == enrolledcourse ||  CoursesAssigned ==enrolledcourse ){
 
               alert("You have already enrolled in the course");
             }
