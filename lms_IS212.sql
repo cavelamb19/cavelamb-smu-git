@@ -31,7 +31,7 @@ CREATE TABLE `Course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `course` (`courseID`, `courseName`, `courseDesc`, `preRequisites`, `classesID`) VALUES
-(1, 'Software Project Management', 'agile methods', 'NULL', 1);
+(1, 'IS212 Software Project Management G2', 'agile methods', 'NULL', 1);
 
 
 -- --------------------------------------------------------
@@ -116,7 +116,7 @@ CREATE TABLE `Trainer` (
 --
 
 INSERT INTO `Trainer` (`id`, `coursesTeaching`) VALUES
-(2, 'IS212');
+(2, 'IS212 Software Project Management');
 
 -- --------------------------------------------------------
 
