@@ -99,8 +99,12 @@
       
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
+      //Terence 
+      var returnhome = params.get('return');
       //console.log(staffID);
-
+      if (returnhome == 1){
+        availablecourse();
+      }else{
       var service_URL="http://localhost:5000/learner/" + staffID
    
          $.ajax({
@@ -129,7 +133,7 @@
                 <div class="card" style="border-radius: 25px;">
                   <img src="..." class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title" style="text-align:center;">${CoursesTaking}</h5>
+                    <h5 class="card-title" style="text-align:center;"><strong>${CoursesTaking}</strong></h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                     <a href="learnercoursematerial.html"><i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
                   </div>
@@ -172,7 +176,7 @@
         });
 
 
-
+      }
   }
 
   function mycourse(){
