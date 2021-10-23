@@ -18,7 +18,7 @@
 
 <body onload="class_details()">
    <!--- <i class="fa fa-home" style="padding-left: 50px; font-size: 40px;"></i> -->
-    <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Learner Homepage</h1>
+    <h4 id="name" style="text-align: end; padding-right: 40px;"></h1>
 
 <hr>
   
@@ -121,6 +121,26 @@
 
         var staffID= obj['id']; 
         var classid= obj['classid'];
+
+        var service_URL="http://localhost:5000/learner/" + staffID
+   
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                    var name= data.Name
+                    //console.log(name);
+
+                    document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
+                }
+              }
+            });
 
         var class_URL="http://localhost:5000/classes/" + classid;
 
