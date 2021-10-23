@@ -367,7 +367,7 @@ def find_course_by_classesid(classesID):
 @app.route("/course/courseName/<string:courseName>")    
 def find_course(courseName):
     courselist = Course.query.filter(Course.courseName.like('%' + courseName + '%')).first()
-    #petlist = Pet_app.query.filter_by(Pet_type=petType).all()
+    
     if courselist:
         return jsonify(
             {
@@ -380,7 +380,7 @@ def find_course(courseName):
     return jsonify(
         {
             "code": 404,
-            "message": "No pets in this category not found."
+            "message": "No Courses found."
         }
     ), 404
     
