@@ -502,12 +502,14 @@ function withdraw(enrollname){
                   // console.log(response)
                     if (response.code == "200") {
                       alert("You have successfully withdraw from Course")
+                      location.reload(true)
+                      //response.setHeader("Refresh", "0; URL=http://localhost:5000/learner/" + staffID);
                     } else {
                       //alert('failed');
                     }
                   },
                 });
-
+                
 }
 
 </script>
