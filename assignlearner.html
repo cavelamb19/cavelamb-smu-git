@@ -383,7 +383,9 @@ function assign(){
                                         success: function (response) {
                                         // console.log(response)
                                           if (response.code == "200") {
-                                            alert("You have successfully assigned learner the class")
+                                            alert("You have successfully assigned learner to the course")
+                                            var url= "adminhomepage.html?id="+ staffID;
+                                            location.href=url;
                                           } else {
                                             //alert('failed');
                                           }
@@ -405,7 +407,10 @@ function assign(){
                                         success: function (response) {
                                         // console.log(response)
                                           if (response.code == "200") {
-                                            alert("You have successfully assigned learner the class")
+                                            alert("You have successfully assigned learner to the course")
+                                           
+                                            var url= "adminhomepage.html?id="+ staffID;
+                                            location.href=url;
                                           } else {
                                             //alert('failed');
                                           }
@@ -420,11 +425,15 @@ function assign(){
                                       alert("The learner has not fulfilled the preRequisites of this course")
                                     }
                                   }
+
+                              
                                   
                               } else {
                                 //alert('failed');
                               }
                             },
+                             
+                            
                           });
               
                         
@@ -437,6 +446,9 @@ function assign(){
               
               
               }
+
+
+       
    
 }
 
