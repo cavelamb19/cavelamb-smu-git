@@ -136,7 +136,10 @@ CREATE TABLE `Learner` (
 --
 
 INSERT INTO `Learner` (`id`, `CoursesAssigned`, `CompletedCourses`,`CoursesEnrolled`) VALUES
-(3, '', 'IS214 System Design', 'IS216 Software Design');
+(3, '', 'IS214 System Design', 'IS216 Software Design'),
+(4, '', 'IS115 Computational Thinking', 'IS216 Software Design'),
+(5, '', 'IS113 Web application', 'IS216 Software Design'),
+(6, '', 'IS112 Business applications', 'IS216 Software Design');
 
 -- --------------------------------------------------------
 
@@ -160,8 +163,11 @@ CREATE TABLE `Employee` (
 
 INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignation`,`Department`,`ContactNo`) VALUES
 (1, 'Phris Coskitt', 'csok','coski@gmail.com','administrator','hr','90227823'),
-(2, 'Arnold de Mari', 'Dr','Dr@gmail.com','trainer','Training','82329832'),
-(3, 'Constance Wilkinson', 'cons','cons@gmail.com','learner','Learning','92130843');
+(2, 'Arnold de Mari', 'Ard','Dr@gmail.com','trainer','Training','82329832'),
+(3, 'Constance Wilkinson', 'cons','cons@gmail.com','learner','Learning','92130843'),
+(4, 'Johnson sim', 'john','johnson@gmail.com','learner','Learning','90247788'),
+(5, 'Mary lamb', 'Mar','Mar@gmail.com','learner','Learning','83425667'),
+(6, 'David bee', 'bee','bee@gmail.com','learner','Learning','92358877');
 
 
 ALTER TABLE `Course`
