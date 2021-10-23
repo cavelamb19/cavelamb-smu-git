@@ -100,9 +100,12 @@
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
       //Terence 
-      var returnhome = params.get('return');
+      var returntoavailcourse = params.get('return');
       //console.log(staffID);
-      if (returnhome == 1){
+      if (returntoavailcourse == 1){
+        //var url= "Learnerhomepage.html?id="+ staffID;
+        //location.href=url;
+        
         availablecourse();
       }else{
       var service_URL="http://localhost:5000/learner/" + staffID
@@ -183,7 +186,7 @@
       
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
-      console.log(staffID);
+      //console.log(staffID);
 
       var service_URL="http://localhost:5000/learner/" + staffID
    
@@ -192,7 +195,7 @@
             type: 'get',
             dataType: "json",
             success: function (response) {
-            console.log(response)
+            //console.log(response)
                 if (response.code == "200") {
 
                     var data = response.data;
