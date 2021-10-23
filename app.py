@@ -195,7 +195,30 @@ class Quiz(db.Model):
         "qnID": self.qnID, "ansID": self.ansID, "qnType": self.qnType, "StartTime": self.StartTime,
         "EndTime": self.EndTime, "qnDuration": self.qnDuration, "attemptNo": self.attemptNo, "quizScore": self.quizScore}
 
-#For login
+
+
+
+###########################################################
+
+#For Employee
+@app.route("/employee/")
+def getallemployee():
+    
+    employeelist = Employee.query.all()
+    if len(employeelist):
+        return jsonify({
+            "code": 200,
+            "data": {
+                "course": [employee.to_dict() for employee in employeelist]
+            }
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "All courses not found."
+        }), 404
+        
+        
 @app.route("/employee/<int:staffid>")
 def staffid(staffid):
     employee = Employee.query.filter_by(StaffID=staffid).first()
@@ -210,7 +233,8 @@ def staffid(staffid):
             "message": "employee not found."
         }), 404
         
-         
+        
+###########################################################
 
 #trainer
 @app.route("/trainer/<int:trainerid>")
@@ -226,7 +250,28 @@ def trainerid(trainerid):
             "message": "trainer not found."
         }), 404
 
+
+###########################################################
+
 #Learner
+@app.route("/learner/")
+def getalllearner():
+
+    learnerlist = Learner.query.all()
+    if len(learnerlist):
+        return jsonify({
+            "code": 200,
+            "data": {
+                "course": [learner.to_dict() for learner in learnerlist]
+            }
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "All courses not found."
+        }), 404
+
+    
 @app.route("/learner/<int:learnerid>")
 def learnerid(learnerid):
     learner = Learner.query.filter_by(id=learnerid).first()
@@ -240,92 +285,9 @@ def learnerid(learnerid):
             "message": "learner not found."
         }), 404
 
-
-
-#The following withdraw learner from course  - POST
-@app.route("/withdrawCourses", methods=['POST'])
-def withdraw_course():
-    
-       
-    try:   
-        
-        enrollcourse = request.get_json()
-        
-        #print(enrollcourse)
-        if not all(key in enrollcourse.keys() for
-                   key in ('learnerid','enrolledCourses')):
-            return jsonify({
-                "message": "Incorrect JSON object provided."
-            }), 500
-        
-        learnerid= enrollcourse['learnerid']
-        learner = Learner.query.filter_by(id=learnerid).first()
-        if not learner:
-            return jsonify({
-                "message": "learner not valid."
-            }), 500
-            
-        
-        
-        learner.CoursesEnrolled = ""
-        #print(learner.enrolledCourses)
-        db.session.commit()
-        return jsonify(
-            {
-                "code": 200,
-                "data": learner.to_dict()
-            }
-        ), 200
-        
-   
-    except Exception as e:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
-
-    
-#The following add data to self enrolled in learner - POST
-@app.route("/enrolledCourses", methods=['POST'])
-def self_enrolled():
-   
-    try:   
-        
-        enrollcourse = request.get_json()
-        
-        #print(enrollcourse)
-        if not all(key in enrollcourse.keys() for
-                   key in ('learnerid','enrolledCourses')):
-            return jsonify({
-                "message": "Incorrect JSON object provided."
-            }), 500
-        
-        learnerid= enrollcourse['learnerid']
-        learner = Learner.query.filter_by(id=learnerid).first()
-        if not learner:
-            return jsonify({
-                "message": "learner not valid."
-            }), 500
-            
-        
-        
-        learner.CoursesEnrolled = enrollcourse['enrolledCourses']
-        #print(learner.enrolledCourses)
-        db.session.commit()
-        return jsonify(
-            {
-                "code": 200,
-                "data": learner.to_dict()
-            }
-        ), 200
-        
-   
-    except Exception as e:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
-
-
   
+
+###########################################################
      
 # course        
 @app.route("/course/")
@@ -384,7 +346,10 @@ def find_course(courseName):
         }
     ), 404
     
-    
+
+
+
+###########################################################
     
 #class
 @app.route("/classes/<int:classesID>")
@@ -404,8 +369,129 @@ def classes(classesID):
             "message": "class not found."
         }), 404
 
+
+
+###########################################################
+
+#The following is  for self enrolling to courses for learner (1 course) - POST
+@app.route("/enrolledCourses", methods=['POST'])
+def self_enrolled():
+
+    try:
+
+        enrollcourse = request.get_json()
+
+        #print(enrollcourse)
+        if not all(key in enrollcourse.keys() for
+                   key in ('learnerid', 'enrolledCourses')):
+            return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+
+        learnerid = enrollcourse['learnerid']
+        learner = Learner.query.filter_by(id=learnerid).first()
+        if not learner:
+            return jsonify({
+                "message": "learner not valid."
+            }), 500
+
+        learner.CoursesEnrolled = enrollcourse['enrolledCourses']
+        #print(learner.enrolledCourses)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": learner.to_dict()
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+
+#The following withdraw learner from course  (1 course)  - POST
+@app.route("/withdrawCourses", methods=['POST'])
+def withdraw_course():
+
+    try:
+
+        enrollcourse = request.get_json()
+
+        #print(enrollcourse)
+        if not all(key in enrollcourse.keys() for
+                   key in ('learnerid', 'enrolledCourses')):
+            return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+
+        learnerid = enrollcourse['learnerid']
+        learner = Learner.query.filter_by(id=learnerid).first()
+        if not learner:
+            return jsonify({
+                "message": "learner not valid."
+            }), 500
+
+        learner.CoursesEnrolled = ""
+        #print(learner.enrolledCourses)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": learner.to_dict()
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+        
+        
+
+#The following is to assign learner to course (1 course) - POST
+@app.route("/assigncourses", methods=['POST'])
+def assign_course():
+
+    try:
+
+        assign = request.get_json()
+
+        #print(enrollcourse)
+        if not all(key in assign.keys() for
+                   key in ('learnerid', 'enrolledCourses')):
+            return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+        
+        for learnerid in assign['learnerid'] :
+           
+            learner = Learner.query.filter_by(id=learnerid).first()
+            if not learner:
+                return jsonify({
+                    "message": "learner not valid."
+                }), 500
+
+            learner.CoursesAssigned= assign['enrolledCourses']
+            #print(learner.enrolledCourses)
+            db.session.commit()
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": learner.to_dict()
+                }
+            ), 200
+
     
-    
+    except Exception as e:
+          return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+
+
 
 if __name__ == '__main__':
    app.run(host='0.0.0.0', port=5000, debug=True)

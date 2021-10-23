@@ -41,6 +41,8 @@
                 <li class="nav-item">
                   <a class="nav-link" style="padding-left: 80px; padding-top: 40px;" href="#" >Class List</a>
                 </li>
+
+
              
               </ul>
     </div>
@@ -51,8 +53,18 @@
          
 <div class="main" style="margin-left : 360px">
           
-
-          <div class="container" id="coursedetailscontainer">
+          <div class="container">
+            <div id="coursename">
+             
+            
+            </div>
+       </div>
+        
+        <br>
+        <br>
+        <br>
+        <br>
+          <div class="container">
             <div id="coursesdetails">
              <p><b>Trainer</b>: ${trainer} | <b>Start</b>: ${starttime}  | <b>End</b>:${enddate}  | <b>Class-size</b>: ${classsize} | <b>Current-enrolled</b>: ${currentenroll}</p>
             
@@ -69,15 +81,37 @@
 
           <br>
           <br>
-          
+          <br>
          <div class="container" >
             <div id="Learners">
              
-              <p>List of learners</p>
-              
+            <h3><b>List of learners</b></h3>
+            
             </div>
+      </div>
+
+        <br>
+        <div class="container">
+        <div class="row">
+          <div class="col-8">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Course Taken Before</th>
+                  <th scope="col">Assigned?</th>
+                </tr>
+              </thead>
+              <tbody id="tablebody">
+                
+              
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
        
-     </div>
+
 
             
        
@@ -85,6 +119,19 @@
 
   </div>
 
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+    <div class="container" >
+        
+        <button type="button" class="btn btn-info" style="margin-left: 250px ;" onclick="assign()">Submit</button>
+            
+            
+      </div>
 
 
 
@@ -112,9 +159,12 @@
 
       var staffID= obj['id']; 
       var classid= obj['classid'];
+      var coursename= obj["coursename"];
 
       
       document.getElementById("coursesdetails").innerHTML = "";
+
+      document.getElementById("coursename").innerHTML += ` <h2 style="text-align:center;"> ${coursename} </h2>`;
       
       var service_URL="http://localhost:5000/employee/" + staffID
    
@@ -213,9 +263,194 @@
            
 
         });
+
+
+
+        //get the users
+
+
+         $.ajax({
+            url: "http://localhost:5000/learner/",
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                   var learnerlist=response.data.course;
+
+                   var names="";
+                   for( learner of learnerlist){{
+
+                        var learnername= learner.Name;
+                        var learnerid= learner.StaffID;
+                        var CompletedCourses = learner.CompletedCourses
+
+
+                        names=`<tr>
+                              <td>${learnername}</td>
+                              <td>${CompletedCourses} </td> 
+                              <td><div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="assigned[]" value= ${learnerid}>
+                                    <label class="custom-control-label" ></label>
+                                </div></td>
+                            </tr>
+                                   `
+                     }
+                   }
+
+                   document.getElementById("tablebody").innerHTML +=names;
+
+                  
+                  
+                } else{
+                  alert("something went wrong");
+                }
+
+            },  
+           
+
+        });
  }
 
+function assign(){
 
+        let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+        var staffID= obj['id']; 
+        var classid= obj['classid'];
+        var coursename= obj['coursename']
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+        let assigned = [];
+        checkboxes.forEach((checkbox) => { assigned.push(checkbox.value);  });
+
+
+      
+        
+        //console.log(data);
+
+        for (learnerid of assigned){
+
+          
+
+          $.ajax({
+                  url: 'http://localhost:5000/course/classesID/' + classid ,
+                  type: 'get',
+                  dataType: "json",
+                  success: function (response) {
+                  // console.log(response)
+                    if (response.code == "200") {
+
+                        var coursedata=response.data;
+                        var prereq= coursedata.preRequisites;
+
+                        // console.log(CompletedCourses);
+                      
+                         $.ajax({
+                            url: 'http://localhost:5000/learner/' + learnerid ,
+                            type: 'get',
+                            dataType: "json",
+                            success: function (response) {
+                            // console.log(response)
+                              if (response.code == "200") {
+
+                                  var learnerdata= response.data;
+                                  var CompletedCourses= learnerdata.CompletedCourses;
+                                  var CoursesAssigned= learnerdata.CoursesAssigned;
+                                  var CoursesEnrolled= learnerdata.CoursesEnrolled;
+
+
+                                  // console.log(CompletedCourses);
+
+                                  if (CoursesAssigned == coursename || CoursesEnrolled == coursename ){
+
+                                    alert("Learner has already enrolled in the course ")
+                                  }
+
+                                 else if(prereq == "NULL"){
+
+                                   
+                                     var data = { "learnerid": assigned, "enrolledCourses": coursename }
+
+                                     $.ajax({
+                                        url: 'http://localhost:5000/assigncourses',
+                                        type: 'post',
+                                        data: JSON.stringify(data),
+                                        contentType: "application/json; charset=utf-8",
+                                        processData: "json",
+                                        success: function (response) {
+                                        // console.log(response)
+                                          if (response.code == "200") {
+                                            alert("You have successfully assigned learner to the course")
+                                            var url= "adminhomepage.html?id="+ staffID;
+                                            location.href=url;
+                                          } else {
+                                            //alert('failed');
+                                          }
+                                        },
+                                   });
+
+                                  }
+
+                                  else if ( prereq == CompletedCourses){
+
+                                     var data = { "learnerid": assigned, "enrolledCourses": coursename }
+
+                                     $.ajax({
+                                        url: 'http://localhost:5000/assigncourses',
+                                        type: 'post',
+                                        data: JSON.stringify(data),
+                                        contentType: "application/json; charset=utf-8",
+                                        processData: "json",
+                                        success: function (response) {
+                                        // console.log(response)
+                                          if (response.code == "200") {
+                                            alert("You have successfully assigned learner to the course")
+                                           
+                                            var url= "adminhomepage.html?id="+ staffID;
+                                            location.href=url;
+                                          } else {
+                                            //alert('failed');
+                                          }
+                                        },
+                                   });
+                                  }
+
+                                  else{
+
+                                    if (prereq != CompletedCourses){
+
+                                      alert("The learner has not fulfilled the preRequisites of this course")
+                                    }
+                                  }
+
+                              
+                                  
+                              } else {
+                                //alert('failed');
+                              }
+                            },
+                             
+                            
+                          });
+              
+                        
+                    } else {
+                      //alert('failed');
+                    }
+                  },
+                });
+
+              
+              
+              }
+
+
+       
+   
+}
 
 
 
