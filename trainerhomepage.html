@@ -16,7 +16,7 @@
 
   </head>
 
-<body onload="">
+<body onload="load()">
    <!--- <i class="fa fa-home" style="padding-left: 50px; font-size: 40px;"></i> -->
     <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Trainer Homepage</h1>
 
@@ -41,66 +41,20 @@
                 <li class="nav-item">
                   <a class="nav-link" style="padding-left: 80px; padding-top: 40px;" href="#">My Courses</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link " style="padding-left: 70px; padding-top: 40px;" href="#">Class Schedule</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#">Available Courses</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link"style="padding-left: 70px; padding-top: 40px;"  href="#">Courses Completed</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"style="padding-left: 70px; padding-top: 40px;"  href="../cavelamb-smu-git/loginpage.html">Log out</a>
+                    <a class="nav-link"style="padding-left: 80px; padding-top: 40px;"  href="../cavelamb-smu-git/loginpage.html">Log out</a>
                 </li>
               </ul>
     </div>
   </div>      
 </div>
 
-
-         
             
 <div class="main" style="margin-left : 360px">
 
           <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 90%;" id="mycourses">
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="..." class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-            </div>
-          </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 50%;" id="mycourses">
         </div>
   </div>
 
@@ -111,9 +65,8 @@
       let params = new URLSearchParams(location.search);
       params.get('id');
       var staffID = params.get('id');
-      console.log(staffID);
 
-      var service_URL="http://localhost:5000/employee/" + staffID
+      var service_URL="http://localhost:5000/trainer/" + staffID
    
          $.ajax({
             url: service_URL,
@@ -130,7 +83,8 @@
 
                   document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
                   
-                var CoursesTaking=data.CoursesTaking
+                var coursesteaching =data.coursesTeaching
+                console.log(coursesteaching)
                   
                 var courses ="";
 
@@ -140,9 +94,9 @@
                <div class="card-group ">
                 <div class="card" style="margin-right: 30px;">
                   <div class="card-body">
-                    <h5 class="card-title">${CoursesTaking}</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <button type="button" class="btn btn-primary" style="float:right;">Enroll</button>
+                    <h5 class="card-title">${coursesteaching}</h5>
+                    <p class="card-text"></p>
+                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onclick="viewcourse()"></i>
                   </div>
                 </div>
                 </div>`
@@ -156,6 +110,13 @@
             },  
         });
   }
+
+function viewcourse(){
+
+var url= "trainerquiz.html"
+location.href=url;
+}
+
 </script>
   
 
