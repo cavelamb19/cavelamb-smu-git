@@ -126,7 +126,7 @@ INSERT INTO `Trainer` (`id`, `coursesTeaching`) VALUES
 
 CREATE TABLE `Learner` (
   `id` int(11) NOT NULL,
-  `CoursesTaking` varchar(50)  DEFAULT NULL,
+  `CoursesAssigned` varchar(50)  DEFAULT NULL,
   `CompletedCourses` varchar(50)  DEFAULT NULL,
   `CoursesEnrolled` varchar(50) DEFAULT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -136,7 +136,7 @@ CREATE TABLE `Learner` (
 --
 
 INSERT INTO `Learner` (`id`, `CoursesTaking`, `CompletedCourses`,`CoursesEnrolled`) VALUES
-(3, 'IS212 Software Project Management', 'IS214 System Design', 'IS216 Software Design');
+(3, '', 'IS214 System Design', 'IS216 Software Design');
 
 -- --------------------------------------------------------
 
