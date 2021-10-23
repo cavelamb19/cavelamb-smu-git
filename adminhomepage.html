@@ -152,7 +152,7 @@
                                   <h5 class="card-title" style="text-align:center;">${coursename}</h5>
                                   <br>
                                   <br>
-                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="assignlearner(${classesid})" ></i>
+                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="assignlearner('${classesid}','${coursename}')" ></i>
                                   </div>
                               </div>
                             </div> `
@@ -188,14 +188,14 @@
 
  }
 
-function assignlearner(classesid){
+function assignlearner(classesid,coursename){
 
 
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
       //console.log(staffID);
 
-      var url= "assignlearner.html?id="+ staffID +"&classid=" + classesid;
+      var url= "assignlearner.html?id="+ staffID +"&classid=" + classesid + "&coursename=" + coursename;
 
 
 
