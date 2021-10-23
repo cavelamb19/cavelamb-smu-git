@@ -16,7 +16,7 @@
 
   </head>
 
-<body onload="">
+<body onload="class_details()">
    <!--- <i class="fa fa-home" style="padding-left: 50px; font-size: 40px;"></i> -->
     <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Learner Homepage</h1>
 
@@ -116,7 +116,13 @@
        location.href=url;
   }
 
-  
+  function class_details(){
+        let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+        var staffID= obj['id']; 
+        var classid= obj['classid'];
+        
+  }
   
 
 
