@@ -280,14 +280,14 @@
                    var learnerlist=response.data.course;
 
                    var names="";
-                   for( learner of learnerlist){{
+                   for( learner of learnerlist){
 
                         var learnername= learner.Name;
                         var learnerid= learner.StaffID;
                         var CompletedCourses = learner.CompletedCourses
 
 
-                        names=`<tr>
+                        names+=`<tr>
                               <td>${learnername}</td>
                               <td>${CompletedCourses} </td> 
                               <td><div class="custom-control custom-checkbox">
@@ -297,13 +297,12 @@
                             </tr>
                                    `
                      }
+                     document.getElementById("tablebody").innerHTML +=names;
                    }
-
-                   document.getElementById("tablebody").innerHTML +=names;
-
+                    
                   
                   
-                } else{
+                  else{
                   alert("something went wrong");
                 }
 

@@ -455,7 +455,7 @@ def withdraw_course():
 @app.route("/assigncourses", methods=['POST'])
 def assign_course():
 
-    try:
+    
 
         assign = request.get_json()
 
@@ -467,28 +467,30 @@ def assign_course():
             }), 500
         
         for learnerid in assign['learnerid'] :
-           
-            learner = Learner.query.filter_by(id=learnerid).first()
-            if not learner:
+            
+            try:
+            
+                learner = Learner.query.filter_by(id=learnerid).first()
+                if not learner:
+                    return jsonify({
+                        "message": "learner not valid."
+                    }), 500
+
+                learner.CoursesAssigned= assign['enrolledCourses']
+                #print(learner.enrolledCourses)
+                db.session.commit()
+                return jsonify(
+                    {
+                        "code": 200,
+                        "data": learner.to_dict()
+                    }
+                ), 200
+
+            
+            except Exception as e:
                 return jsonify({
-                    "message": "learner not valid."
+                    "message": "Unable to commit to database."
                 }), 500
-
-            learner.CoursesAssigned= assign['enrolledCourses']
-            #print(learner.enrolledCourses)
-            db.session.commit()
-            return jsonify(
-                {
-                    "code": 200,
-                    "data": learner.to_dict()
-                }
-            ), 200
-
-    
-    except Exception as e:
-          return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
 
 
 
