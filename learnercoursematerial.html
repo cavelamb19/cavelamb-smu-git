@@ -61,8 +61,8 @@
 <div class="main" style="margin-left : 360px">
           
           <div id="section" style="text-align: center;">
-            <b>Trainer:</b> John Tan | <b>Start Date</b>: 16 August 2021 | <b>End Date</b>: 9 January 2021 | <b>Class Timings</b>: 8am-11am | <b>Enrolled</b>: 40
-
+            <!--<b>Trainer:</b> John Tan | <b>Start Date</b>: 16 August 2021 | <b>End Date</b>: 9 January 2021 | <b>Class Timings</b>: 8am-11am | <b>Enrolled</b>: 40
+            -->
           </div>
           
           <br>
@@ -121,8 +121,44 @@
 
         var staffID= obj['id']; 
         var classid= obj['classid'];
-        
-  }
+
+        var class_URL="http://localhost:5000/classes/" + classid;
+
+         $.ajax({
+            url: class_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+
+                  var classdata=response.data ;
+                  var starttime= classdata.startTime ;
+                  var startdate= classdata.startDate;
+                  var enddate= classdata.endDate;
+                  var endtime= classdata.endTime;
+                  var classid= classdata.classesID;
+                  var classsize=classdata.classesSize;
+                  var trainer= classdata.trainerAssigned;
+                  var currentenroll= classdata.currentEnrolled;
+                              
+                  //console.log(starttime)
+                  section = `<b>Trainer:</b> ${trainer} | <b>Start Date</b>: ${startdate} | <b>End Date</b>: ${enddate} | <b>Class Timings</b>: ${starttime} - ${endtime} | <b>Enrolled</b>: ${currentenroll}`  ;    
+                  
+                  document.getElementById("section").innerHTML+= section ;
+                }else{
+                        alert("something went wrong");
+
+
+                  }
+            }
+          });
+                    
+  } 
+
+       
+
+
   
 
 
