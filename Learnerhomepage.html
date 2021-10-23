@@ -89,8 +89,8 @@
       
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
-      
- 
+      //console.log(staffID);
+
       var service_URL="http://localhost:5000/learner/" + staffID
    
          $.ajax({
@@ -98,7 +98,7 @@
             type: 'get',
             dataType: "json",
             success: function (response) {
-            console.log(response)
+            //console.log(response)
                 if (response.code == "200") {
 
                     var data = response.data;
@@ -113,7 +113,12 @@
                   
                     var courses ="";
 
-                    if(CoursesAssigned != ""){
+                    if(CoursesAssigned != "" ){
+
+
+
+                      
+                    
                     courses += `
 
               <div class="col">
@@ -122,20 +127,23 @@
                   <div class="card-body">
                     <h5 class="card-title" style="text-align:center;">${CoursesAssigned}</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
+                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
                   </div>
                 </div>
               </div> `
 
-            }
+                    }
 
-            else{
+                    else{
+                      
                       document.getElementById("section").innerHTML  = "" ;
                       document.getElementById("mycourses").innerHTML ="" ;
 
                       document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
-                      document.getElementById("mycourses").innerHTML+=courses;
-            }
+                      
+
+
+                    }
 
               if (CoursesEnrolled != ""){
 
@@ -187,11 +195,12 @@
             
                }
                else{
-                      document.getElementById("section").innerHTML  = "" ;
-                      document.getElementById("mycourses").innerHTML ="" ;
+                document.getElementById("section").innerHTML  = "" ;
+                document.getElementById("mycourses").innerHTML ="" ;
+                
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
+                document.getElementById("mycourses").innerHTML+=courses;
 
-                      document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
-                      document.getElementById("mycourses").innerHTML+=courses;
                }
                 
                
@@ -460,10 +469,12 @@ function enrollcourse(enrollname){
             var learnerdata =response.data;
             var coursesEnrolled= learnerdata.CoursesEnrolled;
             var CompletedCourses= learnerdata.CompletedCourses;
+            var CoursesAssigned=learnerdata.CoursesAssigned;
             //console.log(coursesEnrolled);
+            //console.log(CoursesAssigned);
 
 
-            if (coursesEnrolled == enrolledcourse){
+            if (coursesEnrolled == enrolledcourse ||  CoursesAssigned ==enrolledcourse ){
 
               alert("You have already enrolled in the course");
             }

@@ -18,7 +18,7 @@
 
 <body onload="">
    <!--- <i class="fa fa-home" style="padding-left: 50px; font-size: 40px;"></i> -->
-    <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Learner Homepage</h1>
+    <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Trainer Homepage</h1>
 
 <hr>
   
@@ -49,6 +49,9 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link"style="padding-left: 70px; padding-top: 40px;"  href="#">Courses Completed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"style="padding-left: 70px; padding-top: 40px;"  href="../cavelamb-smu-git/loginpage.html">Log out</a>
                 </li>
               </ul>
     </div>
@@ -110,7 +113,7 @@
       var staffID = params.get('id');
       console.log(staffID);
 
-      var service_URL="http://localhost:5000/learner/" + staffID
+      var service_URL="http://localhost:5000/employee/" + staffID
    
          $.ajax({
             url: service_URL,
@@ -127,7 +130,7 @@
 
                   document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
                   
-                    var CoursesTaking=data.CoursesTaking
+                var CoursesTaking=data.CoursesTaking
                   
                 var courses ="";
 
@@ -146,20 +149,13 @@
 
                 document.getElementById("mycourses").innerHTML+=courses;
                 
-                } else{
+                } 
+                else{
                   alert("something went wrong");
                 }
-
             },  
-           
-
         });
-
-
-
   }
-
-
 </script>
   
 
