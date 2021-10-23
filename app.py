@@ -46,7 +46,7 @@ class Learner(Employee):
     __tablename__ = 'learner'
 
     id= db.Column(db.Integer, db.ForeignKey('employee.StaffID'),primary_key=True)
-    CoursesTaking = db.Column(db.String(50))
+    CoursesAssigned = db.Column(db.String(50))
     CompletedCourses = db.Column(db.String(50))
     CoursesEnrolled= db.Column(db.String(50))
 
