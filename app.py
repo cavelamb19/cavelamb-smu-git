@@ -466,10 +466,12 @@ def assign_course():
                 "message": "Incorrect JSON object provided."
             }), 500
         
+
         
+        
+       
         for learnerid in assign['learnerid'] :
             
-           
             try:
             
                 learner = Learner.query.filter_by(id=learnerid).first()
