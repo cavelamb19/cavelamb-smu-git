@@ -410,7 +410,41 @@ def self_enrolled():
             "message": "Unable to commit to database."
         }), 500
 
+#Terence add code 
+@app.route("/currentEnrolled", methods=['POST'])
+def currentEnrolled():
 
+    try:
+
+        currentenroll = request.get_json()
+
+        #print(currentenroll)
+        if not all(key in currentenroll.keys() for
+                   key in ('classesID', 'currentEnrolled')):
+            return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+
+        classid = currentenroll['classesID']
+        classes = Classes.query.filter_by(classesID=classid).first()
+        if not classes:
+            return jsonify({
+                "message": "class not valid."
+            }), 500
+        
+        classes.currentEnrolled = currentenroll['currentEnrolled']
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": classes.json()
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
 
 #The following withdraw learner from course  (1 course)  - POST
 @app.route("/withdrawCourses", methods=['POST'])
@@ -448,8 +482,8 @@ def withdraw_course():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
-        
-        
+
+
 
 #The following is to assign learner to course (1 course) - POST
 @app.route("/assigncourses", methods=['POST'])
