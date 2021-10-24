@@ -136,10 +136,10 @@ CREATE TABLE `Learner` (
 --
 
 INSERT INTO `Learner` (`id`, `CoursesAssigned`, `CompletedCourses`,`CoursesEnrolled`) VALUES
-(3, '', 'IS214 System Design', 'IS216 Software Design'),
-(4, '', 'IS115 Computational Thinking', 'IS216 Software Design'),
-(5, '', 'IS113 Web application', 'IS216 Software Design'),
-(6, '', 'IS112 Business applications', 'IS216 Software Design');
+(3, '', 'IS214 System Design', ''),
+(4, '', 'IS115 Computational Thinking', ''),
+(5, '', 'IS113 Web application', ''),
+(6, '', 'IS112 Business applications', '');
 
 -- --------------------------------------------------------
 
