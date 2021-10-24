@@ -126,17 +126,7 @@
 
        location.href=url;
   }
-  //Terence added param to go back to availble course
-  function availablecourse(){
-    let obj = Object.fromEntries(new URLSearchParams(location.search));
-
-        var staffID= obj['id']; 
-        var returnavailcourse = 1;
-
-        var url= "Learnerhomepage.html?id="+ staffID +"&return=" + returnavailcourse;
-
-       location.href=url;
-  }
+  
 
   function viewcourse(){
 
