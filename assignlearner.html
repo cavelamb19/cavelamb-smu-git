@@ -330,10 +330,10 @@ function assign(){
         
         //console.log(data);
 
-        for (learnerid of assigned){
+        
 
-          
-
+          //console.log(learnerid);
+           
           $.ajax({
                   url: 'http://localhost:5000/course/classesID/' + classid ,
                   type: 'get',
@@ -346,7 +346,9 @@ function assign(){
                         var prereq= coursedata.preRequisites;
 
                         // console.log(CompletedCourses);
-                      
+                        
+                        for (learnerid of assigned){
+                          //console.log(learnerid)
                          $.ajax({
                             url: 'http://localhost:5000/learner/' + learnerid ,
                             type: 'get',
@@ -354,24 +356,26 @@ function assign(){
                             success: function (response) {
                             // console.log(response)
                               if (response.code == "200") {
-
+                                  //console.log(learnerid)
                                   var learnerdata= response.data;
                                   var CompletedCourses= learnerdata.CompletedCourses;
                                   var CoursesAssigned= learnerdata.CoursesAssigned;
                                   var CoursesEnrolled= learnerdata.CoursesEnrolled;
-
+                                  var learner = learnerdata.id
+                                  var learnername = learnerdata.Name
+                                  //console.log(response.data)
 
                                   // console.log(CompletedCourses);
 
                                   if (CoursesAssigned == coursename || CoursesEnrolled == coursename ){
 
-                                    alert("Learner has already enrolled in the course ")
+                                    alert(`${learnername} has already enrolled in the course `)
                                   }
 
                                  else if(prereq == "NULL"){
 
                                    
-                                     var data = { "learnerid": assigned, "enrolledCourses": coursename }
+                                     var data = { "learnerid": learner, "enrolledCourses": coursename }
 
                                      $.ajax({
                                         url: 'http://localhost:5000/assigncourses',
@@ -382,9 +386,9 @@ function assign(){
                                         success: function (response) {
                                         // console.log(response)
                                           if (response.code == "200") {
-                                            alert("You have successfully assigned learner to the course")
-                                            var url= "adminhomepage.html?id="+ staffID;
-                                            location.href=url;
+                                            alert(`You have successfully assigned ${learnername} to the course`)
+                                            //var url= "adminhomepage.html?id="+ staffID;
+                                            //location.href=url;
                                           } else {
                                             //alert('failed');
                                           }
@@ -395,7 +399,7 @@ function assign(){
 
                                   else if ( prereq == CompletedCourses){
 
-                                     var data = { "learnerid": assigned, "enrolledCourses": coursename }
+                                     var data = { "learnerid": learner, "enrolledCourses": coursename }
 
                                      $.ajax({
                                         url: 'http://localhost:5000/assigncourses',
@@ -406,10 +410,10 @@ function assign(){
                                         success: function (response) {
                                         // console.log(response)
                                           if (response.code == "200") {
-                                            alert("You have successfully assigned learner to the course")
+                                            alert(`You have successfully assigned ${learnername} to the course`)
                                            
-                                            var url= "adminhomepage.html?id="+ staffID;
-                                            location.href=url;
+                                            //var url= "adminhomepage.html?id="+ staffID;
+                                            //location.href=url;
                                           } else {
                                             //alert('failed');
                                           }
@@ -421,7 +425,7 @@ function assign(){
 
                                     if (prereq != CompletedCourses){
 
-                                      alert("The learner has not fulfilled the preRequisites of this course")
+                                      alert(`The ${learnername} has not fulfilled the preRequisites of this course`)
                                     }
                                   }
 
@@ -430,12 +434,12 @@ function assign(){
                               } else {
                                 //alert('failed');
                               }
-                            },
+                            }
                              
                             
                           });
               
-                        
+                        } 
                     } else {
                       //alert('failed');
                     }
@@ -444,7 +448,7 @@ function assign(){
 
               
               
-              }
+              
 
 
        
