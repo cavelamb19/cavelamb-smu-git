@@ -503,11 +503,10 @@ def assign_course():
 
         
         
-       
-        for learnerid in assign['learnerid'] :
+   
             
-            try:
-            
+        try:
+                learnerid = assign['learnerid']
                 learner = Learner.query.filter_by(id=learnerid).first()
                 if not learner:
                     return jsonify({
@@ -525,7 +524,7 @@ def assign_course():
                 ), 200
 
             
-            except Exception as e:
+        except Exception as e:
                 return jsonify({
                     "message": "Unable to commit to database."
                 }), 500
