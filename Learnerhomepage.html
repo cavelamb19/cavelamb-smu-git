@@ -503,13 +503,13 @@ function enrollcourse(enrollname){
                 type: 'get',
                 dataType: "json",
                 success: function (response) {
-           // console.log(response)
-            if (response.code == "200") {
+                // console.log(response)
+                if (response.code == "200") {
 
 
-                var data = response.data;
-                var currentEnrolled= data.currentEnrolled;
-                var classsize= data.classesSize;
+                  var data = response.data;
+                  var currentEnrolled= data.currentEnrolled;
+                  var classsize= data.classesSize;
 
 
                
@@ -634,7 +634,7 @@ function withdraw(enrollname){
                                     if (response.code == "200") {
                                         var data = response.data;
                                         var currentEnrolled= data.currentEnrolled;
-                                        console.log(currentEnrolled);
+                                        //console.log(currentEnrolled);
                                         currentEnrolled -= 1;
                                         console.log(currentEnrolled);
                                         var data = { "classesID":classesid, "currentEnrolled": currentEnrolled }
@@ -650,7 +650,7 @@ function withdraw(enrollname){
                                                     if (response.code == "200") {
                                                       //alert("You have successfully withdraw from Course")
                                                       location.reload(true)
-                                                      console.log('success');
+                                                      //console.log('success');
                                                       //response.setHeader("Refresh", "0; URL=http://localhost:5000/learner/" + staffID);
                                                     } else {
                                                       //alert('failed');
