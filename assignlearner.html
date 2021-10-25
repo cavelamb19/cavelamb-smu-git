@@ -344,8 +344,7 @@ function assign(){
 
                         var coursedata=response.data;
                         var prereq= coursedata.preRequisites;
-
-                        // console.log(CompletedCourses);
+                        
                         
                         for (learnerid of assigned){
                           //console.log(learnerid)
@@ -373,8 +372,44 @@ function assign(){
                                   }
 
                                  else if(prereq == "NULL"){
+                                      
+                                  //Add current enrol +
+                                      $.ajax({
+                                              url: 'http://localhost:5000/classes/' + classid,
+                                              type: 'get',
+                                              dataType: "json",
+                                              success: function (response) {
+                                              // console.log(response)
+                                              if (response.code == "200") {
 
-                                   
+
+                                                var data = response.data;
+                                                var currentEnrolled= data.currentEnrolled;
+                                                
+                                                currentEnrolled += 1;
+                                                var data = { "classesID":classid, "currentEnrolled": currentEnrolled }
+
+                                                //console.log(JSON.stringify(data))
+                                                $.ajax({
+                                                  url: 'http://localhost:5000/currentEnrolled',
+                                                  type: 'post',
+                                                  data: JSON.stringify(data),
+                                                  contentType: "application/json; charset=utf-8",
+                                                  processData: "json",
+                                                  success: function (response) {
+                                                  // console.log(response)
+                                                    if (response.code == "200") {
+                                                      //alert("You have successfully enrolled in the class")
+                                                      location.reload(true)
+                                                    } else {
+                                                      alert('adding to currentEnrolled failed');
+                                                    }
+                                                  },
+                                                });
+                                              }
+                                              }
+                                            });
+
                                      var data = { "learnerid": learner, "enrolledCourses": coursename }
 
                                      $.ajax({
@@ -389,6 +424,7 @@ function assign(){
                                             alert(`You have successfully assigned ${learnername} to the course`)
                                             //var url= "adminhomepage.html?id="+ staffID;
                                             //location.href=url;
+                                               
                                           } else {
                                             //alert('failed');
                                           }
