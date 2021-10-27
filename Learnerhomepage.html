@@ -477,7 +477,11 @@ function enrollcourse(enrollname){
 
               alert("You have already enrolled in the course");
             }
+            
+            else if (CompletedCourses == enrolledcourse){
 
+              alert("You have already completed the course!")
+            }
             else{
                 
               $.ajax({
