@@ -85,7 +85,7 @@
 <script>
   
  
-  function load(){
+   function load(){
       
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
@@ -98,7 +98,7 @@
             type: 'get',
             dataType: "json",
             success: function (response) {
-            console.log(response)
+            //console.log(response)
                 if (response.code == "200") {
 
                     var data = response.data;
@@ -113,37 +113,62 @@
                   
                     var courses ="";
 
-                    if(CoursesAssigned != "" ){
-
-
-
-                      
+                    if(CoursesAssigned != ""){
                     
-                    courses += `
+                    $.ajax({
+                  url: 'http://localhost:5000/course/courseName/' + CoursesAssigned,
+                  type: 'get',
+                  data: 'json' ,
+                  success: function (response) {
+                  //console.log(response)
+                    if (response.code == "200") {
+                     
+                      
+                       var coursedata=response.data.course;
+                
+                       var classesid= coursedata.classesID;
 
-              <div class="col">
+                      courses += `
+
+               <div class="col">
                 <div class="card" style="border-radius: 25px;">
-                  <img src="..." class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title" style="text-align:center;">${CoursesAssigned}</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
+                    <p class="card-text"></p>
+                    <br>
+                    <br>
+                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewAssignedcoursematerials('${classesid}','${CoursesAssigned}')"></i></a>
+                    <br>
+                    <br>
                   </div>
                 </div>
               </div> `
 
+                  //console.log(courses);
+                    } else {
+                      alert('Something went wrong');
                     }
 
-                    else{
-                      
-                      document.getElementById("section").innerHTML  = "" ;
-                      document.getElementById("mycourses").innerHTML ="" ;
 
-                      document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
-                      
+                document.getElementById("section").innerHTML  = "" ;
+                document.getElementById("mycourses").innerHTML ="" ;
 
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
+                document.getElementById("mycourses").innerHTML+=courses;
 
-                    }
+                  },
+                });
+              
+            
+               }
+               else{
+                document.getElementById("section").innerHTML  = "" ;
+                document.getElementById("mycourses").innerHTML ="" ;
+                
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
+                document.getElementById("mycourses").innerHTML+=courses;
+
+               }
 
               if (CoursesEnrolled != ""){
 
@@ -165,11 +190,12 @@
 
                <div class="col">
                 <div class="card" style="border-radius: 25px;">
-                  <img src="..." class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title" style="text-align:center;">${CoursesEnrolled}</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcoursematerials('${classesid}')"></i></a>
+                    <p class="card-text"></p>
+                    <br>
+                    <br>
+                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewEnrolledcoursematerials('${classesid}','${CoursesEnrolled}')"></i></a>
                     <br>
                     <br>
                     <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="withdraw('${CoursesEnrolled}')">Withdraw</button>
@@ -249,31 +275,60 @@
 
                     if(CoursesAssigned != ""){
                     
-                    courses += `
+                    $.ajax({
+                  url: 'http://localhost:5000/course/courseName/' + CoursesAssigned,
+                  type: 'get',
+                  data: 'json' ,
+                  success: function (response) {
+                  //console.log(response)
+                    if (response.code == "200") {
+                     
+                      
+                       var coursedata=response.data.course;
+                
+                       var classesid= coursedata.classesID;
 
-              <div class="col">
+                      courses += `
+
+               <div class="col">
                 <div class="card" style="border-radius: 25px;">
-                  <img src="..." class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title" style="text-align:center;">${CoursesAssigned}</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" ></i></a>
+                    <p class="card-text"></p>
+                    <br>
+                    <br>
+                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewAssignedcoursematerials('${classesid}','${CoursesAssigned}')"></i></a>
+                    <br>
+                    <br>
                   </div>
                 </div>
               </div> `
 
+                  //console.log(courses);
+                    } else {
+                      alert('Something went wrong');
                     }
 
-                    else{
-                      
-                      document.getElementById("section").innerHTML  = "" ;
-                      document.getElementById("mycourses").innerHTML ="" ;
 
-                      document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
-                      document.getElementById("mycourses").innerHTML+=courses;
+                document.getElementById("section").innerHTML  = "" ;
+                document.getElementById("mycourses").innerHTML ="" ;
 
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
+                document.getElementById("mycourses").innerHTML+=courses;
 
-                    }
+                  },
+                });
+              
+            
+               }
+               else{
+                document.getElementById("section").innerHTML  = "" ;
+                document.getElementById("mycourses").innerHTML ="" ;
+                
+                document.getElementById("section").innerHTML += `<h2> My Courses </h2>` ;
+                document.getElementById("mycourses").innerHTML+=courses;
+
+               }
 
               if (CoursesEnrolled != ""){
 
@@ -295,11 +350,12 @@
 
                <div class="col">
                 <div class="card" style="border-radius: 25px;">
-                  <img src="..." class="card-img-top" alt="...">
                   <div class="card-body">
                     <h5 class="card-title" style="text-align:center;">${CoursesEnrolled}</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcoursematerials('${classesid}')"></i></a>
+                    <p class="card-text"></p>
+                    <br>
+                    <br>
+                    <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewEnrolledcoursematerials('${classesid}','${CoursesEnrolled}')"></i></a>
                     <br>
                     <br>
                     <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="withdraw('${CoursesEnrolled}')">Withdraw</button>
@@ -384,7 +440,6 @@ function availablecourse(){
 
                             <div class="col">
                               <div class="card" style="border-radius: 25px;">
-                                <img src="..." class="card-img-top" alt="...">
                                 <div class="card-body">
                                   <h5 class="card-title" style="text-align:center;">${coursename}</h5>
                                   <h5 class="card-title" style="text-align:center;">Class Size</h5>
@@ -686,15 +741,28 @@ function withdraw(enrollname){
               
 }
 
-
-
-function viewcoursematerials(classid){
+function viewAssignedcoursematerials(classid, CoursesAssigned){
          
       let params = new URLSearchParams(location.search);
       var staffID = params.get('id');
       //console.log(staffID);
 
-      var url= "learnercoursematerial.html?id="+ staffID +"&classid=" + classid;
+      var url= "learnercoursematerial.html?id="+ staffID +"&classid=" + classid+ "&CourseAssigned=" + CoursesAssigned ; 
+
+
+
+       location.href=url;
+
+
+}
+
+function viewEnrolledcoursematerials(classid, CoursesEnrolled){
+         
+      let params = new URLSearchParams(location.search);
+      var staffID = params.get('id');
+      //console.log(staffID);
+
+      var url= "learnercoursematerial.html?id="+ staffID +"&classid=" + classid +"&CourseEnrolled=" + CoursesEnrolled;
 
 
 
