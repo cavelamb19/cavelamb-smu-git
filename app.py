@@ -369,6 +369,27 @@ def classes(classesID):
             "message": "class not found."
         }), 404
 
+###########################################################
+
+#lesson
+
+
+@app.route("/lesson/classesID/<int:classesID>")
+def lesson(classesID):
+
+    lessonlist = Lesson.query.filter_by(classesID=classesID).all()
+    if lessonlist:
+        return jsonify({
+            "code": 200,
+            "data": [lesson.json() for lesson in lessonlist]
+
+
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "class not found."
+        }), 404
 
 
 ###########################################################
