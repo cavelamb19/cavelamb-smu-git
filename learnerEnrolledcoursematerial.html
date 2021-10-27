@@ -106,17 +106,15 @@
 
         var staffID= obj['id']; 
         var classid= obj['classid'];
-        var CourseAssigned= obj['CourseAssigned'];
         var CourseEnrolled= obj['CourseEnrolled'];
 
-        if (CourseAssigned ==""){
-           document.getElementById("coursename").innerHTML += `<h2> ${CourseEnrolled} </h2>`;
-        }
+        //console.log(CourseAssigned);
 
-        else{
 
-           document.getElementById("coursename").innerHTML += `<h2> ${CourseAssigned} </h2>`;
-        }
+
+          document.getElementById("coursename").innerHTML ="";
+          document.getElementById("coursename").innerHTML+= `<h2> ${CourseEnrolled} </h2>`    
+        
 
         var service_URL="http://localhost:5000/learner/" + staffID
    
