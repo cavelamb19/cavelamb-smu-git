@@ -501,10 +501,6 @@ def assign_course():
             }), 500
         
 
-        
-        
-   
-            
         try:
                 learnerid = assign['learnerid']
                 learner = Learner.query.filter_by(id=learnerid).first()
