@@ -67,24 +67,14 @@
           <div class="container">
             <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;" id="mycourses">
         
-              <div class="col fw-bold">
-                              <!-- <div class="card" style="border-radius: 25px;">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title" style="text-align:center;">coursename</h5>
-                                  <br>
-                                  <br>
-                                  <i class="fa fa-eye" style="font-size:24px; padding-left:100px;" onClick="viewcourse(${classesid})" ></i>
-                                  <br>
-                                  <br>
-                                  <button type="button" class="btn btn-primary" style="margin-left:80px;" onClick="enrollcourse('${coursename}')">Enroll</button>
-                                  </div>
-                              </div> -->
-                              <li>Week1 - Introduction</li>
-                              <li>Week1a - SPM Fundamentals</li>
-                              <li>Week1 - Quiz</li>
+              <div class="col fw-bold" id="material">
 
-                            </div> 
+                            <!-- <li>Week1 - Introduction</li>
+                              <li>Week1a - SPM Fundamentals</li>
+                              <li>Week1 - Quiz</li> -->
+                              
+                                 
+              </div> 
        
          
         </div>
@@ -199,7 +189,7 @@
                     
                     
                   <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" onClick('${material}','${quizid}')>Week ${lessonid}</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" onClick="CourseMaterial('${material}','${quizid}')">Week ${lessonid}</a>
                   </li>
                     
                     
@@ -235,9 +225,16 @@
   } 
 
        
+function CourseMaterial(material, quizid){
 
+         var learning_material= material;
 
-  
+         document.getElementById("material").innerHTML =""; 
+
+        materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}">${material} </a></li> ` ;
+         document.getElementById("material").innerHTML += materialdetails;     
+                              
+}
 
 
 </script>
