@@ -82,9 +82,16 @@
                                  
               </div> 
 
+
+              <div id="download" style="padding-left:20px;"> 
+              
+              </div>
+
               <div id="status" style="padding-left:20px;"> 
               
               </div>
+
+           
        
          
         </div>
@@ -251,11 +258,17 @@ function CourseMaterial(material, quizid ,lessonid){
 
         materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" onClick="CompleteCourse('${lessonid}')" target="_blank" >${material}</a></li> ` ;
         
+        downloaddetails= `<a href="../cavelamb-smu-git/CourseMaterial/${material}" onClick="CompleteCourse('${lessonid}')" download>
+                           <img src="../cavelamb-smu-git/images/download.png" width= 30px; height=20px;>
+                           </a>`
+
         
         document.getElementById("status").innerHTML = ""; 
+        document.getElementById("download").innerHTML = ""; 
 
         document.getElementById("material").innerHTML += materialdetails;
-        document.getElementById("status").innerHTML += `uncomplete`;   
+        document.getElementById("status").innerHTML += `uncomplete`;  
+        document.getElementById("download").innerHTML += downloaddetails;  
         
        
         
@@ -268,14 +281,19 @@ function CourseMaterial(material, quizid ,lessonid){
 
         materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank">${material}</a></li> ` ;
         
-
+          downloaddetails= `<a href="../cavelamb-smu-git/CourseMaterial/${material}" download>
+                           <img src="../cavelamb-smu-git/images/download.png" width= 30px; height=20px;>
+                           </a>`
       
         
         document.getElementById("status").innerHTML = ""; 
+        document.getElementById("download").innerHTML = "";
 
         document.getElementById("material").innerHTML += materialdetails;
 
          document.getElementById("status").innerHTML = "<span> &#10003 Completed</span>" ;
+
+         document.getElementById("download").innerHTML += downloaddetails; 
 
       }  
 
@@ -293,6 +311,9 @@ function CompleteCourse(lessonid){
          localStorage.setItem(lessonid, "1") ;
 
 }
+
+
+
 
 
 
