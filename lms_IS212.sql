@@ -44,10 +44,10 @@ INSERT INTO `course` (`courseID`, `courseName`, `courseDesc`, `preRequisites`, `
 
 CREATE TABLE `Classes` (
   `classesID` int(11)  NOT NULL,
-  `startDate` date DEFAULT NULL,
-  `startTime` timestamp  DEFAULT NULL,
-  `endDate` date  DEFAULT NULL,
-  `endTime` timestamp  DEFAULT NULL,
+  `startDate` float(50) DEFAULT NULL,
+  `startTime` float(50)  DEFAULT NULL,
+  `endDate` float(50)  DEFAULT NULL,
+  `endTime` float(50)  DEFAULT NULL,
   `classesSize` int(11) DEFAULT NULL,
   `trainerAssigned` varchar(50)  DEFAULT NULL,
   `currentEnrolled` int(11) DEFAULT NULL
@@ -69,24 +69,33 @@ CREATE TABLE `Lesson` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `lesson` (`lessonID`, `courseMaterial`, `quizID`, `classesID`) VALUES
-(1, 'Week1a-Introduction', 1, 1);
+(1, 'Week1a-Introduction', '', 1),
+(2, 'Week2a-design', '', 1);
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 -- Table structure for table `Quiz`
 --
-
 CREATE TABLE `Quiz` (
   `quizID` int(11)  NOT NULL,
+  `StartTime` float(50) DEFAULT NULL,
+  `EndTime` float(50) DEFAULT NULL,
+  `qnDuration` float(50) DEFAULT NULL,
+  `attemptNo` int(11) DEFAULT NULL,
+  `quizDesc` float(50) DEFAULT NULL,
+  `quizScore` float(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Table structure for table `Question`
+--
+
+CREATE TABLE `Question` (
+  `qnID` int(11)  NOT NULL,
   `qn` varchar(50) DEFAULT NULL,
-  `qnID` int(11) DEFAULT NULL,
   `ans` varchar(50) DEFAULT NULL,
   `ansID` int(11) DEFAULT NULL,
   `qnType` varchar(50) DEFAULT NULL,
-  `StartTime` timestamp DEFAULT NULL,
-  `EndTime` timestamp DEFAULT NULL,
-  `qnDuration` timestamp DEFAULT NULL,
-  `attemptNo` int(11) DEFAULT NULL,
-  `quizScore` float(50) DEFAULT NULL
+  `quizID` int(11) DEFAULT NULL,
+  `lessonID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -158,20 +167,21 @@ CREATE TABLE `Employee` (
   `Email` varchar(50) DEFAULT NULL,
   `CurrentDesignation` varchar(50) DEFAULT NULL,
   `Department` varchar(50) DEFAULT NULL,
-  `ContactNo` varchar(50) DEFAULT NULL
+  `ContactNo` varchar(50) DEFAULT NULL,
+  `Role` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Employee`
 --
 
-INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignation`,`Department`,`ContactNo`) VALUES
-(1, 'Phris Coskitt', 'csok','coski@gmail.com','administrator','hr','90227823'),
-(2, 'Arnold de Mari', 'Ard','Dr@gmail.com','trainer','Training','82329832'),
-(3, 'Constance Wilkinson', 'cons','cons@gmail.com','learner','Learning','92130843'),
-(4, 'Johnson sim', 'john','johnson@gmail.com','learner','Learning','90247788'),
-(5, 'Mary lamb', 'Mar','Mar@gmail.com','learner','Learning','83425667'),
-(6, 'David bee', 'bee','bee@gmail.com','learner','Learning','92358877');
+INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignation`,`Department`,`ContactNo`,`Role`) VALUES
+(1, 'Phris Coskitt', 'csok','coski@gmail.com','Hr','hr','90227823','administrator'),
+(2, 'Arnold de Mari', 'Ard','Dr@gmail.com','Senior Engineer','Training','82329832','trainer'),
+(3, 'Constance Wilkinson', 'cons','cons@gmail.com','Engineer','Learning','92130843','learner'),
+(4, 'Johnson sim', 'john','johnson@gmail.com','Engineer','Learning','90247788','learner'),
+(5, 'Mary lamb', 'Mar','Mar@gmail.com','Engineer','Learning','83425667','learner'),
+(6, 'David bee', 'bee','bee@gmail.com','Engineer','Learning','92358877','learner');
 
 
 ALTER TABLE `Course`
@@ -187,7 +197,8 @@ ALTER TABLE `Lesson`
 ALTER TABLE `Quiz`
   ADD PRIMARY KEY (`quizID`);
 
-
+ALTER TABLE `Question`
+  ADD PRIMARY KEY (`qnID`);
   
 ALTER TABLE `Lesson`
   ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes`(`classesID`);
