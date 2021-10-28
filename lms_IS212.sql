@@ -44,10 +44,10 @@ INSERT INTO `course` (`courseID`, `courseName`, `courseDesc`, `preRequisites`, `
 
 CREATE TABLE `Classes` (
   `classesID` int(11)  NOT NULL,
-  `startDate` float(50) DEFAULT NULL,
-  `startTime` float(50)  DEFAULT NULL,
-  `endDate` float(50)  DEFAULT NULL,
-  `endTime` float(50)  DEFAULT NULL,
+  `startDate` varchar(50) DEFAULT NULL,
+  `startTime` varchar(50)  DEFAULT NULL,
+  `endDate` varchar(50) DEFAULT NULL,
+  `endTime` varchar(50) DEFAULT NULL,
   `classesSize` int(11) DEFAULT NULL,
   `trainerAssigned` varchar(50)  DEFAULT NULL,
   `currentEnrolled` int(11) DEFAULT NULL
