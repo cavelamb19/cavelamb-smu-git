@@ -163,41 +163,70 @@ class Quiz(db.Model):
     __tablename__ = 'Quiz'
 
     quizID = db.Column(db.Integer, primary_key=True)
-    qn = db.Column(db.String(50))
-    qnID = db.Column(db.Integer)
-    ansID = db.Column(db.Integer)
-    qnType = db.Column(db.String(50))
     StartTime = db.Column(db.TIMESTAMP)
     EndTime = db.Column(db.TIMESTAMP)
-    qnDuration = db.Column(db.TIMESTAMP)
+    quizDuration = db.Column(db.TIMESTAMP)
     attemptNo = db.Column(db.Integer)
-    quizScore = db.Column(db.Integer)
-
+    quizDesc =  db.Column(db.String(50))
     
     
 
-    def __init__(self, quizID,qn,qnID,ansID,qnType,StartTime,EndTime,qnDuration,attemptNo,quizScore):
+    def __init__(self, quizID,StartTime,EndTime,quizDuration,attemptNo,quizDesc):
         self.quizID = quizID
-        self.qn = qn
-        self.qnID = qnID
-        self.ansID = ansID
-        self.qnType = qnType
         self.StartTime = StartTime
         self.EndTime = EndTime
-        self.qnDuration = qnDuration
+        self.quizDuration = quizDuration
         self.attemptNo = attemptNo
-        self.quizScore = quizScore
+        self.quizDesc = quizDesc
     
              
 
     def json(self):
-        return {"quizID": self.quizID, "qn": self.qn,
-        "qnID": self.qnID, "ansID": self.ansID, "qnType": self.qnType, "StartTime": self.StartTime,
-        "EndTime": self.EndTime, "qnDuration": self.qnDuration, "attemptNo": self.attemptNo, "quizScore": self.quizScore}
+        return {"quizID": self.quizID,"StartTime": self.StartTime,
+        "EndTime": self.EndTime, "quiznDuration": self.quizDuration, "attemptNo": self.attemptNo, "quizDesc": self.quizDesc}
+
+class Quizscore(db.Model):
+
+    __tablename__ = 'Quizscore'
+
+    qsID = db.Column(db.Integer, primary_key=True)
+    quizscore = db.Column(db.Integer)
+    quizID = db.Column(db.Integer)
+
+
+    def __init__(self, qsID,quizscore,quizID):
+        self.qsID = qsID
+        self.quizscore = quizscore
+        self.quizID = quizID
+
+    def json(self):
+        return {"quizID": self.quizID,"quizscore": self.quizscore,
+        "quizID": self.quizID}
+
+class Question(db.Model):
+
+    __tablename__ = 'Question'
+
+    qnID = db.Column(db.Integer, primary_key=True)
+    qn = db.Column(db.String(50))
+    ans = db.Column(db.String(50))
+    ansID = db.Column(db.Integer)
+    qnType = db.Column(db.String(50))
+    quizID = db.Column(db.Integer)
+    lessonID = db.Column(db.Integer)
 
 
 
+    def __init__(self, qnID,qn,ans,ansID,qnType,quizID,lessonID):
+        self.qnID = qnID
+        self.qn = qn
+        self.ans = ans
+        self.ansID = ansID
+        self.qnType = qnType
+        self.quizID = quizID
+        self.lessonID = lessonID
 
+    
 ###########################################################
 
 #For Employee
