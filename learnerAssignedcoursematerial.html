@@ -13,6 +13,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
 
 
+<style>
+
+a:visited{
+   
+    color:pink;
+    
+  
+}
+
+</style>
+
 
   </head>
 
@@ -75,12 +86,19 @@
                               
                                  
               </div> 
+
+              <div id="status" style="padding-left:20px;"> </div>
        
          
         </div>
 
-       
-   </div>
+
+
+  </div>
+
+   <div class="container" id="progress">
+    
+</div>
 
 <script>
 
@@ -187,12 +205,14 @@
                     
                     
                   <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" onClick="CourseMaterial('${material}','${quizid}')">Week ${lessonid}</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" id="${lessonid}" onClick="CourseMaterial('${material}','${quizid}', '${lessonid}')">Week ${lessonid}</a>
                   </li>
                     
-                    
+                     
                     `
                   }
+
+                 
                    
                   lessondetails += `<li class="nav-item">
                   <a class="nav-link" style="padding-left: 70px; padding-top: 40px;">Final Quiz</a>
@@ -222,17 +242,70 @@
                     
   } 
 
-       
-function CourseMaterial(material, quizid){
+
+
+function CourseMaterial(material, quizid ,lessonid){
+        
+        
+        if(localStorage.getItem(lessonid) != "1"){
 
          var learning_material= material;
 
          document.getElementById("material").innerHTML =""; 
 
-        materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}">${material} </a></li> ` ;
-         document.getElementById("material").innerHTML += materialdetails;     
-                              
+        materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" onClick="CompleteCourse('${lessonid}')" target="_blank" >${material}</a></li> ` ;
+        
+        
+        document.getElementById("status").innerHTML = ""; 
+
+        document.getElementById("material").innerHTML += materialdetails;
+        document.getElementById("status").innerHTML += `uncomplete`;   
+        
+       
+        
+      }
+      else{
+
+        var learning_material= material;
+
+        document.getElementById("material").innerHTML =""; 
+
+        materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank">${material}</a></li> ` ;
+        
+
+      
+        
+        document.getElementById("status").innerHTML = ""; 
+
+        document.getElementById("material").innerHTML += materialdetails;
+
+         document.getElementById("status").innerHTML = "<span> &#10003 Completed</span>" ;
+
+      }  
+
+
+        
+
 }
+
+
+
+function CompleteCourse(lessonid){
+
+         localStorage.setItem(lessonid, "1") ;
+
+}
+
+
+
+
+        
+  
+       
+
+        
+        
+        
 
 
 </script>
