@@ -54,7 +54,7 @@ CREATE TABLE `Classes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`, `currentEnrolled`) VALUES
-(1, 'August 18 2021', '8am', 'November 5 2021', '12pm', 50, 'Arnold de Mari', 0),
+(1, 'August 18 2021', '8am', 'November 5 2021', '12pm', 50, 'James Sim', 0),
 (2, 'August 30 2021', '12pm', 'November 2 2021', '3pm', 50, 'John Tan', 0),
 (3, 'August 5 2021', '3.15pm', 'November 8 2021', '6.45pm', 50, 'Alan Lim', 0),
 (4, 'August 27 2021', '3.15pm', 'November 13 2021', '6.45pm', 50, 'Brandon Lum', 0),
