@@ -54,7 +54,12 @@ CREATE TABLE `Classes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`, `currentEnrolled`) VALUES
-(1, '2021-10-18', '2021-10-18 06:30:00', '2021-11-18', '2021-11-18 06:30:00', 50, 'Arnold de Mari', 0);
+(1, 'August 18 2021', '8am', 'November 5 2021', '12pm', 50, 'Arnold de Mari', 0),
+(2, 'August 30 2021', '12pm', 'November 2 2021', '3pm', 50, 'John Tan', 0),
+(3, 'August 5 2021', '3.15pm', 'November 8 2021', '6.45pm', 50, 'Alan Lim', 0),
+(4, 'August 27 2021', '3.15pm', 'November 13 2021', '6.45pm', 50, 'Brandon Lum', 0),
+(5, 'August 22 2021', '12pm', 'November 16 2021', '3pm', 50, 'Mary low', 0);
+
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -69,8 +74,8 @@ CREATE TABLE `Lesson` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `lesson` (`lessonID`, `courseMaterial`, `quizID`, `classesID`) VALUES
-(1, 'Week1a-Introduction', '', 1),
-(2, 'Week2a-design', '', 1);
+(1, 'Week1a-Introduction', 1, 1),
+(2, 'Week2-SWDevProcess', 2, 1);
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 -- Table structure for table `Quiz`
@@ -79,10 +84,17 @@ CREATE TABLE `Quiz` (
   `quizID` int(11)  NOT NULL,
   `StartTime` float(50) DEFAULT NULL,
   `EndTime` float(50) DEFAULT NULL,
-  `qnDuration` float(50) DEFAULT NULL,
+  `quizDuration` float(50) DEFAULT NULL,
   `attemptNo` int(11) DEFAULT NULL,
-  `quizDesc` float(50) DEFAULT NULL,
-  `quizScore` float(50) DEFAULT NULL
+  `quizDesc` float(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Table structure for table `Quiz`
+--
+CREATE TABLE `Quizscore` (
+  `qsID` int(11)  NOT NULL,
+  `quizscore` float(50) DEFAULT NULL,
+  `quizID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table structure for table `Question`
