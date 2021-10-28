@@ -36,7 +36,7 @@
   overflow-x: hidden;
   padding-top: 20px;">
  
- <i class="fa fa-home" style="padding-left: 110px; font-size: 40px;"></i> 
+ <i class="fa fa-home" style="padding-left: 110px; font-size: 40px;" onClick="home()"></i> 
       
         <ul class="nav flex-column">
                 <li class="nav-item">
@@ -104,6 +104,19 @@
    </div>
 </div>
 <script>
+
+  function home(){
+
+      let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+        var staffID= obj['id']; 
+        
+        
+
+        var url= "trainerhomepage.html?id="+ staffID 
+        location.href=url;
+
+  }
 
   function load(){
       
