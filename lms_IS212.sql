@@ -142,7 +142,7 @@ CREATE TABLE `Trainer` (
 --
 
 INSERT INTO `Trainer` (`id`, `coursesTeaching`) VALUES
-(2, 'IS212 Software Project Management');
+(2, 'IS212 Software Project Management G2');
 
 -- --------------------------------------------------------
 
