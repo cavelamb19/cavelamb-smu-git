@@ -106,10 +106,10 @@ class Classes(db.Model):
     __tablename__ = 'classes'
 
     classesID = db.Column(db.Integer, primary_key=True)
-    startDate = db.Column(db.DATE)
-    startTime = db.Column(db.TIMESTAMP)
-    endDate = db.Column(db.DATE)
-    endTime= db.Column(db.TIMESTAMP)
+    startDate = db.Column(db.String(50))
+    startTime = db.Column(db.String(50))
+    endDate = db.Column(db.String(50))
+    endTime= db.Column(db.String(50))
     classesSize = db.Column(db.Integer)
     trainerAssigned = db.Column(db.String(50))
     currentEnrolled= db.Column(db.Integer)
