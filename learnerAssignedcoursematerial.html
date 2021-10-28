@@ -246,7 +246,7 @@ a:visited{
 
 function CourseMaterial(material, quizid ,lessonid){
         
-        
+        // check whether the lesson material in that lesson had been clicked before
         if(localStorage.getItem(lessonid) != "1"){
 
          var learning_material= material;
@@ -291,7 +291,9 @@ function CourseMaterial(material, quizid ,lessonid){
 
 
 function CompleteCourse(lessonid){
-
+         
+         // This function will only happen if the lesson material is click first time.
+         // store the lessonid as key and value as 1 to indicate that the lessonid material has been clicked
          localStorage.setItem(lessonid, "1") ;
 
 }
