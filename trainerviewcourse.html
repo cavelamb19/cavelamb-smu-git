@@ -163,6 +163,7 @@ function load(){
                   //console.log(lessondata);
 
                   lessondetails= "";
+                  var lesson_count=1;
                   for (lesson of lessondata){
 
                       var lessonid= lesson.lessonID;
@@ -174,11 +175,12 @@ function load(){
                     
                     
                   <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" id="${lessonid}" onClick="CourseMaterial('${material}','${quizid}','${lessonid}')">Week ${lessonid}</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" id="${lessonid}" onClick="CourseMaterial('${material}','${quizid}','${lessonid}')">Week ${lesson_count}</a>
                   </li>
                     
                      
                     `
+                   lesson_count++ 
                   }
 
                  
