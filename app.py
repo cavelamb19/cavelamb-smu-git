@@ -232,7 +232,7 @@ class Question(db.Model):
     def json(self):
         return {"qnID": self.qnID,"qn": self.qn,
         "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID,"lessonID": self.lessonID}
-        
+
 ###########################################################
 
 #For Employee
@@ -581,6 +581,8 @@ def assign_course():
                     "message": "Unable to commit to database."
                 }), 500
 
+
+#Create Quiz not complete
 
 
 
