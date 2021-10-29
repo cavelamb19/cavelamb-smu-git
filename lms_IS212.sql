@@ -255,9 +255,11 @@ ALTER TABLE `Question`
 ALTER TABLE `QuizAttempt`
   ADD CONSTRAINT `QuizAttempt_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
 
-ALTER TABLE `QuizAttempt`
-  ADD CONSTRAINT `QuizAttempt_ibfk_2` FOREIGN KEY (`learnerID`) REFERENCES `Learner`(`id`);
-              
+--
+-- AUTO_INCREMENT for table QuizAttempt
+--
+ALTER TABLE  `QuizAttempt`
+  MODIFY `AttemptID` int(11) NOT NULL AUTO_INCREMENT;              
 
 ALTER TABLE `Employee`
   ADD PRIMARY KEY (`StaffID`);
