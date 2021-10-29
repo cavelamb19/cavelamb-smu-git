@@ -230,7 +230,7 @@ function CourseMaterial(material,lessonid){
           document.getElementById("addmaterials").innerHTML +=addmaterial;
           
           
-        
+        // check if quiz have been created before
         $.ajax({
         url:  "http://localhost:5000/quiz/lessonID/" + lessonid,
         type: 'get',
@@ -239,7 +239,7 @@ function CourseMaterial(material,lessonid){
         console.log(response)
             if (response.code == "200") {
 
-                
+
                 var quizdata=response.data;
                 var quiztitle=quizdata.quizTitle;
 
@@ -256,12 +256,7 @@ function CourseMaterial(material,lessonid){
                  }
               
               }
-              
-        
-
-              
-            
-              
+                  
               
             });
 
@@ -276,8 +271,38 @@ function addquiz(lessonid){
         var staffID= obj['id']; 
         var coursesTeaching= obj['coursename'];
 
-        var url= "TrainerCreateQuiz.html?id="+ staffID + "&coursename="+ coursesTeaching + "&lessonid="+ lessonid ;
-        location.href=url;
+        //Check if quiz had been created. If created, dont allow trainer to create
+        // Assume, one lesson only 1 quiz.
+        $.ajax({
+        url:  "http://localhost:5000/quiz/lessonID/" + lessonid,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+        console.log(response)
+            if (response.code == "200") {
+
+              
+                var quizdata=response.data;
+                var quizid= quizdata.quizID;
+                var lessonID=quizdata.lessonID;
+
+                
+                if(lessonid == lessonID){
+                  
+                  alert("You have already created a quiz for this lesson")
+                 }
+
+                 else{
+
+                    var url= "TrainerCreateQuiz.html?id="+ staffID + "&coursename="+ coursesTeaching + "&lessonid="+ lessonid ;
+                    location.href=url;
+                 }
+              
+              }
+                  
+          }    
+            });
+
 
 
 }
