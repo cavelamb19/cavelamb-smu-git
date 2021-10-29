@@ -164,12 +164,22 @@ class Quiz(db.Model):
     StartTime = db.Column(db.String(50))
     EndTime = db.Column(db.String(50))
     quizDuration = db.Column(db.String(50))
-    attemptNo = db.Column(db.Integer)
+    attemptNo = db.Column(db.String(50))
     quizTitle = db.Column(db.String(50))
     quizDesc =  db.Column(db.String(50))
     lessonID = db.Column(db.Integer)
     
-    
+    def __init__(self, quizID, StartTime, EndTime, quizDuration, attemptNo, quizTitle, quizDesc, lessonID):
+        self.quizID = quizID
+        self.StartTime = StartTime
+        self.EndTime = EndTime
+        self.quizDuration = quizDuration
+        self.attemptNo = attemptNo
+        self.quizTitle = quizTitle
+        self.quizDesc = quizDesc
+        self.lessonID = lessonID
+        
+        
 
     def to_dict(self):
         """
@@ -440,7 +450,7 @@ def quiz_info():
 
         #print(enrollcourse)
         if not all(key in quizInfo.keys() for
-                   key in ('lessonID', 'title', 'time', 'instruction')):
+                   key in ('lessonID', 'title', 'time', 'instruction','attempt')):
             return jsonify({
                 "message": "Incorrect JSON object provided."
             }), 500
@@ -451,21 +461,28 @@ def quiz_info():
         title= quizInfo['title']
         time= quizInfo['time']
         instruction=quizInfo['instruction']
+        attempt=quizInfo['attempt']
         
         
-        quiz = Quiz(quizDuration="30", attemptNo="1",
-                    quizTitle=quizInfo['title'], quizDesc=quizInfo['instruction'],  lessonID="1")
+        quiz = Quiz(quizID=lessonid, StartTime="", EndTime="", quizDuration=time, attemptNo=attempt,
+                    quizTitle=title, quizDesc=instruction, lessonID=lessonid)
         
         
         
         try:
             db.session.add(quiz)
             db.session.commit()
-            return jsonify(quiz.to_dict()), 201
-        except Exception:
+            return jsonify(
+            {
+                "code": 200,
+                "data": quiz.to_dict()
+            }
+        ), 200
+
+        except Exception as e:
                return jsonify({
-               "message": "Unable to commit to database."
-               }), 500
+            "message": "Unable to commit to database."
+        }), 500
 
 
 

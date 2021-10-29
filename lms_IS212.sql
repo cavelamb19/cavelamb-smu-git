@@ -84,7 +84,7 @@ CREATE TABLE `Quiz` (
   `StartTime` varchar(50) DEFAULT NULL,
   `EndTime` varchar(50) DEFAULT NULL,
   `quizDuration` varchar(50) DEFAULT NULL,
-  `attemptNo` int(11) DEFAULT NULL,
+  `attemptNo` varchar(50) DEFAULT NULL,
   `quizTitle`  varchar(50) DEFAULT NULL,
   `quizDesc`  varchar(50) DEFAULT NULL,
   `lessonID` int(11)  DEFAULT NULL
@@ -242,8 +242,4 @@ ALTER TABLE `Administrator`
 
 
 
-  
--- AUTO_INCREMENT for table `Quiz`
---
-ALTER TABLE `Quiz`
-  MODIFY `quizID` int(11) NOT NULL AUTO_INCREMENT;
+
