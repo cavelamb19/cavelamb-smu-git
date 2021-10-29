@@ -95,7 +95,8 @@ CREATE TABLE `Quiz` (
 CREATE TABLE `Quizscore` (
   `qsID` int(11)  NOT NULL,
   `quizscore` float(50) DEFAULT NULL,
-  `quizID` int(11) DEFAULT NULL
+  `quizID` int(11) DEFAULT NULL,
+  `learnerID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table structure for table `Question`
@@ -226,7 +227,8 @@ ALTER TABLE `Quiz`
 
 ALTER TABLE `Quizscore`
   ADD PRIMARY KEY (`qsID`),
-  ADD KEY `quizID` (`quizID`);
+  ADD KEY `quizID` (`quizID`),
+  ADD KEY `learnerID` (`learnerID`);
 
 ALTER TABLE `Question`
   ADD PRIMARY KEY (`qnID`),
