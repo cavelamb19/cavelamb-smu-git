@@ -217,26 +217,47 @@ ALTER TABLE `Classes`
   ADD PRIMARY KEY (`classesID`);
 
 ALTER TABLE `Lesson`
-  ADD PRIMARY KEY (`lessonID`);
+  ADD PRIMARY KEY (`lessonID`),
+  ADD KEY `classesID` (`classesID`);
 
 ALTER TABLE `Quiz`
   ADD PRIMARY KEY (`quizID`),
-   ADD KEY `lessonID` (`lessonID`);
+  ADD KEY `lessonID` (`lessonID`);
+
+ALTER TABLE `Quizscore`
+  ADD PRIMARY KEY (`qsID`),
+  ADD KEY `quizID` (`quizID`);
 
 ALTER TABLE `Question`
-  ADD PRIMARY KEY (`qnID`);
-  
+  ADD PRIMARY KEY (`qnID`),
+  ADD KEY `quizID` (`quizID`);
 
 ALTER TABLE `QuizAttempt`
   ADD PRIMARY KEY (`AttemptID`),
   ADD KEY `quizID` (`quizID`),
-   ADD KEY `learnerID` (`learnerID`);
+  ADD KEY `learnerID` (`learnerID`);
   
-  
+ALTER TABLE `Course`
+  ADD CONSTRAINT `Course_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes`(`classesID`);  
 
 ALTER TABLE `Lesson`
   ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes`(`classesID`);
 
+ALTER TABLE `Quiz`
+  ADD CONSTRAINT `Quiz_ibfk_1` FOREIGN KEY (`lessonID`) REFERENCES `Lesson`(`lessonID`);
+
+ALTER TABLE `Quizscore`
+  ADD CONSTRAINT `Quizscore_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
+
+ALTER TABLE `Question`
+  ADD CONSTRAINT `Question_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
+
+ALTER TABLE `QuizAttempt`
+  ADD CONSTRAINT `QuizAttempt_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
+
+ALTER TABLE `QuizAttempt`
+  ADD CONSTRAINT `QuizAttempt_ibfk_2` FOREIGN KEY (`learnerID`) REFERENCES `Learner`(`id`);
+              
 
 ALTER TABLE `Employee`
   ADD PRIMARY KEY (`StaffID`);
