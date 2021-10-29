@@ -244,13 +244,13 @@ class QuizAttempt(db.Model):
       __tablename__ = 'QuizAttempt'
       
       AttemptID = db.Column(db.Integer, primary_key=True)
-      qnID = db.Column(db.Integer)
       qn = db.Column(db.String(10000))
+      qnID = db.Column(db.Integer)
       ans = db.Column(db.String(10000))
       ansID = db.Column(db.Integer)
       qnType = db.Column(db.String(50))
-      quizID = db.Column(db.Integer, db.ForeignKey('Quiz.id'))
-      learnerID = db.Column(db.Integer, db.ForeignKey('Learner.id'))
+      quizID = db.Column(db.Integer, db.ForeignKey('Quiz.quizID'))
+      learnerID = db.Column(db.Integer)
       
       def __init__(self,AttemptID,qn,qnID,ans,ansID,qnType,quizID,learnerID):
         
@@ -268,6 +268,8 @@ class QuizAttempt(db.Model):
         "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID,
         "learnerID":self.learnerID}
 
+
+   
     
 
 db.create_all()
@@ -624,31 +626,31 @@ def add_Attempt():
 
     Answerlist = request.get_json()
 
-    #print(enrollcourse)
+    #print(Answerlist)
     if not all(key in Answerlist.keys() for
-               key in ('qnID', 'question', 'answer', 'qnType', 'lessonID')):
+               key in ('qnID', 'answer', 'qnType', 'quizID', 'learnerid')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
 
-    print(questionlist)
+    
 
-    qnid = questionlist['qnID']
-    questiondetails = questionlist['question']
-    answer = questionlist['answer']
-    qntype = questionlist['qnType']
-    lessonid = questionlist['lessonID']
+    qnid = Answerlist['qnID']
+    answer = Answerlist['answer']
+    qntype = Answerlist['qnType']
+    quizID = Answerlist['quizID']
+    learnerid = Answerlist['learnerid']
 
-    question = Question(qnID=qnid, qn=questiondetails,
-                        ans=answer, ansID=qnid, qnType=qntype, quizID=lessonid)
+    attempt = QuizAttempt(AttemptID=None, qn="", qnID=qnid, 
+                        ans=answer, ansID=qnid, qnType=qntype, quizID=quizID, learnerID=learnerid)
 
     try:
-        db.session.add(question)
+        db.session.add(attempt)
         db.session.commit()
         return jsonify(
             {
                 "code": 200,
-                "data": question.json()
+                "data": attempt.json()
             }
         ), 200
 
@@ -656,6 +658,13 @@ def add_Attempt():
         return jsonify({
             "message": "Unable to commit to database."
         }), 500
+
+
+
+
+
+
+
 
 
 ###########################################################

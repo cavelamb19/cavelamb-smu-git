@@ -205,8 +205,63 @@ function submit(){
 
            if (trueradio.checked){
 
-            alert("true");
-           }
+              var answer=trueradio.value;
+
+              var data = { "qnID":qnID, "answer":answer, "qnType": truefalse, "quizID":quizid, "learnerid":staffID}
+            
+             
+                  $.ajax({
+                  url: 'http://localhost:5000/addAttempt',
+                  type: 'post',
+                  data: JSON.stringify(data),
+                  contentType: "application/json; charset=utf-8",
+                  processData: "json",
+                  success: function (response) {
+                  // console.log(response)
+                    if (response.code == "200") {
+
+                      alert("You have successfully submitted your quiz")
+                      
+                  
+                    } else {
+                      //alert('failed');
+                    }
+
+                    
+                  },
+                  
+                });
+
+         }
+
+           else{
+
+              var answer=falseradio.value;
+              var data = { "qnID":qnID, "answer":answer, "qnType": truefalse, "quizID":quizid, "learnerid":staffID}
+
+               $.ajax({
+                  url: 'http://localhost:5000/addAttempt',
+                  type: 'post',
+                  data: JSON.stringify(data),
+                  contentType: "application/json; charset=utf-8",
+                  processData: "json",
+                  success: function (response) {
+                  // console.log(response)
+                    if (response.code == "200") {
+
+                      alert("You have successfully submitted your quiz")
+                      
+                  
+                    } else {
+                      //alert('failed');
+                    }
+
+                    
+                  },
+                  
+                });
+
+         }
 
         }
 

@@ -237,8 +237,8 @@ ALTER TABLE `Question`
 
 ALTER TABLE `QuizAttempt`
   ADD PRIMARY KEY (`AttemptID`),
-  ADD KEY `quizID` (`quizID`),
-  ADD KEY `learnerID` (`learnerID`);
+  ADD KEY `quizID` (`quizID`);
+
   
 ALTER TABLE `Course`
   ADD CONSTRAINT `Course_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes`(`classesID`);  
@@ -257,6 +257,7 @@ ALTER TABLE `Question`
 
 ALTER TABLE `QuizAttempt`
   ADD CONSTRAINT `QuizAttempt_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
+  
 
 --
 -- AUTO_INCREMENT for table QuizAttempt
