@@ -236,10 +236,7 @@
           });
 
 
-
-
-
-                }else{
+            }else{
                         alert("something went wrong");
 
 
@@ -269,10 +266,44 @@ function CourseMaterial(material, quizid ,lessonid){
         
         document.getElementById("status").innerHTML = ""; 
         document.getElementById("download").innerHTML = ""; 
+        document.getElementById("material").innerHTML = "";
 
         document.getElementById("material").innerHTML += materialdetails;
         document.getElementById("status").innerHTML += `uncomplete`;  
         document.getElementById("download").innerHTML += downloaddetails;  
+
+
+         // check if quiz have been created before
+        $.ajax({
+        url:  "http://localhost:5000/quiz/lessonID/" + lessonid,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+        console.log(response)
+            if (response.code == "200") {
+
+
+                var quizdata=response.data;
+                var quiztitle=quizdata.quizTitle;
+
+
+                materialdetails += `<li> <a href=""  target="_blank" >${quiztitle}</a></li> `
+                
+
+                document.getElementById("status").innerHTML = ""; 
+                document.getElementById("download").innerHTML = ""; 
+                document.getElementById("material").innerHTML = "";
+
+                document.getElementById("material").innerHTML += materialdetails;
+                document.getElementById("status").innerHTML += `uncomplete`;  
+                document.getElementById("download").innerHTML += downloaddetails;  
+              
+                 }
+              
+              }
+                  
+              
+            });
         
        
         
@@ -292,12 +323,44 @@ function CourseMaterial(material, quizid ,lessonid){
         
         document.getElementById("status").innerHTML = ""; 
         document.getElementById("download").innerHTML = "";
+        document.getElementById("material").innerHTML = "";
 
         document.getElementById("material").innerHTML += materialdetails;
+        document.getElementById("status").innerHTML = `<span style="color:blue"> &#10003 Completed</span>` ;
+        document.getElementById("download").innerHTML += downloaddetails; 
 
-         document.getElementById("status").innerHTML = `<span style="color:blue"> &#10003 Completed</span>` ;
 
-         document.getElementById("download").innerHTML += downloaddetails; 
+        // check if quiz have been created before
+        $.ajax({
+        url:  "http://localhost:5000/quiz/lessonID/" + lessonid,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+        console.log(response)
+            if (response.code == "200") {
+
+
+                var quizdata=response.data;
+                var quiztitle=quizdata.quizTitle;
+
+
+                materialdetails += `<li> <a href=""  target="_blank" >${quiztitle}</a></li> `
+                
+
+              document.getElementById("status").innerHTML = ""; 
+              document.getElementById("download").innerHTML = "";
+              document.getElementById("material").innerHTML = "";
+
+              document.getElementById("material").innerHTML += materialdetails;
+              document.getElementById("status").innerHTML = `<span style="color:blue"> &#10003 Completed</span>` ;
+              document.getElementById("download").innerHTML += downloaddetails; 
+              
+                 }
+              
+              }
+                  
+              
+            });
 
       }  
 
