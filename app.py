@@ -23,6 +23,7 @@ class Employee(db.Model):
     CurrentDesignation = db.Column(db.String(50))
     Department = db.Column(db.String(50))
     ContactNo = db.Column(db.String(50))
+    Role= db.Column(db.String(50))
 
     __mapper_args__ = {
         'polymorphic_identity': 'employee'
