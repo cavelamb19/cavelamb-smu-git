@@ -81,13 +81,13 @@ INSERT INTO `Lesson` (`lessonID`, `courseMaterial`,`classesID`) VALUES
 --
 CREATE TABLE `Quiz` (
   `quizID` int(11)  NOT NULL,
-  `StartTime` float(50) DEFAULT NULL,
-  `EndTime` float(50) DEFAULT NULL,
-  `quizDuration` float(50) DEFAULT NULL,
+  `StartTime` varchar(50) DEFAULT NULL,
+  `EndTime` varchar(50) DEFAULT NULL,
+  `quizDuration` varchar(50) DEFAULT NULL,
   `attemptNo` int(11) DEFAULT NULL,
-  `quizTitle`  float(50) DEFAULT NULL,
-  `quizDesc`  float(50) DEFAULT NULL,
-  `lessonID` int(11)  NOT NULL
+  `quizTitle`  varchar(50) DEFAULT NULL,
+  `quizDesc`  varchar(50) DEFAULT NULL,
+  `lessonID` int(11)  DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table structure for table `Quiz`
@@ -196,6 +196,7 @@ INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignatio
 (6, 'David bee', 'bee','bee@gmail.com','Engineer','Learning','92358877','learner');
 
 
+
 ALTER TABLE `Course`
   ADD PRIMARY KEY (`courseID`),
   ADD KEY `classesID` (`classesID`);
@@ -214,7 +215,6 @@ ALTER TABLE `Question`
   
 ALTER TABLE `Lesson`
   ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes`(`classesID`);
-
 
 
 ALTER TABLE `Employee`
@@ -237,3 +237,13 @@ ALTER TABLE `Trainer`
 
 ALTER TABLE `Administrator`
   ADD CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Employee` (`StaffID`);
+
+
+
+
+
+  
+-- AUTO_INCREMENT for table `Quiz`
+--
+ALTER TABLE `Quiz`
+  MODIFY `quizID` int(11) NOT NULL AUTO_INCREMENT;

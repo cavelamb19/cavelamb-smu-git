@@ -165,28 +165,24 @@ class Quiz(db.Model):
     EndTime = db.Column(db.String(50))
     quizDuration = db.Column(db.String(50))
     attemptNo = db.Column(db.Integer)
+    quizTitle = db.Column(db.String(50))
     quizDesc =  db.Column(db.String(50))
-    quizTitle =  db.Column(db.String(50))
     lessonID = db.Column(db.Integer)
     
     
 
-    def __init__(self, quizID,StartTime,EndTime,quizDuration,attemptNo,quizDesc,quizTitle,lessonID):
-        self.quizID = quizID
-        self.StartTime = StartTime
-        self.EndTime = EndTime
-        self.quizDuration = quizDuration
-        self.attemptNo = attemptNo
-        self.quizDesc = quizDesc
-        self.quizTitle = quizTitle
-        self.lessonID = lessonID
-    
-             
+    def to_dict(self):
+        """
+        'to_dict' converts the object into a dictionary,
+         in which the keys correspond to database columns
+         """
+        columns = self.__mapper__.column_attrs.keys()
+        result = {}
+        for column in columns:
+            result[column] = getattr(self, column)
+            return result
 
-    def json(self):
-        return {"quizID": self.quizID,"StartTime": self.StartTime,
-        "EndTime": self.EndTime, "quizDuration": self.quizDuration, "attemptNo": self.attemptNo, "quizDesc": self.quizDesc,"quizTitle": self.quizTitle,
-        "lessonID":self.lessonID}
+
 
 class Quizscore(db.Model):
 
@@ -197,7 +193,7 @@ class Quizscore(db.Model):
     quizID = db.Column(db.Integer)
     learnerID = db.Column(db.Integer)
 
-    def __init__(self, qsID,quizscore,quizID):
+    def __init__(self, qsID,quizscore,quizID,learnerID):
         self.qsID = qsID
         self.quizscore = quizscore
         self.quizID = quizID
@@ -233,6 +229,9 @@ class Question(db.Model):
     def json(self):
         return {"qnID": self.qnID,"qn": self.qn,
         "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID}
+
+
+db.create_all()
 
 ###########################################################
 
@@ -426,6 +425,50 @@ def lesson(classesID):
         return jsonify({
             "message": "class not found."
         }), 404
+
+
+
+
+###########################################################
+
+#quiz  #29102021 added
+@app.route("/addquizInfo", methods= ['POST'])
+def quiz_info():
+    
+
+        quizInfo = request.get_json()
+
+        #print(enrollcourse)
+        if not all(key in quizInfo.keys() for
+                   key in ('lessonID', 'title', 'time', 'instruction')):
+            return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+
+        print(quizInfo);
+        
+        lessonid = quizInfo['lessonID']
+        title= quizInfo['title']
+        time= quizInfo['time']
+        instruction=quizInfo['instruction']
+        
+        
+        quiz = Quiz(quizDuration="30", attemptNo="1",
+                    quizTitle=quizInfo['title'], quizDesc=quizInfo['instruction'],  lessonID="1")
+        
+        
+        
+        try:
+            db.session.add(quiz)
+            db.session.commit()
+            return jsonify(quiz.to_dict()), 201
+        except Exception:
+               return jsonify({
+               "message": "Unable to commit to database."
+               }), 500
+
+
+
 
 
 ###########################################################
