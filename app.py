@@ -437,7 +437,7 @@ def lesson(classesID):
 
 ###########################################################
 
-#quiz  #29102021 added
+#quiz  #29102021 added post quiz info
 @app.route("/addquizInfo", methods= ['POST'])
 def quiz_info():
     
@@ -479,9 +479,9 @@ def quiz_info():
         }), 500
 
 
-
+#find quiz by lessonid
 @app.route("/quiz/lessonID/<int:lessonID>")
-def get_quiz(lessonID):
+def get_quiz_by_id(lessonID):
     
     quiz = Quiz.query.filter_by(lessonID=lessonID).first()
     if quiz:

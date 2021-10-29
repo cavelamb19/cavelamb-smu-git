@@ -111,7 +111,7 @@
         
         
 
-        var url= "trainerhomepage.html?id="+ staffID 
+        var url= "LearnerhomePage.html?id="+ staffID 
         location.href=url;
 
   }
@@ -121,11 +121,12 @@
       let obj = Object.fromEntries(new URLSearchParams(location.search));
 
         var staffID= obj['id']; 
-        var coursename= obj['coursename']
+        var CourseAssigned= obj['CourseAssigned'];
+        var classid= obj['classid'];
         
         
 
-        var url= "TrainerViewCourse.html?id="+ staffID +"&coursename="+ coursename ;
+        var url= "learnerAssignedcoursematerial.html?id="+ staffID +"&classid="+ classid +"&CourseAssigned="+ CourseAssigned;
         location.href=url;
 
   }
@@ -141,7 +142,7 @@
 
         document.getElementById("coursename").innerHTML+= `<h2> ${courseName} </h2>`;
 
-         var service_URL="http://localhost:5000/trainer/" + staffID
+         var service_URL="http://localhost:5000/learner/" + staffID
    
          $.ajax({
             url: service_URL,
@@ -160,6 +161,27 @@
                 }
               }
             });
+          
+          $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID;
+                    var name= data.Name;
+                    var role= data.Role;
+
+                    document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name} (${role})</b></h6>`
+                }
+              }
+            });
+
+
+
   
       
   

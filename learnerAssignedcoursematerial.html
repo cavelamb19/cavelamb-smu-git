@@ -387,10 +387,11 @@ function takequiz(quizid){
      let obj = Object.fromEntries(new URLSearchParams(location.search));
 
         var staffID= obj['id']; 
-        var coursename=obj ['CourseAssigned'];
+        var CourseAssigned=obj ['CourseAssigned'];
+        var classid= obj['classid'];
         
 
-        var url= "QuizInstructionPage.html?id="+ staffID + "&coursename="+ coursename + "&quizid="+ quizid ;
+        var url= "QuizInstructionPage.html?id="+ staffID +"&classid="+ classid +"&CourseAssigned="+ CourseAssigned + "&quizid="+ quizid ;
         location.href=url;
 
 }
