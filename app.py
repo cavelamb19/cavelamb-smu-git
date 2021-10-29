@@ -244,6 +244,7 @@ class QuizAttempt(db.Model):
       __tablename__ = 'QuizAttempt'
       
       AttemptID = db.Column(db.Integer, primary_key=True)
+      qnID = db.Column(db.Integer)
       qn = db.Column(db.String(10000))
       ans = db.Column(db.String(10000))
       ansID = db.Column(db.Integer)
@@ -251,15 +252,22 @@ class QuizAttempt(db.Model):
       quizID = db.Column(db.Integer, db.ForeignKey('Quiz.id'))
       learnerID = db.Column(db.Integer, db.ForeignKey('Learner.id'))
       
-      def __init__(self,AttemptID,qn,ans,ansID,qnType,quizID,learnerID):
+      def __init__(self,AttemptID,qn,qnID,ans,ansID,qnType,quizID,learnerID):
         
         self.AttemptID= AttemptID
         self.qn = qn
+        self.qnID = qnID
         self.ans = ans
         self.ansID = ansID
         self.qnType = qnType
         self.quizID = quizID
         self.learnerID= learnerID
+        
+      def json(self):
+          return {"AttemptID": self.AttemptID, "qn": self.qn, "qnID": self.qnID,
+        "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID,
+        "learnerID":self.learnerID}
+
     
 
 db.create_all()
@@ -608,7 +616,46 @@ def get_question_by_quizID(quizID):
         }), 404
 
 
+###########################################################
 
+#QuizAttempt
+@app.route("/addAttempt", methods=['POST'])
+def add_Attempt():
+
+    Answerlist = request.get_json()
+
+    #print(enrollcourse)
+    if not all(key in Answerlist.keys() for
+               key in ('qnID', 'question', 'answer', 'qnType', 'lessonID')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+
+    print(questionlist)
+
+    qnid = questionlist['qnID']
+    questiondetails = questionlist['question']
+    answer = questionlist['answer']
+    qntype = questionlist['qnType']
+    lessonid = questionlist['lessonID']
+
+    question = Question(qnID=qnid, qn=questiondetails,
+                        ans=answer, ansID=qnid, qnType=qntype, quizID=lessonid)
+
+    try:
+        db.session.add(question)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": question.json()
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
 
 
 ###########################################################

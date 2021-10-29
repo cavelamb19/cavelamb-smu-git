@@ -115,6 +115,7 @@ CREATE TABLE `Question` (
 CREATE TABLE `QuizAttempt` (
   `AttemptID` int(11)  NOT NULL,
   `qn` varchar(10000) DEFAULT NULL,
+  `qnID` int(11)  DEFAULT NULL,
   `ans` varchar(10000) DEFAULT NULL,
   `ansID` int(11) DEFAULT NULL,
   `qnType` varchar(50) DEFAULT NULL,
