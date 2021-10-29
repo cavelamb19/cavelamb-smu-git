@@ -156,6 +156,7 @@ class Lesson(db.Model):
         return {"lessonID": self.lessonID, "courseMaterial": self.courseMaterial,
          "classesID": self.classesID}
 
+
 class Quiz(db.Model):
 
     __tablename__ = 'Quiz'
@@ -181,16 +182,11 @@ class Quiz(db.Model):
         
         
 
-    def to_dict(self):
-        """
-        'to_dict' converts the object into a dictionary,
-         in which the keys correspond to database columns
-         """
-        columns = self.__mapper__.column_attrs.keys()
-        result = {}
-        for column in columns:
-            result[column] = getattr(self, column)
-            return result
+    def json(self):
+        return {"quizID": self.quizID, "StartTime": self.StartTime,
+         "EndTime":self.EndTime, "quizDuration":self.quizDuration,
+         "attemptNo":self.attemptNo, "quizTitle":self.quizTitle, "quizDesc":self.quizDesc,
+         "lessonID":self.lessonID}
 
 
 
@@ -210,7 +206,7 @@ class Quizscore(db.Model):
         self.learnerID = learnerID
 
     def json(self):
-        return {"quizID": self.quizID,"quizscore": self.quizscore,
+        return {"qsID": self.qsID,"quizscore": self.quizscore,
         "quizID": self.quizID, "learnerID": self.learnerID}
 
 class Question(db.Model):
@@ -418,7 +414,6 @@ def classes(classesID):
 
 #lesson
 
-
 @app.route("/lesson/classesID/<int:classesID>")
 def lesson(classesID):
 
@@ -475,7 +470,7 @@ def quiz_info():
             return jsonify(
             {
                 "code": 200,
-                "data": quiz.to_dict()
+                "data": quiz.json()
             }
         ), 200
 
@@ -483,6 +478,26 @@ def quiz_info():
                return jsonify({
             "message": "Unable to commit to database."
         }), 500
+
+
+@app.route("/quiz/lessonID/<int:lessonID>")
+def get_quiz(lessonID):
+    
+    quiz = Quiz.query.filter_by(lessonID=lessonID).first()
+    if quiz:
+        return jsonify({
+            "code": 200,
+            "data": quiz.json()
+
+
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "quiz not found."
+        }), 404
+    
+    
 
 
 ###########################################################
@@ -685,7 +700,7 @@ def assign_course():
                 }), 500
 
 
-#Create Quiz not complete
+
 
 
 

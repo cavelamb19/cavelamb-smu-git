@@ -209,6 +209,7 @@ ALTER TABLE `Lesson`
 
 ALTER TABLE `Quiz`
   ADD PRIMARY KEY (`quizID`);
+   ADD KEY `classesID` (`classesID`);
 
 ALTER TABLE `Question`
   ADD PRIMARY KEY (`qnID`);
