@@ -79,7 +79,8 @@
 </div>
 <script>
 
-var numoftruefalse= []
+var numoftruefalse= [];
+var question=[];
 
 function load(){
 
@@ -141,21 +142,22 @@ function load(){
 
                             <div>
                               <h4>Q${counter}.${qn}</h4>
-                            </div
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="true${counter}" id="true${counter}" value="True">
-                            <label class="form-check-label" for="true${counter}" >
-                             True
-                            </label>
-                            </div>  
-                            
-                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="truefalse${counter}" id="false${counter}" value="False">
-                            <label class="form-check-label" for="false${counter}">
-                             False
-                            </label>
-                            </div> 
-                           
+                            </div>
+
+                          <div class="form-check">
+                          <input class="form-check-input" type="radio" name="truefalse${counter}" id="true${counter}" value="True">
+                          <label class="form-check-label" for="true${counter}">
+                           True
+                          </label>
+                          </div>
+                          
+                          <div class="form-check">
+                          <input class="form-check-input" type="radio" name="truefalse${counter}" id="false${counter}" value="False">
+                          <label class="form-check-label" for="false${counter}">
+                           False
+                          </label>
+                          </div>
+
                           <br>
                           <br>
                           `
@@ -189,14 +191,28 @@ function submit(){
         var classid= obj['classid'];
         
 
+        if(numoftruefalse.length != 0){
+
+          var truefalse="truefalse";
         //checking for length of True false question so to get the ID and value of the radio 
         for(i=0; i<numoftruefalse.length; i++){
 
+           var qnID= numoftruefalse[i];
+  
+           var trueradio= document.getElementById(`true${numoftruefalse[i]}`);
+           var falseradio= document.getElementById(`false${numoftruefalse[i]}`);
 
-          
+
+           if (trueradio.checked){
+
+            alert("true");
+           }
+
         }
 
   }
+
+}
 
 
 
