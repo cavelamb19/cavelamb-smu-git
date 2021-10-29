@@ -449,8 +449,6 @@ def quiz_info():
             return jsonify({
                 "message": "Incorrect JSON object provided."
             }), 500
-
-        print(quizInfo);
         
         lessonid = quizInfo['lessonID']
         title= quizInfo['title']
@@ -478,6 +476,7 @@ def quiz_info():
                return jsonify({
             "message": "Unable to commit to database."
         }), 500
+
 
 
 @app.route("/quiz/lessonID/<int:lessonID>")

@@ -216,19 +216,20 @@ function load(){
 function CourseMaterial(material,lessonid){
         
         
-        
+          var learning_material= material;
 
-         var learning_material= material;
+          document.getElementById("material").innerHTML =""; 
+          document.getElementById("addmaterials").innerHTML =""; 
 
-         document.getElementById("material").innerHTML =""; 
-         document.getElementById("addmaterials").innerHTML =""; 
-
-        materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank" >${material}</a></li> ` ;
-        
-        addmaterial= `<button style="margin-right:30px;" type="button" class="btn btn-secondary" >Add Topic</button>
-                      <button style="margin-right:30px;" type="button" class="btn btn-secondary" onclick="addquiz('${lessonid}')">Create Quiz</button>`
-        
-      
+          materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank" >${material}</a></li> ` ;
+              
+          addmaterial= `<button style="margin-right:30px;" type="button" class="btn btn-secondary" >Add Topic</button>
+                            <button style="margin-right:30px;" type="button" class="btn btn-secondary" onclick="addquiz('${lessonid}')">Create Quiz</button>`
+              
+          document.getElementById("material").innerHTML += materialdetails;
+          document.getElementById("addmaterials").innerHTML +=addmaterial;
+          
+          
         
         $.ajax({
         url:  "http://localhost:5000/quiz/lessonID/" + lessonid,
@@ -238,6 +239,7 @@ function CourseMaterial(material,lessonid){
         console.log(response)
             if (response.code == "200") {
 
+                
                 var quizdata=response.data;
                 var quiztitle=quizdata.quizTitle;
 
@@ -245,18 +247,26 @@ function CourseMaterial(material,lessonid){
                 materialdetails += `<li> <a href=""  target="_blank" >${quiztitle}</a></li> `
                 
 
-               
+                document.getElementById("material").innerHTML =""; 
+                document.getElementById("addmaterials").innerHTML =""; 
 
                  document.getElementById("material").innerHTML += materialdetails;
                  document.getElementById("addmaterials").innerHTML +=addmaterial;
               
                  }
+              
               }
+              
+        
+
+              
+            
+              
+              
             });
 
 
-
-}
+  }
 
 
 function addquiz(lessonid){
