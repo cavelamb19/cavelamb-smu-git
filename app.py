@@ -142,7 +142,7 @@ class Lesson(db.Model):
 
     lessonID = db.Column(db.Integer, primary_key=True)
     courseMaterial = db.Column(db.String(50))
-    classesID = db.Column(db.Integer)
+    classesID = db.Column(db.Integer, db.ForeignKey('classes.classesID'))
     
     
 
@@ -169,7 +169,7 @@ class Quiz(db.Model):
     attemptNo = db.Column(db.String(50))
     quizTitle = db.Column(db.String(50))
     quizDesc =  db.Column(db.String(50))
-    lessonID = db.Column(db.Integer)
+    lessonID = db.Column(db.Integer, db.ForeignKey('Lesson.lessonID'))
     
     def __init__(self, quizID, StartTime, EndTime, quizDuration, attemptNo, quizTitle, quizDesc, lessonID):
         self.quizID = quizID
@@ -198,7 +198,7 @@ class Quizscore(db.Model):
     qsID = db.Column(db.Integer, primary_key=True)
     quizscore = db.Column(db.Integer)
     quizID = db.Column(db.Integer)
-    learnerID = db.Column(db.Integer)
+    learnerID = db.Column(db.Integer, db.ForeignKey('Learner.id'))
 
     def __init__(self, qsID,quizscore,quizID,learnerID):
         self.qsID = qsID
@@ -219,7 +219,7 @@ class Question(db.Model):
     ans = db.Column(db.String(10000))
     ansID = db.Column(db.Integer)
     qnType = db.Column(db.String(50))
-    quizID = db.Column(db.Integer)
+    quizID = db.Column(db.Integer, db.ForeignKey('Quiz.quizID'))
     
 
 
@@ -237,6 +237,30 @@ class Question(db.Model):
         return {"qnID": self.qnID,"qn": self.qn,
         "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID}
 
+
+
+class QuizAttempt(db.Model):
+    
+      __tablename__ = 'QuizAttempt'
+      
+      AttemptID = db.Column(db.Integer, primary_key=True)
+      qn = db.Column(db.String(10000))
+      ans = db.Column(db.String(10000))
+      ansID = db.Column(db.Integer)
+      qnType = db.Column(db.String(50))
+      quizID = db.Column(db.Integer, db.ForeignKey('Quiz.id'))
+      learnerID = db.Column(db.Intger, db.ForeignKey('Learner.id'))
+      
+      def __init__(self,AttemptID,qn,ans,ansID,qnType,quizID,learnerID):
+        
+        self.AttemptID= AttemptID
+        self.qn = qn
+        self.ans = ans
+        self.ansID = ansID
+        self.qnType = qnType
+        self.quizID = quizID
+        self.learnerID= learnerID
+    
 
 db.create_all()
 
