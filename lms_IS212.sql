@@ -69,13 +69,12 @@ INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTim
 CREATE TABLE `Lesson` (
   `lessonID` int(11)  NOT NULL,
   `courseMaterial` varchar(50) DEFAULT NULL,
-  `quizID` int(11) DEFAULT NULL,
   `classesID` int(11)  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `lesson` (`lessonID`, `courseMaterial`, `quizID`, `classesID`) VALUES
-(1, 'Week1a-Introduction', 1, 1),
-(2, 'Week2-SWDevProcess', 2, 1);
+INSERT INTO `lesson` (`lessonID`, `courseMaterial`,`classesID`) VALUES
+(1, 'Week1a-Introduction', 1),
+(2, 'Week2-SWDevProcess', 1);
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 -- Table structure for table `Quiz`
@@ -87,7 +86,8 @@ CREATE TABLE `Quiz` (
   `quizDuration` float(50) DEFAULT NULL,
   `attemptNo` int(11) DEFAULT NULL,
   `quizTitle`  float(50) DEFAULT NULL,
-  `quizDesc`  float(50) DEFAULT NULL
+  `quizDesc`  float(50) DEFAULT NULL,
+  `lessonID` int(11)  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table structure for table `Quiz`
@@ -107,8 +107,7 @@ CREATE TABLE `Question` (
   `ans` varchar(50) DEFAULT NULL,
   `ansID` int(11) DEFAULT NULL,
   `qnType` varchar(50) DEFAULT NULL,
-  `quizID` int(11) DEFAULT NULL,
-  `lessonID` int(11) DEFAULT NULL
+  `quizID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
