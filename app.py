@@ -249,7 +249,7 @@ class QuizAttempt(db.Model):
       ansID = db.Column(db.Integer)
       qnType = db.Column(db.String(50))
       quizID = db.Column(db.Integer, db.ForeignKey('Quiz.id'))
-      learnerID = db.Column(db.Intger, db.ForeignKey('Learner.id'))
+      learnerID = db.Column(db.Integer, db.ForeignKey('Learner.id'))
       
       def __init__(self,AttemptID,qn,ans,ansID,qnType,quizID,learnerID):
         
