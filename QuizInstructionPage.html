@@ -194,9 +194,11 @@ function startquiz(){
 
         var staffID= obj['id']; 
         var quizid= obj['quizid'];
+        var CourseAssigned= obj['CourseAssigned'];
+        var classid= obj['classid'];
         
 
-        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid ;
+        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid; 
         location.href=url;
 
 }

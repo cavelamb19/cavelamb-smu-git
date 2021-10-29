@@ -69,7 +69,7 @@
 
     
 
-        <button style="margin-right:30px;"  type="button" class="btn btn-secondary" onclick="submit()">Done</button>
+        <button style="margin-right:30px;"  type="button" class="btn btn-secondary" onclick="submit()">Submit Quiz</button>
               
               
 
@@ -177,10 +177,22 @@ function load(){
               }
           });
 
-           
-
 }
 
+function submit(){
+
+     let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+        var staffID= obj['id']; 
+        var quizid= obj['quizid'];
+        var CourseAssigned= obj['CourseAssigned'];
+        var classid= obj['classid'];
+        
+
+        var url= "learnerAssignedcoursematerial.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid;  
+        location.href=url;
+
+  }
 
 
 

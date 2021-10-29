@@ -198,7 +198,7 @@ INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignatio
 
 
 ALTER TABLE `Course`
-  ADD PRIMARY KEY (`courseID`),
+  ADD PRIMARY KEY (`courseID`);
   ADD KEY `classesID` (`classesID`);
 
 ALTER TABLE `Classes`
