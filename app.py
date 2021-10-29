@@ -487,37 +487,36 @@ def quiz_info():
 
 ###########################################################
 
-#question  #29102021 not done
+#question  #29102021 
 @app.route("/addquestion", methods=['POST'])
-def quiz_info():
+def add_question():
 
-    quizInfo = request.get_json()
+    questionlist = request.get_json()
 
     #print(enrollcourse)
-    if not all(key in quizInfo.keys() for
-                   key in ('lessonID', 'title', 'time', 'instruction', 'attempt')):
+    if not all(key in questionlist.keys() for
+               key in ('qnID', 'question', 'answer', 'qnType', 'lessonID')):
          return jsonify({
                 "message": "Incorrect JSON object provided."
             }), 500
 
-    print(quizInfo)
+    print(questionlist)
 
-    lessonid = quizInfo['lessonID']
-    title = quizInfo['title']
-    time = quizInfo['time']
-    instruction = quizInfo['instruction']
-    attempt = quizInfo['attempt']
+    qnid=questionlist['qnID']
+    questiondetails= questionlist['question']
+    answer=questionlist['answer']
+    qntype=questionlist['qnType']
+    lessonid=questionlist['lessonID']
 
-    quiz = Quiz(quizID=lessonid, StartTime="", EndTime="", quizDuration=time, attemptNo=attempt,
-                quizTitle=title, quizDesc=instruction, lessonID=lessonid)
+    question = Question(qnID=qnid, qn=questiondetails, ans=answer, ansID=qnid, qnType=qntype, quizID=lessonid )
 
     try:
-        db.session.add(quiz)
+        db.session.add(question)
         db.session.commit()
         return jsonify(
             {
                 "code": 200,
-                "data": quiz.to_dict()
+                "data": question.json()
                 }
         ), 200
 
