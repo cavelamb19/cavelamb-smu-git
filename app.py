@@ -481,7 +481,7 @@ def quiz_info():
 
 #find quiz by lessonid
 @app.route("/quiz/lessonID/<int:lessonID>")
-def get_quiz_by_id(lessonID):
+def get_quiz_by_lessonid(lessonID):
     
     quiz = Quiz.query.filter_by(lessonID=lessonID).first()
     if quiz:
@@ -497,7 +497,25 @@ def get_quiz_by_id(lessonID):
             "message": "quiz not found."
         }), 404
     
-    
+#find quiz
+@app.route("/quiz/<int:quizID>")
+def get_quiz(quizID):
+
+    quiz = Quiz.query.filter_by(quizID=quizID).first()
+    if quiz:
+        return jsonify({
+            "code": 200,
+            "data": quiz.json()
+
+
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "quiz not found."
+        }), 404
+
+
 
 
 ###########################################################

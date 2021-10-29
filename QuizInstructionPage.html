@@ -60,40 +60,35 @@
           <br>
 
           <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;" id="quizdesc">
+            
         
               <div class="col fw-bold">
-                    <div class="form-group">
-                    <h3><label for="title">Quiz Title</label></h3>
-                    <input type="text" class="form-control" id="title" placeholder="Enter Quiz Title">
-                  </div>
+                  
+                   <div id="title" ></div>
 
+                  <br>
+                  <br>
 
-                  <div class="form-group">
-                    <h3><label for="time">Time Allowed</label></h3>
-                    <input type="text" class="form-control" id="time" placeholder="Enter Time Allowed">
-                  </div>
+                  <div id="time"></div>
+                  <div id="attempt"></div>
+                  
+                  <br>
+                  <br>
+                  <br>
 
-                  <div class="form-group">
-                    <h3><label for="Attempt">No.of Attempts</label></h3>
-                    <input type="text" class="form-control" id="Attempt" placeholder="Enter no of attempt">
-                  </div>
-
-                   <div class="form-group">
-                    <h3><label for="instruction">Instructions</label></h3>
-                    <input type="text" class="form-control" id="instruction" placeholder="Enter Instructions">
-                  </div>
+                   <div id="instruction"></div>
             
 
-              </div>
-         
         </div>
+
+      
+        
 
         <br>
         <br>
         <br>
         
-        <button style="margin-right:30px;" type="button" class="btn btn-secondary" onClick="createQuestion()">Create Question</button>`
+        <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz()">Begin Quiz</button>`
 
               
 
@@ -134,8 +129,9 @@
 
     let obj = Object.fromEntries(new URLSearchParams(location.search));
 
-        var courseName= obj['coursename']; 
+        var courseName= obj['CourseAssigned']; 
         var staffID= obj['id']; 
+        var quizID =obj['quizid'];
 
 
         document.getElementById("coursename").innerHTML="";
@@ -162,87 +158,49 @@
               }
             });
           
-          $.ajax({
-            url: service_URL,
+       $.ajax({
+            url: "http://localhost:5000//quiz/" + quizID,
             type: 'get',
             dataType: "json",
             success: function (response) {
-            //console.log(response)
+            console.log(response)
                 if (response.code == "200") {
 
-                    var data = response.data;
-                    var staffid= data.StaffID;
-                    var name= data.Name;
-                    var role= data.Role;
+                    var quizdata = response.data;
+                    var title= quizdata.quizTitle;
+                    var time= quizdata.quizDuration;
+                    var attempt=quizdata.attemptNo;
+                    var instruction=quizdata.quizDesc;
 
-                    document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name} (${role})</b></h6>`
+
+                  
+                    document.getElementById("title").innerHTML +=`<h3> ${title} </h3>`;
+                    document.getElementById("time").innerHTML +=`<h4> Time allowed: ${time} </h4>`;
+                    document.getElementById("attempt").innerHTML +=`<h4> Attempts allowed: ${attempt} </h4>`;
+
+                    document.getElementById("instruction").innerHTML +=`<h4> Instruction: ${instruction} </h4>`;
+                    
                 }
               }
             });
 
 
+}
 
-  
-      
-  
- }
 
-function createQuestion(){
+function startquiz(){
 
-      let obj = Object.fromEntries(new URLSearchParams(location.search));
+        let obj = Object.fromEntries(new URLSearchParams(location.search));
 
         var staffID= obj['id']; 
-        var coursename=obj ['coursename'];
-        var lessonid=obj['lessonid'];
+        var quizid= obj['quizid'];
+        
 
-        var title= document.getElementById("title").value;
-        var time= document.getElementById("time").value;
-        var instruction= document.getElementById("instruction").value;
-        var attempt=document.getElementById("Attempt").value;
+        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid ;
+        location.href=url;
 
-       // console.log(title);
-       // console.log(time);
-        //console.log(instruction);
-
-        if(title =="" || time =="" || instruction == "" || attempt ==""){
-
-          alert("Title, Time or Instruction field cannot be empty")
-        }
-
-        else{
-
-          var data = { "lessonID":lessonid, "title": title, "time":time, "instruction":instruction, "attempt":attempt}
-
-           $.ajax({
-                  url: 'http://localhost:5000/addquizInfo',
-                  type: 'post',
-                  data: JSON.stringify(data),
-                  contentType: "application/json; charset=utf-8",
-                  processData: "json",
-                  success: function (response) {
-                  // console.log(response)
-                    if (response.code == "200") {
-
-                      alert("You have successfully created quiz info")
-                      var url= "TrainerCreateQuestion.html?id="+ staffID + "&coursename="+ coursename + "&lessonid="+ lessonid ;
-                    location.href=url; 
-                  
-                    } else {
-                      //alert('failed');
-                    }
-
-                    
-                  },
-                  
-                });
-
-
-
-                  
-        }
-         
 }
-         
+
 
 </script>
   
