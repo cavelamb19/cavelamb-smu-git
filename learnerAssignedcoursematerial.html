@@ -342,6 +342,7 @@ function CourseMaterial(material, quizid ,lessonid){
 
                 var quizdata=response.data;
                 var quiztitle=quizdata.quizTitle;
+                var quizid= quizdata.quizID;
 
 
                 materialdetails += `<li> <a href=""  target="_blank" onClick="takequiz('${quizid}')" >${quiztitle}</a></li> `
@@ -383,9 +384,14 @@ function CompleteCourse(lessonid){
 function takequiz(quizid){
 
 
+     let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+        var staffID= obj['id']; 
+        var coursename=obj ['CourseAssigned'];
         
 
-
+        var url= "QuizInstructionPage.html?id="+ staffID + "&coursename="+ coursename + "&quizid="+ quizid ;
+        location.href=url;
 
 }
 
