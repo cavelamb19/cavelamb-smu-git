@@ -485,6 +485,49 @@ def quiz_info():
         }), 500
 
 
+###########################################################
+
+#question  #29102021 not done
+@app.route("/addquestion", methods=['POST'])
+def quiz_info():
+
+    quizInfo = request.get_json()
+
+    #print(enrollcourse)
+    if not all(key in quizInfo.keys() for
+                   key in ('lessonID', 'title', 'time', 'instruction', 'attempt')):
+         return jsonify({
+                "message": "Incorrect JSON object provided."
+            }), 500
+
+    print(quizInfo)
+
+    lessonid = quizInfo['lessonID']
+    title = quizInfo['title']
+    time = quizInfo['time']
+    instruction = quizInfo['instruction']
+    attempt = quizInfo['attempt']
+
+    quiz = Quiz(quizID=lessonid, StartTime="", EndTime="", quizDuration=time, attemptNo=attempt,
+                quizTitle=title, quizDesc=instruction, lessonID=lessonid)
+
+    try:
+        db.session.add(quiz)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": quiz.to_dict()
+                }
+        ), 200
+
+    except Exception as e:
+            return jsonify({
+                "message": "Unable to commit to database."
+                }), 500
+
+
+
 
 
 
