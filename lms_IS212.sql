@@ -110,6 +110,18 @@ CREATE TABLE `Question` (
   `quizID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `QuizAttempt` (
+  `AttemptID` int(11)  NOT NULL,
+  `qn` varchar(10000) DEFAULT NULL,
+  `ans` varchar(10000) DEFAULT NULL,
+  `ansID` int(11) DEFAULT NULL,
+  `qnType` varchar(50) DEFAULT NULL,
+  `quizID` int(11) DEFAULT NULL,
+  `learnerID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- --------------------------------------------------------
 --
 -- Table structure for table `Administrator`
@@ -214,6 +226,14 @@ ALTER TABLE `Quiz`
 ALTER TABLE `Question`
   ADD PRIMARY KEY (`qnID`);
   
+
+ALTER TABLE `QuizAttempt`
+  ADD PRIMARY KEY (`AttemptID`),
+  ADD KEY `quizID` (`quizID`),
+   ADD KEY `learnerID` (`learnerID`);
+  
+  
+
 ALTER TABLE `Lesson`
   ADD CONSTRAINT `Lesson_ibfk_1` FOREIGN KEY (`classesID`) REFERENCES `Classes`(`classesID`);
 
