@@ -215,8 +215,8 @@ class Question(db.Model):
     __tablename__ = 'Question'
 
     qnID = db.Column(db.Integer, primary_key=True)
-    qn = db.Column(db.String(50))
-    ans = db.Column(db.String(50))
+    qn = db.Column(db.String(10000))
+    ans = db.Column(db.String(10000))
     ansID = db.Column(db.Integer)
     qnType = db.Column(db.String(50))
     quizID = db.Column(db.Integer)

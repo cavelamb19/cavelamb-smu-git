@@ -103,8 +103,8 @@ CREATE TABLE `Quizscore` (
 
 CREATE TABLE `Question` (
   `qnID` int(11)  NOT NULL,
-  `qn` varchar(50) DEFAULT NULL,
-  `ans` varchar(50) DEFAULT NULL,
+  `qn` varchar(10000) DEFAULT NULL,
+  `ans` varchar(10000) DEFAULT NULL,
   `ansID` int(11) DEFAULT NULL,
   `qnType` varchar(50) DEFAULT NULL,
   `quizID` int(11) DEFAULT NULL
