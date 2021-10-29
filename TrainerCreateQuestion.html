@@ -148,6 +148,7 @@
 var countertruefalse=0
 var countermcq=0
 var numoftruefalse= []
+var mcq=[]
 function truefalse(){
 
          
@@ -195,7 +196,7 @@ function submit(){
 
       if(numoftruefalse.length != 0 ){
 
-        var mcq= "mcq";
+        var truefalse= "truefalse";
       for (i=0; i<numoftruefalse.length; i++){
 
             var qnID= numoftruefalse[i]; // link each question to a new question id
@@ -205,7 +206,7 @@ function submit(){
 
             var answer= document.getElementById(`answertruefalse${numoftruefalse[i]}`).value ;
 
-            var data = { "qnID":qnID, "question": question, "answer":answer, "qnType": mcq, "lessonID":lessonID}
+            var data = { "qnID":qnID, "question": question, "answer":answer, "qnType": truefalse, "lessonID":lessonID}
 
 
                 $.ajax({

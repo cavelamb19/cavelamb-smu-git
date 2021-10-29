@@ -17,7 +17,7 @@
   </head>
 
 <body onload="load()">
-    <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Trainer Homepage</h4>
+    <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Learner Homepage</h4>
        
 
 <hr>
@@ -95,7 +95,7 @@
 
         var courseName= obj['coursename']; 
         var staffID= obj['id']; 
-        var quizid=obj['quidid'];
+        var quizid=obj['quizid'];
 
 
          var service_URL="http://localhost:5000/learner/" + staffID
@@ -120,7 +120,7 @@
 
 
             $.ajax({
-            url: "http://localhost:5000//question/quizID/" +quizid ,
+            url: "http://localhost:5000/question/quizID/" + quizid ,
             type: 'get',
             dataType: "json",
             success: function (response) {
