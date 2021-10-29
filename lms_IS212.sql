@@ -198,7 +198,7 @@ INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignatio
 
 
 ALTER TABLE `Course`
-  ADD PRIMARY KEY (`courseID`);
+  ADD PRIMARY KEY (`courseID`),
   ADD KEY `classesID` (`classesID`);
 
 ALTER TABLE `Classes`
@@ -208,8 +208,8 @@ ALTER TABLE `Lesson`
   ADD PRIMARY KEY (`lessonID`);
 
 ALTER TABLE `Quiz`
-  ADD PRIMARY KEY (`quizID`);
-   ADD KEY `classesID` (`classesID`);
+  ADD PRIMARY KEY (`quizID`),
+   ADD KEY `lessonID` (`lessonID`);
 
 ALTER TABLE `Question`
   ADD PRIMARY KEY (`qnID`);
