@@ -293,23 +293,28 @@ function addquiz(lessonid){
                   alert("You have already created a quiz for this lesson")
                  }
 
-                 else{
-
-                    var url= "TrainerCreateQuiz.html?id="+ staffID + "&coursename="+ coursesTeaching + "&lessonid="+ lessonid ;
-                    location.href=url;
-                 }
               
               }
+  
                   
-          }    
-            });
+          },
+          
+       error: function(response){
 
-      var url= "TrainerCreateQuiz.html?id="+ staffID + "&coursename="+ coursesTeaching + "&lessonid="+ lessonid ;
-      location.href=url;
+        var url= "TrainerCreateQuiz.html?id="+ staffID + "&coursename="+ coursesTeaching + "&lessonid="+ lessonid ;
+        location.href=url;
+        
+       }
+            
+      
+      });
+
+ 
 
 
 
 }
+
 
 
 
