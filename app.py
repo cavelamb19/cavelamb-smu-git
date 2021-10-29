@@ -437,7 +437,7 @@ def lesson(classesID):
 
 ###########################################################
 
-#quiz  #29102021 added post quiz info
+#quiz  #29102021 added Post quiz info to Quiz table
 @app.route("/addquizInfo", methods= ['POST'])
 def quiz_info():
     
@@ -520,7 +520,7 @@ def get_quiz(quizID):
 
 ###########################################################
 
-#question  #29102021 
+#question  #29102021 Post Question to question table
 @app.route("/addquestion", methods=['POST'])
 def add_question():
 

@@ -117,6 +117,31 @@
                 }
               }
             });
+
+
+            $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            //console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID;
+                    var name= data.Name;
+                    var role= data.Role;
+
+                    document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name} (${role})</b></h6>`
+                }
+              }
+            });
+
+
+
+
+
+
 }
 
 
