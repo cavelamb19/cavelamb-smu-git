@@ -394,6 +394,7 @@ def find_course(courseName):
 ###########################################################
     
 #class
+
 @app.route("/classes/<int:classesID>")
 def classes(classesID):
 
@@ -437,7 +438,10 @@ def lesson(classesID):
 
 ###########################################################
 
-#quiz  #29102021 added Post quiz info to Quiz table
+#quiz  
+ 
+ 
+#29102021 added Post quiz info to Quiz table
 @app.route("/addquizInfo", methods= ['POST'])
 def quiz_info():
     
@@ -520,7 +524,9 @@ def get_quiz(quizID):
 
 ###########################################################
 
-#question  #29102021 Post Question to question table
+#Question   
+ 
+#29102021 Post Question to question table
 @app.route("/addquestion", methods=['POST'])
 def add_question():
 
@@ -558,6 +564,24 @@ def add_question():
                 "message": "Unable to commit to database."
                 }), 500
 
+
+#Find question
+@app.route("/question/quizID/<int:quizID>")
+def get_question_by_quizID(quizID):
+
+    questionlist = Question.query.filter_by(quizID=quizID).all()
+    if questionlist:
+        return jsonify({
+            "code": 200,
+            "data": [question.json() for question in questionlist]
+
+
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "quiz not found."
+        }), 404
 
 
 
