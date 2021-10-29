@@ -17,9 +17,8 @@
   </head>
 
 <body onload="load()">
-   <!--- <i class="fa fa-home" style="padding-left: 50px; font-size: 40px;"></i> -->
     <h4 id="name" style="text-align: end; padding-right: 40px;">Welcome, Trainer Homepage</h4>
-        <h4 id= "course" style="text-align: center; padding-right: 40px;">IS212: Software Project Management G1</h4>
+
 
 <hr>
   
@@ -40,13 +39,7 @@
       
         <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#" onclick="mycourse()">Week 1</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link " style="padding-left: 70px; padding-top: 40px;" href="#">Week 2</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#" onclick="availablecourse()">Final Quiz</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#" onclick="Back()">Back</a>
                 </li>
 
               </ul>
@@ -58,10 +51,8 @@
          
             
 <div class="main" style="margin-left : 360px">
-          
-          <div id="section" style="text-align: center;">
-            
-
+          <div id="coursename" style="text-align: center;">
+         
           </div>
           
           <br>
@@ -72,21 +63,27 @@
             <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;" id="quizdesc">
         
               <div class="col fw-bold">
-                    <h2>Enter Quiz Title</h2>
-                    <br> 
+                    <div class="form-group">
+                    <h3><label for="title">Quiz Title</label></h3>
+                    <input type="text" class="form-control" id="title" placeholder="Enter Quiz Title">
+                  </div>
 
-                  <p>
-                        Enter Time Allowed:
-                        <br>
-                        Enter Attempts Allowed: 
-                        <br> 
-                        Enter Instructions: 
-                        <br> <br> 
-                        This quiz is graded <br> 
-                        Calculator is allowed for this quiz. <br> 
-                        You need a minimum score of 85% to pass.
 
-                  </p>
+                  <div class="form-group">
+                    <h3><label for="time">Time Allowed</label></h3>
+                    <input type="text" class="form-control" id="time" placeholder="Enter Time Allowed">
+                  </div>
+
+                  <div class="form-group">
+                    <h3><label for="Attempt">No.of Attempts</label></h3>
+                    <input type="text" class="form-control" id="Attempt" placeholder="Enter no of attempt">
+                  </div>
+
+                   <div class="form-group">
+                    <h3><label for="instruction">Instructions</label></h3>
+                    <input type="text" class="form-control" id="instruction" placeholder="Enter Instructions">
+                  </div>
+            
 
               </div>
          
@@ -95,8 +92,9 @@
         <br>
         <br>
         <br>
+        
+        <button style="margin-right:30px;" type="button" class="btn btn-secondary" onClick="createQuestion()">Create Question</button>`
 
-        <button style="margin-right:30px;" id="quiz" type="button" class="btn btn-secondary" value="2" onclick="createquiz()"><a href="trainerquiz3.html">Create Questions</a></button>
               
 
         
@@ -117,65 +115,111 @@
         location.href=url;
 
   }
+
+  function Back(){
+  
+      let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+        var staffID= obj['id']; 
+        var coursename= obj['coursename']
+        
+        
+
+        var url= "TrainerViewCourse.html?id="+ staffID +"&coursename="+ coursename ;
+        location.href=url;
+
+  }
   function load(){
 
-      let params = new URLSearchParams(location.search);
-      params.get('id');
-      var staffID = params.get('id');
+    let obj = Object.fromEntries(new URLSearchParams(location.search));
 
-      var service_URL="http://localhost:5000/trainer/" + staffID
+        var courseName= obj['coursename']; 
+        var staffID= obj['id']; 
 
-        $.ajax({
+
+        document.getElementById("coursename").innerHTML="";
+
+        document.getElementById("coursename").innerHTML+= `<h2> ${courseName} </h2>`;
+
+         var service_URL="http://localhost:5000/trainer/" + staffID
+   
+         $.ajax({
             url: service_URL,
             type: 'get',
             dataType: "json",
             success: function (response) {
-            console.log(response)
+            //console.log(response)
                 if (response.code == "200") {
 
-                  var data = response.data;
-                  var staffid= data.StaffID
-                  var name= data.Name
-                  var coursesteaching = data.coursesTeaching
-                    
-                  document.getElementById("name").innerHTML = `<h4>Welcome, <b>${name}</b></h4>`
-                  document.getElementById("course").innerHTML = `<h4><b>${coursesteaching}</b></h4>`
-                
-     
-                }     
-              }    
-        });
-      }
-  function createquiz(){
+                    var data = response.data;
+                    var staffid= data.StaffID
+                    var name= data.Name
+                    //console.log(name);
+
+                    document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name}</b></h6>`
+                }
+              }
+            });
+  
       
-      let params = new URLSearchParams(location.search);
-      var staffID = params.get('id');
-      var quizID = params.get('quizid');
-      var lessonID = params.get('lessonid');
+  
+ }
 
-      // Havent take in variables yet, app route not done yet
-      var data = { "quizID": quizID, "StartTime": starttime, "EndTime": endtime,"quizDuration": quizDuration
-                  ,"attemptNo":attemptNo , "quizTitle": quiztitle, "quizDesc": quizDesc }
+function createQuestion(){
 
-      $.ajax({
-        url: 'http://localhost:5000/createquiz',
-        type: 'post',
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        processData: "json",
-        success: function (response) {
-        // console.log(response)
-          if (response.code == "200") {
-            //alert(`You have successfully assigned ${learnername} to the course`)
-            //var url= "adminhomepage.html?id="+ staffID;
-            //location.href=url;
-                
-          } else {
-            //alert('failed');
-          }
-        },
-    });
-  }
+      let obj = Object.fromEntries(new URLSearchParams(location.search));
+
+        var staffID= obj['id']; 
+        var coursename=obj ['coursename'];
+        var lessonid=obj['lessonid'];
+
+        var title= document.getElementById("title").value;
+        var time= document.getElementById("time").value;
+        var instruction= document.getElementById("instruction").value;
+        var attempt=document.getElementById("Attempt").value;
+
+       // console.log(title);
+       // console.log(time);
+        //console.log(instruction);
+
+        if(title =="" || time =="" || instruction == "" || attempt ==""){
+
+          alert("Title, Time or Instruction field cannot be empty")
+        }
+
+        else{
+
+          var data = { "lessonID":lessonid, "title": title, "time":time, "instruction":instruction, "attempt":attempt}
+
+           $.ajax({
+                  url: 'http://localhost:5000/addquizInfo',
+                  type: 'post',
+                  data: JSON.stringify(data),
+                  contentType: "application/json; charset=utf-8",
+                  processData: "json",
+                  success: function (response) {
+                  // console.log(response)
+                    if (response.code == "200") {
+
+                      alert("You have successfully created quiz info")
+                      var url= "TrainerCreateQuestion.html?id="+ staffID + "&coursename="+ coursename + "&lessonid="+ lessonid ;
+                    location.href=url; 
+                  
+                    } else {
+                      //alert('failed');
+                    }
+
+                    
+                  },
+                  
+                });
+
+
+
+                  
+        }
+         
+}
          
 
 </script>
