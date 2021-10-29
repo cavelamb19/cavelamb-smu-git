@@ -141,22 +141,20 @@ class Lesson(db.Model):
 
     lessonID = db.Column(db.Integer, primary_key=True)
     courseMaterial = db.Column(db.String(50))
-    quizID = db.Column(db.Integer)
     classesID = db.Column(db.Integer)
     
     
 
-    def __init__(self, lessonID,courseMaterial,quizID,classesID):
+    def __init__(self, lessonID,courseMaterial,classesID):
         self.lessonID = lessonID
         self.courseMaterial = courseMaterial
-        self.quizID = quizID
         self.classesID = classesID
     
              
 
     def json(self):
         return {"lessonID": self.lessonID, "courseMaterial": self.courseMaterial,
-        "quizID": self.quizID, "classesID": self.classesID}
+         "classesID": self.classesID}
 
 class Quiz(db.Model):
 
@@ -169,10 +167,11 @@ class Quiz(db.Model):
     attemptNo = db.Column(db.Integer)
     quizDesc =  db.Column(db.String(50))
     quizTitle =  db.Column(db.String(50))
+    lessonID = db.Column(db.Integer)
     
     
 
-    def __init__(self, quizID,StartTime,EndTime,quizDuration,attemptNo,quizDesc,quizTitle):
+    def __init__(self, quizID,StartTime,EndTime,quizDuration,attemptNo,quizDesc,quizTitle,lessonID):
         self.quizID = quizID
         self.StartTime = StartTime
         self.EndTime = EndTime
@@ -180,12 +179,14 @@ class Quiz(db.Model):
         self.attemptNo = attemptNo
         self.quizDesc = quizDesc
         self.quizTitle = quizTitle
+        self.lessonID = lessonID
     
              
 
     def json(self):
         return {"quizID": self.quizID,"StartTime": self.StartTime,
-        "EndTime": self.EndTime, "quizDuration": self.quizDuration, "attemptNo": self.attemptNo, "quizDesc": self.quizDesc,"quizTitle": self.quizTitle}
+        "EndTime": self.EndTime, "quizDuration": self.quizDuration, "attemptNo": self.attemptNo, "quizDesc": self.quizDesc,"quizTitle": self.quizTitle,
+        "lessonID":self.lessonID}
 
 class Quizscore(db.Model):
 
@@ -216,22 +217,22 @@ class Question(db.Model):
     ansID = db.Column(db.Integer)
     qnType = db.Column(db.String(50))
     quizID = db.Column(db.Integer)
-    lessonID = db.Column(db.Integer)
+    
 
 
 
-    def __init__(self, qnID,qn,ans,ansID,qnType,quizID,lessonID):
+    def __init__(self, qnID,qn,ans,ansID,qnType,quizID):
         self.qnID = qnID
         self.qn = qn
         self.ans = ans
         self.ansID = ansID
         self.qnType = qnType
         self.quizID = quizID
-        self.lessonID = lessonID
+        
 
     def json(self):
         return {"qnID": self.qnID,"qn": self.qn,
-        "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID,"lessonID": self.lessonID}
+        "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID}
 
 ###########################################################
 
