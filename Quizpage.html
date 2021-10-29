@@ -56,19 +56,10 @@
           <br>
           <br>
 
-          <div class="container ">
-            
-           
+          <div class="container " id="question">
         
-              <div class="col fw-bold" id="question">
-                   
-
-             
           
-            
-
-
-              </div>
+          </div>
          
   
 
@@ -88,8 +79,9 @@
 </div>
 <script>
 
+var numoftruefalse= []
 
-   function load(){
+function load(){
 
     let obj = Object.fromEntries(new URLSearchParams(location.search));
 
@@ -127,15 +119,65 @@
             console.log(response)
                 if (response.code == "200") {
 
-              
+                    var questionlist=response.data;
+
+                    //console.log(questiondata);
+
+                    var questiondetails="";
+                    
+                    var counter=1;
+                    for(question of questionlist){
+
+                        var type= question.qnType;
+                        var qnid= question.qnID;
+                        var qn= question.qn;
+
+                        
+                        
+
+                        if( type= "Truefalse"){
+
+                          questiondetails += `
+
+                            <div>
+                              <h4>Q${counter}.${qn}</h4>
+                            </div
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="true${counter}" id="true${counter}" value="True">
+                            <label class="form-check-label" for="true${counter}" >
+                             True
+                            </label>
+                            </div>  
+                            
+                             <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${counter}" id="false${counter}" value="False">
+                            <label class="form-check-label" for="false${counter}">
+                             False
+                            </label>
+                            </div> 
+                           
+                          <br>
+                          <br>
+                          `
+
+                        numoftruefalse.push(counter);
+                            
+                        }
+
+                      counter ++ ;
+
+                    }
+
+                    document.getElementById("question").innerHTML += questiondetails; 
+                    
+
+
+
                 }
               }
-            });
+          });
 
-
-
-
-
+           
 
 }
 
