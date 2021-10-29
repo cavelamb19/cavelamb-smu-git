@@ -60,14 +60,11 @@
             
            
         
-              <div class="col fw-bold">
-                    <h2>Create Quiz Question</h2>
-                    <br>
-                    <br>
-
-              </div>
-                
               <div class="col fw-bold" id="question">
+                   
+
+             
+          
             
 
 
@@ -79,11 +76,7 @@
         <br>
         <br>
 
-        <button style="margin-right:30px;"  type="button" class="btn btn-secondary"  onclick="mcq()">Add Mutiple Choice Question</button>
-
-        <button style="margin-right:30px;"  type="button" class="btn btn-secondary" onclick="truefalse()">Add True/Flase Question</button>
-        
-        <button style="margin-right:30px;"  type="button" class="btn btn-secondary" id="clear">Clear</button>
+    
 
         <button style="margin-right:30px;"  type="button" class="btn btn-secondary" onclick="submit()">Done</button>
               
@@ -94,19 +87,6 @@
    </div>
 </div>
 <script>
-    function home(){
-
-      let obj = Object.fromEntries(new URLSearchParams(location.search));
-
-        var staffID= obj['id']; 
-        
-        
-
-        var url= "trainerhomepage.html?id="+ staffID 
-        location.href=url;
-
-  }
-
 
 
    function load(){
@@ -115,13 +95,10 @@
 
         var courseName= obj['coursename']; 
         var staffID= obj['id']; 
+        var quizid=obj['quidid'];
 
 
-        document.getElementById("coursename").innerHTML="";
-
-        document.getElementById("coursename").innerHTML+= `<h2> ${courseName} </h2>`;
-
-         var service_URL="http://localhost:5000/trainer/" + staffID
+         var service_URL="http://localhost:5000/learner/" + staffID
    
          $.ajax({
             url: service_URL,
@@ -145,99 +122,10 @@
 
 
 
-var countertruefalse=0
-var countermcq=0
-var numoftruefalse= []
-function truefalse(){
-
-         
-         countertruefalse ++
-          //console.log(counter)
-         var truefalsedetails= ` <div class="form-group">
-                    <h3><label for="truefalse${countertruefalse}"> True/False Question ${countertruefalse}</label></h3>
-                    <input type="text" class="form-control" id="truefalse${countertruefalse}" placeholder="Enter Question">
-                  </div>
-                  <div class="form-group">
-                    <h3><label for="answertruefalse${countertruefalse}">True/False Answer${countertruefalse} </label></h3>
-                    <input type="text" class="form-control" id="answertruefalse${countertruefalse}" placeholder="Enter Answer">
-                  </div>
-                  `
-         
-         
-        numoftruefalse.push(countertruefalse)
-         
-         document.getElementById("question").innerHTML +=truefalsedetails;
-         
-}
-//console.log(numoftruefalse);
 
 
 
 
-//jquery to clear the content for clear button
-$( "#clear" ).click(function() {
-  $( "#question" ).empty();
- countertruefalse=0;
- numoftruefalse=[];
-});
-
-
-
-function submit(){
-
-        
-      let obj = Object.fromEntries(new URLSearchParams(location.search));
-      var staffID= obj['id']; 
-      var lessonID= obj['lessonid'];
-      var coursename= obj['coursename'];
-
-      //console.log(numoftruefalse.length)
-
-      if(numoftruefalse.length != 0 ){
-
-        var mcq= "mcq";
-      for (i=0; i<numoftruefalse.length; i++){
-
-            var qnID= numoftruefalse[i]; // link each question to a new question id
-
-            var question= document.getElementById(`truefalse${numoftruefalse[i]}`).value ;
-            //console.log(question);
-
-            var answer= document.getElementById(`answertruefalse${numoftruefalse[i]}`).value ;
-
-            var data = { "qnID":qnID, "question": question, "answer":answer, "qnType": mcq, "lessonID":lessonID}
-
-
-                $.ajax({
-                  url: 'http://localhost:5000/addquestion',
-                  type: 'post',
-                  data: JSON.stringify(data),
-                  contentType: "application/json; charset=utf-8",
-                  processData: "json",
-                  success: function (response) {
-                  // console.log(response)
-                    if (response.code == "200") {
-
-                      var url= "TrainerViewCourse.html?id="+ staffID + "&coursename="+ coursename;
-                      location.href=url; 
-                  
-                    } else {
-                      //alert('failed');
-                    }
-
-                    
-                  },
-                  
-                });
-
-
-          }
-
-      alert("You have successfully created a Quiz");
-          
-      }
-      
-  }
 
 </script>
   
