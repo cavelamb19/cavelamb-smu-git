@@ -168,14 +168,14 @@ function load(){
 
                       var lessonid= lesson.lessonID;
                       var material= lesson.courseMaterial;
-                      var quizid= lesson.quizID;
+                     
 
                       
                     lessondetails += `
                     
                     
                   <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" id="${lessonid}" onClick="CourseMaterial('${material}','${quizid}','${lessonid}')">Week ${lesson_count}</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" id="${lessonid}" onClick="CourseMaterial('${material}','${lessonid}')">Week ${lesson_count}</a>
                   </li>
                     
                      
@@ -213,7 +213,7 @@ function load(){
                     
   } 
  
-function CourseMaterial(material, quizid, lessonid){
+function CourseMaterial(material,lessonid){
         
         
         
@@ -226,7 +226,7 @@ function CourseMaterial(material, quizid, lessonid){
         materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank" >${material}</a></li> ` ;
         
         addmaterial= `<button style="margin-right:30px;" type="button" class="btn btn-secondary" >Add Topic</button>
-                      <button style="margin-right:30px;" type="button" class="btn btn-secondary" onclick="addquiz('${quizid}', '${lessonid}')">Create Quiz</button>`
+                      <button style="margin-right:30px;" type="button" class="btn btn-secondary" onclick="addquiz('${lessonid}')">Create Quiz</button>`
         
         
         document.getElementById("material").innerHTML += materialdetails;
@@ -236,14 +236,14 @@ function CourseMaterial(material, quizid, lessonid){
 }
 
 
-function addquiz(quizid,lessonid){
+function addquiz(lessonid){
 
         let obj = Object.fromEntries(new URLSearchParams(location.search));
 
         var staffID= obj['id']; 
         var coursesTeaching= obj['coursename'];
 
-        var url= "TrainerCreateQuiz.html?id="+ staffID + "&coursename="+ coursesTeaching + "&quizid=" + quizid + "&lessonid="+ lessonid
+        var url= "TrainerCreateQuiz.html?id="+ staffID + "&coursename="+ coursesTeaching + "&lessonid="+ lessonid ;
         location.href=url;
 
 
