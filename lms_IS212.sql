@@ -30,7 +30,7 @@ CREATE TABLE `Course` (
   `classesID` int(11)  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `course` (`courseID`, `courseName`, `courseDesc`, `preRequisites`, `classesID`) VALUES
+INSERT INTO `Course` (`courseID`, `courseName`, `courseDesc`, `preRequisites`, `classesID`) VALUES
 (1, 'IS212 Software Project Management G2', 'agile methods', 'NULL', 1),
 (2, 'IS115 Computational Thinking G1', 'Math and coding', 'IS112 Business applications', 2),
 (3, 'IS113 Web application G3', 'Designing frontend web', 'NULL', 3),
@@ -53,7 +53,7 @@ CREATE TABLE `Classes` (
   `currentEnrolled` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`, `currentEnrolled`) VALUES
+INSERT INTO `Classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`, `currentEnrolled`) VALUES
 (1, 'August 18 2021', '8am', 'November 5 2021', '12pm', 50, 'James Sim', 0),
 (2, 'August 30 2021', '12pm', 'November 2 2021', '3pm', 50, 'John Tan', 0),
 (3, 'August 5 2021', '3.15pm', 'November 8 2021', '6.45pm', 50, 'Alan Lim', 0),
@@ -73,7 +73,7 @@ CREATE TABLE `Lesson` (
   `classesID` int(11)  NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `lesson` (`lessonID`, `courseMaterial`, `quizID`, `classesID`) VALUES
+INSERT INTO `Lesson` (`lessonID`, `courseMaterial`, `quizID`, `classesID`) VALUES
 (1, 'Week1a-Introduction', 1, 1),
 (2, 'Week2-SWDevProcess', 2, 1);
 -- --------------------------------------------------------
