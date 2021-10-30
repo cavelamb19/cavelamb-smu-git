@@ -54,11 +54,11 @@ CREATE TABLE `Classes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Classes` (`classesID`, `startDate`, `startTime`, `endDate`, `endTime`, `classesSize`, `trainerAssigned`, `currentEnrolled`) VALUES
-(1, 'August 18 2021', '8am', 'November 5 2021', '12pm', 50, 'James Sim', 0),
-(2, 'August 30 2021', '12pm', 'November 2 2021', '3pm', 50, 'John Tan', 0),
-(3, 'August 5 2021', '3.15pm', 'November 8 2021', '6.45pm', 50, 'Alan Lim', 0),
-(4, 'August 27 2021', '3.15pm', 'November 13 2021', '6.45pm', 50, 'Brandon Lum', 0),
-(5, 'August 22 2021', '12pm', 'November 16 2021', '3pm', 50, 'Mary low', 0);
+(1, 'August 18 2021', '8am', 'November 5 2021', '12pm', 40, 'Roger Ng', 0),
+(2, 'August 30 2021', '12pm', 'November 2 2021', '3pm', 30, 'John Tan', 0),
+(3, 'August 5 2021', '3.15pm', 'November 8 2021', '6.45pm', 35, 'Alan Lim', 0),
+(4, 'August 27 2021', '3.15pm', 'November 13 2021', '6.45pm', 40, 'Brandon Lum', 0),
+(5, 'August 22 2021', '12pm', 'November 16 2021', '3pm', 43, 'Mary low', 0);
 
 
 -- --------------------------------------------------------
@@ -199,9 +199,9 @@ CREATE TABLE `Employee` (
 --
 
 INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignation`,`Department`,`ContactNo`,`Role`) VALUES
-(1, 'Phris Coskitt', 'csok','coski@gmail.com','Hr','hr','90227823','administrator'),
-(2, 'Arnold de Mari', 'Ard','Dr@gmail.com','Senior Engineer','Training','82329832','trainer'),
-(3, 'Constance Wilkinson', 'cons','cons@gmail.com','Engineer','Learning','92130843','learner'),
+(1, 'Henry loh', 'hen','henlow@gmail.com','Hr','hr','90227823','administrator'),
+(2, 'Roger Ng', 'Rog','Rogng@gmail.com','Senior Engineer','Training','82329832','trainer'),
+(3, 'Constance TAN', 'cons','constan@gmail.com','Engineer','Learning','92130843','learner'),
 (4, 'Johnson sim', 'john','johnson@gmail.com','Engineer','Learning','90247788','learner'),
 (5, 'Mary lamb', 'Mar','Mar@gmail.com','Engineer','Learning','83425667','learner'),
 (6, 'David bee', 'bee','bee@gmail.com','Engineer','Learning','92358877','learner');
