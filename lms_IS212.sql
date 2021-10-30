@@ -100,12 +100,11 @@ CREATE TABLE `Quizscore` (
 -- Table structure for table `Question`
 --
 
-CREATE TABLE `Question` (
+CREATE TABLE `QuestionTrueFalse` (
   `qnID` int(11)  NOT NULL,
   `qn` varchar(10000) DEFAULT NULL,
   `ans` varchar(10000) DEFAULT NULL,
   `ansID` int(11) DEFAULT NULL,
-  `qnType` varchar(50) DEFAULT NULL,
   `quizID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -228,7 +227,7 @@ ALTER TABLE `Quizscore`
   ADD KEY `quizID` (`quizID`),
   ADD KEY `learnerID` (`learnerID`);
 
-ALTER TABLE `Question`
+ALTER TABLE `QueQuestionTrueFalsestion`
   ADD PRIMARY KEY (`qnID`),
   ADD KEY `quizID` (`quizID`);
 
@@ -249,8 +248,8 @@ ALTER TABLE `Quiz`
 ALTER TABLE `Quizscore`
   ADD CONSTRAINT `Quizscore_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
 
-ALTER TABLE `Question`
-  ADD CONSTRAINT `Question_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
+ALTER TABLE `QuestionTrueFalse`
+  ADD CONSTRAINT `QuestionTrueFalse_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
 
 ALTER TABLE `QuizAttempt`
   ADD CONSTRAINT `QuizAttempt_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
