@@ -39,7 +39,7 @@
       
         <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" href="#" onclick="Back()">Back</a>
+                  <a class="nav-link" style="text-align:center;padding-top:20px; font-size: 30px;" href="#" onclick="Back()">Back to lesson </a>
                 </li>
 
               </ul>
@@ -179,13 +179,14 @@
 
 
                   
-                    document.getElementById("title").innerHTML +=`<h3> ${title} </h3>`;
-                    document.getElementById("time").innerHTML +=`<h4> Time allowed: ${time} </h4>`;
-                    document.getElementById("attempt").innerHTML +=`<h4> Attempts allowed: ${attempt} </h4>`;
+                    document.getElementById("title").innerHTML +=`<h2><strong> ${title} </strong></h2>`;
+                    document.getElementById("time").innerHTML +=`<h3> Time allowed: ${time} </h3>`;
+                    document.getElementById("attempt").innerHTML +=`<h3> Attempts allowed: ${attempt} </h3>`;
 
-                    document.getElementById("instruction").innerHTML +=`<h4> Instruction: ${instruction} </h4>`;
+                    document.getElementById("instruction").innerHTML +=`<h3> Instruction: ${instruction} </h3>`;
 
-                    document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Begin Quiz</button>`
+                    document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Begin Quiz</button>
+                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="pastattempts()">Past Attempts</button>`
                     
                 }
               }
@@ -211,6 +212,20 @@ function startquiz(time){
 
 }
 
+function pastattempts(){
+
+        let obj = Object.fromEntries(new URLSearchParams(location.search));
+  
+        var staffID= obj['id']; 
+        var quizid= obj['quizid'];
+        var CourseAssigned= obj['CourseAssigned'];
+        var classid= obj['classid'];
+
+        
+
+        var url= "Quizviewscore.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid;  
+        location.href=url;
+}
 
 </script>
   
