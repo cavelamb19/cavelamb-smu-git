@@ -159,8 +159,13 @@ function truefalse(){
                   </div>
                   <div class="form-group">
                     <h3><label for="answertruefalse${countertruefalse}">True/False Question ${countertruefalse} Answer </label></h3>
-                    <input type="text" class="form-control" id="answertruefalse${countertruefalse}" placeholder="Enter Answer">
-                  </div>
+                    
+                    <select name="answertruefalse" id="answertruefalse${countertruefalse}">
+                      <option value="">Select Answer</option>
+                      <option value="True">True</option>
+                      <option value="False">False</option>
+                    </select>  
+                    </div>
                   `
          
          
