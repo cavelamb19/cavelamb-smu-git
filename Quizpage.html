@@ -56,6 +56,14 @@
           <br>
           <br>
 
+           <div class="container " id="time">
+        
+          
+          </div>
+
+          <br>
+          <br>
+
           <div class="container " id="question">
         
           
@@ -89,7 +97,9 @@ function load(){
         var courseName= obj['coursename']; 
         var staffID= obj['id']; 
         var quizid=obj['quizid'];
+        var time=obj['time'];
 
+        document.getElementById("time").innerHTML += `<h4 style="font-weight:bold;"> Quiz Duration: ${time} </h4>`;
 
          var service_URL="http://localhost:5000/learner/" + staffID
    
@@ -107,7 +117,8 @@ function load(){
                     var role= data.Role;
 
                     document.getElementById("name").innerHTML = `<h6>Welcome, <b>${name} (${role})</b></h6>`
-                }
+                    
+              }
               }
             });
 
