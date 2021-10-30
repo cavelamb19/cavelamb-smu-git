@@ -92,7 +92,7 @@ CREATE TABLE `Quiz` (
 --
 CREATE TABLE `Quizscore` (
   `qsID` int(11)  NOT NULL,
-  `quizscore` float(50) DEFAULT NULL,
+  `quizscore` int(11) DEFAULT NULL,
   `quizID` int(11) DEFAULT NULL,
   `learnerID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
