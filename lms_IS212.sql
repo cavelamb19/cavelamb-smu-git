@@ -113,7 +113,7 @@ CREATE TABLE `QuizAttempt` (
   `AttemptID` int(11)  NOT NULL,
   `qnID` int(11)  DEFAULT NULL,
   `ans` varchar(10000) DEFAULT NULL,
-  `ansID` int(11) DEFAULT NULL,
+  `ansID` int(11) NOT NULL,
   `qnType` varchar(50) DEFAULT NULL,
   `quizID` int(11) DEFAULT NULL,
   `learnerID` int(11) DEFAULT NULL
@@ -262,7 +262,7 @@ ALTER TABLE  `QuizAttempt`
   MODIFY `AttemptID` int(11) NOT NULL AUTO_INCREMENT; 
 
 ALTER TABLE  `QuestionTrueFalse`
-  MODIFY `qnID` int(11) NOT NULL AUTO_INCREMENT;            
+  MODIFY `qnID` int(11) NOT NULL AUTO_INCREMENT;        
 
 ALTER TABLE `Employee`
   ADD PRIMARY KEY (`StaffID`);
