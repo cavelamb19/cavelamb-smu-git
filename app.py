@@ -132,7 +132,12 @@ class Classes(db.Model):
         "startTime": self.startTime, "endDate": self.endDate,
         "endTime": self.endTime,"classesSize": self.classesSize,"trainerAssigned": self.trainerAssigned, "currentEnrolled": self.currentEnrolled}
     
-    
+    def increaseclasssize(self, num_people, currentEnrolled, classesSize):
+        if (currentEnrolled + num_people) < classesSize:
+            currentEnrolled = currentEnrolled + num_people
+        else:
+            raise Exception("Class is full.")
+
     
 
 
@@ -213,24 +218,22 @@ class Question(db.Model):
     qn = db.Column(db.String(10000))
     ans = db.Column(db.String(10000))
     ansID = db.Column(db.Integer)
-    qnType = db.Column(db.String(50))
     quizID = db.Column(db.Integer, db.ForeignKey('Quiz.quizID'))
     
 
 
 
-    def __init__(self, qnID,qn,ans,ansID,qnType,quizID):
+    def __init__(self, qnID,qn,ans,ansID,quizID):
         self.qnID = qnID
         self.qn = qn
         self.ans = ans
         self.ansID = ansID
-        self.qnType = qnType
         self.quizID = quizID
         
 
     def json(self):
         return {"qnID": self.qnID,"qn": self.qn,
-        "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID}
+        "ans": self.ans, "ansID": self.ansID,"quizID": self.quizID}
 
 
 
