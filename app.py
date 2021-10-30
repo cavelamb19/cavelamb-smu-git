@@ -489,7 +489,7 @@ def quiz_info():
         attempt=quizInfo['attempt']
         
         
-        quiz = Quiz(quizID=lessonid, StartTime="", EndTime="", quizDuration=time, attemptNo=attempt,
+        quiz = Quiz(quizID=lessonid,quizDuration=time, attemptNo=attempt,
                     quizTitle=title, quizDesc=instruction, lessonID=lessonid)
         
         
