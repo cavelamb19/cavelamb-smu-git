@@ -249,8 +249,12 @@
 
 function CourseMaterial(material, quizid ,lessonid){
         
-        // check whether the lesson material in that lesson had been clicked before
-        if(localStorage.getItem(lessonid) != "1"){
+        
+          let obj = Object.fromEntries(new URLSearchParams(location.search));
+          var staffID= obj['id']; 
+
+        // check whether the lesson material in that lesson had been clicked before by the learner
+        if(sessionStorage.getItem(lessonid) != "1" || sessionStorage.getItem(staffID) != staffID){
 
          var learning_material= material;
 
@@ -374,9 +378,14 @@ function CourseMaterial(material, quizid ,lessonid){
 
 function CompleteCourse(lessonid){
          
+          let obj = Object.fromEntries(new URLSearchParams(location.search));
+          var staffID= obj['id']; 
+          
          // This function will only happen if the lesson material is click first time.
          // store the lessonid as key and value as 1 to indicate that the lessonid material has been clicked
-         localStorage.setItem(lessonid, "1") ;
+         // store the staff ID as well to indicate the learner has click the lesson material before
+         sessionStorage.setItem(lessonid, "1") ;
+         sessionStorage.setItem(staffID, staffID);
 
 }
 
