@@ -104,7 +104,6 @@ CREATE TABLE `QuestionTrueFalse` (
   `qnID` int(11)  NOT NULL,
   `qn` varchar(10000) DEFAULT NULL,
   `ans` varchar(10000) DEFAULT NULL,
-  `ansID` int(11) DEFAULT NULL,
   `quizID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

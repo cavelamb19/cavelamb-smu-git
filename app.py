@@ -218,23 +218,21 @@ class QuestionTrueFalse(db.Model):
     qnID = db.Column(db.Integer, primary_key=True)
     qn = db.Column(db.String(10000))
     ans = db.Column(db.String(10000))
-    ansID = db.Column(db.Integer)
     quizID = db.Column(db.Integer, db.ForeignKey('Quiz.quizID'))
     
 
 
 
-    def __init__(self, qnID,qn,ans,ansID,quizID):
+    def __init__(self, qnID,qn,ans,quizID):
         self.qnID = qnID
         self.qn = qn
         self.ans = ans
-        self.ansID = ansID
         self.quizID = quizID
         
 
     def json(self):
         return {"qnID": self.qnID,"qn": self.qn,
-        "ans": self.ans, "ansID": self.ansID,"quizID": self.quizID}
+        "ans": self.ans,"quizID": self.quizID}
 
 
 
