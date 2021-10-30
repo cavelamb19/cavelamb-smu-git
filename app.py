@@ -655,24 +655,9 @@ def add_Attempt():
         }), 500
 
 
-# find ans for the questions attempted for specific learner from quizattempt
-@app.route("/quizattempt/learnerID/<int:learnerID>")
-def get_ans_for_questions_attempt(learnerID):
-    
-    attemptlist = QuizAttempt.query.filter_by(learnerID=learnerID).all()
-    if attemptlist:
-        return jsonify({
-            "code": 200,
-            "data": [attempt.json() for attempt in attemptlist]
+###########################################################
 
-
-        }), 200
-
-    else:
-        return jsonify({
-            "message": "attempt not found."
-        }), 404
-
+#quizscore
 
 # get quiz score for learner
 @app.route("/viewscore/<int:learnerID>")
@@ -693,6 +678,11 @@ def viewscore(learnerID):
 
 
 
+@app.route("/addscore", methods=['POST'])
+def add_score():
+    
+    
+    
 
 ###########################################################
 
