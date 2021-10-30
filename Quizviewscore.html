@@ -61,7 +61,7 @@
         
               <div class="col fw-bold">
                   
-                   <div id="title" ></div>
+                   <div id="title" style="font-size:30px;">Quiz Submitted</div>
 
                   <br>
                   <br>
@@ -162,27 +162,28 @@
             });
       //change to quiz score table
        $.ajax({
-            url: "http://localhost:5000/quiz/" + quizID,
+            url: "http://localhost:5000/viewscore/" + staffID,
             type: 'get',
             dataType: "json",
             success: function (response) {
             console.log(response)
                 if (response.code == "200") {
 
-                    var quizdata = response.data;
-                    var title= quizdata.quizTitle;
-                    var time= quizdata.quizDuration;
-                    var attempt=quizdata.attemptNo;
-                    var instruction=quizdata.quizDesc;
-
-
+                    var quizscorelist = response.data;
+                    
+                    for (quiz of quizscorelist){
+                      quizscore = quiz.quizscore
+                      quizattempt = quiz.qsID
+                      document.getElementById("time").innerHTML +=`<div class="row">
+                                                                    <div class="col-3">
+                                                                      <h3> Attempt ${quizattempt}</h3>
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                      <h3> Score ${quizscore}/3</h3>
+                                                                    </div>
+                                                                  </div>`;
+                    }
                   
-                    document.getElementById("title").innerHTML +=`<h2><strong> ${title} </strong></h2>`;
-                    document.getElementById("time").innerHTML +=`<h3> Time allowed: ${time} </h3>`;
-                    document.getElementById("attempt").innerHTML +=`<h3> Attempts allowed: ${attempt} </h3>`;
-
-                    document.getElementById("instruction").innerHTML +=`<h3> Instruction: ${instruction} </h3>`;
-
                     document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Retake Quiz</button>
                     <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="Back()">Done</button>`
                     
