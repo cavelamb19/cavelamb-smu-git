@@ -565,20 +565,18 @@ def add_question():
 
     #print(enrollcourse)
     if not all(key in questionlist.keys() for
-               key in ('qnID', 'question', 'answer', 'qnType', 'lessonID')):
+               key in ( 'question', 'answer',  'lessonID')):
          return jsonify({
                 "message": "Incorrect JSON object provided."
             }), 500
 
-    print(questionlist)
+    #print(questionlist)
 
-    qnid=questionlist['qnID']
     questiondetails= questionlist['question']
     answer=questionlist['answer']
-    qntype=questionlist['qnType']
     lessonid=questionlist['lessonID']
 
-    question = QuestionTrueFalse(qnID=qnid, qn=questiondetails, ans=answer, ansID=qnid, qnType=qntype, quizID=lessonid )
+    question = QuestionTrueFalse(qnID=None, qn=questiondetails, ans=answer, ansID=None, quizID=lessonid )
 
     try:
         db.session.add(question)
