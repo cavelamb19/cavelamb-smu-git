@@ -53,16 +53,18 @@
            <div id="coursename" style="text-align: center;">
          
           </div>
-          <div id="lessonweek" style="text-align: left;"></div>
-
+          <div id="lessonweek" style="text-align: left;">
+          
           </div>
+
+          
           <br>
           <br>
           <br>
           <br>
           <br>
           <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;">
+            <div class="row" style="width: 70%;">
         
                <div class="col fw-bold" id="material">
 
@@ -226,9 +228,9 @@ function CourseMaterial(material,lessonid){
           document.getElementById("lessonweek").innerHTML="";
 
           lessonweek = `<h2><strong>Week ${lessonid} lesson materials</strong></h2>`;
-          materialdetails= `<li style="margin-left:50px"> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank" >${material}</a></li> ` ;
+          materialdetails= `<li style="font-size: 30px;"> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank" >${material}</a></li> ` ;
               
-          addmaterial= `<button style="margin-right:30px;margin-left:50px;" type="button" class="btn btn-secondary" >Add Topic</button>
+          addmaterial= `<button style="margin-right:30px;" type="button" class="btn btn-secondary" >Add Topic</button>
                             <button style="margin-right:30px;" type="button" class="btn btn-secondary" onclick="addquiz('${lessonid}')">Create Quiz</button>`
           
           document.getElementById("lessonweek").innerHTML += lessonweek;                  
@@ -250,7 +252,7 @@ function CourseMaterial(material,lessonid){
                 var quiztitle=quizdata.quizTitle;
 
 
-                materialdetails += `<li style="margin-left:50px"> <a href=""  target="_blank" >${quiztitle}</a></li> `
+                materialdetails += `<li style="font-size: 30px;"> <a href=""  target="_blank" >${quiztitle}</a></li> `
                 
 
                 document.getElementById("material").innerHTML =""; 
