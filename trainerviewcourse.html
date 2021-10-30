@@ -53,7 +53,9 @@
            <div id="coursename" style="text-align: center;">
          
           </div>
-          
+          <div id="lessonweek" style="text-align: left;"></div>
+
+          </div>
           <br>
           <br>
           <br>
@@ -221,12 +223,15 @@ function CourseMaterial(material,lessonid){
 
           document.getElementById("material").innerHTML =""; 
           document.getElementById("addmaterials").innerHTML =""; 
+          document.getElementById("lessonweek").innerHTML="";
 
-          materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank" >${material}</a></li> ` ;
+          lessonweek = `<h2><strong>Week ${lessonid} lesson materials</strong></h2>`;
+          materialdetails= `<li style="margin-left:50px"> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank" >${material}</a></li> ` ;
               
-          addmaterial= `<button style="margin-right:30px;" type="button" class="btn btn-secondary" >Add Topic</button>
+          addmaterial= `<button style="margin-right:30px;margin-left:50px;" type="button" class="btn btn-secondary" >Add Topic</button>
                             <button style="margin-right:30px;" type="button" class="btn btn-secondary" onclick="addquiz('${lessonid}')">Create Quiz</button>`
-              
+          
+          document.getElementById("lessonweek").innerHTML += lessonweek;                  
           document.getElementById("material").innerHTML += materialdetails;
           document.getElementById("addmaterials").innerHTML +=addmaterial;
           
