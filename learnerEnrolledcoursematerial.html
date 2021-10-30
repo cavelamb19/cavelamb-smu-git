@@ -65,7 +65,7 @@
           <br>
 
           <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 70%;" id="mycourses">
+            <div class="row" style="width: 70%;" id="mycourses">
         
               <div class="col fw-bold" id="material">
 
@@ -229,7 +229,7 @@ function CourseMaterial(material, quizid){
 
          document.getElementById("material").innerHTML =""; 
 
-        materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}">${material} </a></li> ` ;
+        materialdetails= `<li style="font-size: 30px;"> <a href="../cavelamb-smu-git/CourseMaterial/${material}">${material} </a></li> ` ;
          document.getElementById("material").innerHTML += materialdetails;     
                               
 }
