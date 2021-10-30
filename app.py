@@ -198,7 +198,7 @@ class Quizscore(db.Model):
     qsID = db.Column(db.Integer, primary_key=True)
     quizscore = db.Column(db.Integer)
     quizID = db.Column(db.Integer)
-    learnerID = db.Column(db.Integer, db.ForeignKey('Learner.id'))
+    learnerID = db.Column(db.Integer)
 
     def __init__(self, qsID,quizscore,quizID,learnerID):
         self.qsID = qsID
@@ -574,7 +574,7 @@ def add_question():
     answer=questionlist['answer']
     lessonid=questionlist['lessonID']
 
-    question = QuestionTrueFalse(qnID=None, qn=questiondetails, ans=answer, ansID=None, quizID=lessonid )
+    question = QuestionTrueFalse(qnID=None, qn=questiondetails, ans=answer,quizID=lessonid )
 
     try:
         db.session.add(question)
@@ -682,7 +682,7 @@ def add_score():
     scorelist = request.get_json()
     
     if not all(key in scorelist.keys() for
-               key in ('score','quizID','learnerid')):
+               key in ('score','quizID','learnerID')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
@@ -691,7 +691,7 @@ def add_score():
     quizID = scorelist['quizID']
     learnerID= scorelist['learnerID']
     
-
+    
     score = Quizscore(qsID=None, quizscore=quizscore, quizID=quizID, learnerID=learnerID)
 
     try:

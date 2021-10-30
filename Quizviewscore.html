@@ -87,7 +87,8 @@
 
         <div id="startquiz">
 
-
+        <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Retake Quiz</button>
+        <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="Back()">Done</button>`
         </div>
         
         
@@ -128,6 +129,10 @@
       location.href=url;
 
   }
+
+
+  var attempt_list=[];
+  var quizscore_list=[];
   function load(){
 
     let obj = Object.fromEntries(new URLSearchParams(location.search));
@@ -172,25 +177,62 @@
                     var quizscorelist = response.data;
                     
                     for (quiz of quizscorelist){
-                      quizscore = quiz.quizscore
-                      quizattempt = quiz.qsID
-                      document.getElementById("time").innerHTML +=`<div class="row">
-                                                                    <div class="col-3">
-                                                                      <h3> Attempt ${quizattempt}</h3>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                      <h3> Score ${quizscore}/3</h3>
-                                                                    </div>
-                                                                  </div>`;
-                    }
+
+
+                      
+                      var quizscore = quiz.quizscore
+                      var quizattempt = quiz.qsID
+                      var quiz_id=quiz.quizID
+                      
                   
-                    document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Retake Quiz</button>
-                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="Back()">Done</button>`
+                    if(quizID == quiz_id){
+                    
+                      attempt_list.push(quizattempt);
+                    quizscore_list.push(quizscore);
+                  }
+                
+                   
                     
                 }
               }
+            }
             });
 
+          
+          
+          // find length of the question
+           $.ajax({
+            url: "http://localhost:5000/questiontruefalse/quizID/" + quizID,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var question_list = response.data;
+                    var question_length= question_list.length;
+                    
+                         
+                    var attempt_details="";
+                    for(i=0;i<attempt_list.length; i++){
+
+
+                      attempt_details +=`<div class="row">
+                                      <div class="col-3">
+                                        <h3> Attempt ${attempt_list[i]}</h3>
+                                      </div>
+                                      <div class="col-3">
+                                        <h3> Score ${quizscore_list[i]}/${question_length}</h3>
+                                      </div>
+                                    </div>`
+
+                    }
+
+                    document.getElementById("time").innerHTML +=attempt_details;
+               
+               }
+        }
+      });
 
 }
 
