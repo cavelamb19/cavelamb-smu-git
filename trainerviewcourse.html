@@ -250,7 +250,7 @@ function CourseMaterial(material,lessonid){
                 var quiztitle=quizdata.quizTitle;
 
 
-                materialdetails += `<li> <a href=""  target="_blank" >${quiztitle}</a></li> `
+                materialdetails += `<li style="margin-left:50px"> <a href=""  target="_blank" >${quiztitle}</a></li> `
                 
 
                 document.getElementById("material").innerHTML =""; 
@@ -284,7 +284,7 @@ function addquiz(lessonid){
         type: 'get',
         dataType: "json",
         success: function (response) {
-        console.log(response)
+        //console.log(response)
             if (response.code == "200") {
 
               
