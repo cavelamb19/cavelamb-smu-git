@@ -195,7 +195,7 @@
 }
 
 
-function startquiz(time){
+function startquiz(){
 
         let obj = Object.fromEntries(new URLSearchParams(location.search));
 
@@ -203,7 +203,7 @@ function startquiz(time){
         var quizid= obj['quizid'];
         var CourseAssigned= obj['CourseAssigned'];
         var classid= obj['classid'];
-
+        var time = obj['time'];
         
 
         var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
