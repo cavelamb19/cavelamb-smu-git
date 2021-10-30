@@ -163,18 +163,14 @@ class Quiz(db.Model):
     __tablename__ = 'Quiz'
 
     quizID = db.Column(db.Integer, primary_key=True)
-    StartTime = db.Column(db.String(50))
-    EndTime = db.Column(db.String(50))
     quizDuration = db.Column(db.String(50))
     attemptNo = db.Column(db.String(50))
     quizTitle = db.Column(db.String(50))
     quizDesc =  db.Column(db.String(50))
     lessonID = db.Column(db.Integer, db.ForeignKey('Lesson.lessonID'))
     
-    def __init__(self, quizID, StartTime, EndTime, quizDuration, attemptNo, quizTitle, quizDesc, lessonID):
+    def __init__(self, quizID,quizDuration, attemptNo, quizTitle, quizDesc, lessonID):
         self.quizID = quizID
-        self.StartTime = StartTime
-        self.EndTime = EndTime
         self.quizDuration = quizDuration
         self.attemptNo = attemptNo
         self.quizTitle = quizTitle
@@ -184,8 +180,7 @@ class Quiz(db.Model):
         
 
     def json(self):
-        return {"quizID": self.quizID, "StartTime": self.StartTime,
-         "EndTime":self.EndTime, "quizDuration":self.quizDuration,
+        return {"quizID": self.quizID,"quizDuration":self.quizDuration,
          "attemptNo":self.attemptNo, "quizTitle":self.quizTitle, "quizDesc":self.quizDesc,
          "lessonID":self.lessonID}
 
@@ -244,7 +239,6 @@ class QuizAttempt(db.Model):
       __tablename__ = 'QuizAttempt'
       
       AttemptID = db.Column(db.Integer, primary_key=True)
-      qn = db.Column(db.String(10000))
       qnID = db.Column(db.Integer)
       ans = db.Column(db.String(10000))
       ansID = db.Column(db.Integer)
@@ -252,10 +246,9 @@ class QuizAttempt(db.Model):
       quizID = db.Column(db.Integer, db.ForeignKey('Quiz.quizID'))
       learnerID = db.Column(db.Integer)
       
-      def __init__(self,AttemptID,qn,qnID,ans,ansID,qnType,quizID,learnerID):
+      def __init__(self,AttemptID,qnID,ans,ansID,qnType,quizID,learnerID):
         
         self.AttemptID= AttemptID
-        self.qn = qn
         self.qnID = qnID
         self.ans = ans
         self.ansID = ansID
@@ -264,7 +257,7 @@ class QuizAttempt(db.Model):
         self.learnerID= learnerID
         
       def json(self):
-          return {"AttemptID": self.AttemptID, "qn": self.qn, "qnID": self.qnID,
+          return {"AttemptID": self.AttemptID,"qnID": self.qnID,
         "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID,
         "learnerID":self.learnerID}
 
