@@ -87,8 +87,13 @@
         <br>
         <br>
         <br>
+
+        <div id="startquiz">
+
+
+        </div>
         
-        <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz()">Begin Quiz</button>`
+        
 
               
 
@@ -159,7 +164,7 @@
             });
           
        $.ajax({
-            url: "http://localhost:5000//quiz/" + quizID,
+            url: "http://localhost:5000/quiz/" + quizID,
             type: 'get',
             dataType: "json",
             success: function (response) {
@@ -179,6 +184,8 @@
                     document.getElementById("attempt").innerHTML +=`<h4> Attempts allowed: ${attempt} </h4>`;
 
                     document.getElementById("instruction").innerHTML +=`<h4> Instruction: ${instruction} </h4>`;
+
+                    document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Begin Quiz</button>`
                     
                 }
               }
@@ -188,7 +195,7 @@
 }
 
 
-function startquiz(){
+function startquiz(time){
 
         let obj = Object.fromEntries(new URLSearchParams(location.search));
 
@@ -196,9 +203,10 @@ function startquiz(){
         var quizid= obj['quizid'];
         var CourseAssigned= obj['CourseAssigned'];
         var classid= obj['classid'];
+
         
 
-        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid; 
+        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
         location.href=url;
 
 }
