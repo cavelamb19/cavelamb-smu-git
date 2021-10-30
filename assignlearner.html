@@ -399,7 +399,7 @@ function assign(){
                                   }
 
                                   else if ( prereq == CompletedCourses){
-
+                                      count += 1;
                                      var data = { "learnerid": learner, "enrolledCourses": coursename }
 
                                      $.ajax({
@@ -431,43 +431,43 @@ function assign(){
                                   }
 
                               
-                              //console.log(count)
+                              console.log(count)
                               //Add current enrol +
                               $.ajax({
-                                              url: 'http://localhost:5000/classes/' + classid,
-                                              type: 'get',
-                                              dataType: "json",
-                                              success: function (response) {
-                                              // console.log(response)
-                                              if (response.code == "200") {
+                                    url: 'http://localhost:5000/classes/' + classid,
+                                    type: 'get',
+                                    dataType: "json",
+                                    success: function (response) {
+                                    // console.log(response)
+                                    if (response.code == "200") {
 
 
-                                                var data = response.data;
-                                                var currentEnrolled= data.currentEnrolled;
-                                                
-                                                currentEnrolled += count;
-                                                var data = { "classesID":classid, "currentEnrolled": currentEnrolled }
+                                      var data = response.data;
+                                      var currentEnrolled= data.currentEnrolled;
+                                      
+                                      currentEnrolled += count;
+                                      var data = { "classesID":classid, "currentEnrolled": currentEnrolled }
 
-                                                //console.log(JSON.stringify(data))
-                                                $.ajax({
-                                                  url: 'http://localhost:5000/currentEnrolled',
-                                                  type: 'post',
-                                                  data: JSON.stringify(data),
-                                                  contentType: "application/json; charset=utf-8",
-                                                  processData: "json",
-                                                  success: function (response) {
-                                                  // console.log(response)
-                                                    if (response.code == "200") {
-                                                      //alert("You have successfully enrolled in the class")
-                                                      location.reload(true)
-                                                    } else {
-                                                      alert('adding to currentEnrolled failed');
-                                                    }
-                                                  },
-                                                });
-                                              }
-                                              }
-                                            });   
+                                      //console.log(JSON.stringify(data))
+                                      $.ajax({
+                                        url: 'http://localhost:5000/currentEnrolled',
+                                        type: 'post',
+                                        data: JSON.stringify(data),
+                                        contentType: "application/json; charset=utf-8",
+                                        processData: "json",
+                                        success: function (response) {
+                                        // console.log(response)
+                                          if (response.code == "200") {
+                                            //alert("You have successfully enrolled in the class")
+                                            location.reload(true)
+                                          } else {
+                                            alert('adding to currentEnrolled failed');
+                                          }
+                                        },
+                                      });
+                                    }
+                                    }
+                                  });   
                               } else {
                                 //alert('failed');
                               }
