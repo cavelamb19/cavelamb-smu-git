@@ -87,7 +87,7 @@
 </div>
 <script>
 
-var numoftruefalse= [];
+var qnidtruefalse= [];
 var question=[];
 
 function load(){
@@ -147,7 +147,7 @@ function load(){
                         
                         
 
-                        if( type= "Truefalse"){
+                        if( type == "truefalse"){
 
                           questiondetails += `
 
@@ -156,15 +156,15 @@ function load(){
                             </div>
 
                           <div class="form-check">
-                          <input class="form-check-input" type="radio" name="truefalse${counter}" id="true${counter}" value="True">
-                          <label class="form-check-label" for="true${counter}">
+                          <input class="form-check-input" type="radio" name="truefalse${qnid}" id="true${qnid}" value="True">
+                          <label class="form-check-label" for="true${qnid}">
                            True
                           </label>
                           </div>
                           
                           <div class="form-check">
-                          <input class="form-check-input" type="radio" name="truefalse${counter}" id="false${counter}" value="False">
-                          <label class="form-check-label" for="false${counter}">
+                          <input class="form-check-input" type="radio" name="truefalse${qnid}" id="false${qnid}" value="False">
+                          <label class="form-check-label" for="false${qnid}">
                            False
                           </label>
                           </div>
@@ -173,7 +173,7 @@ function load(){
                           <br>
                           `
 
-                        numoftruefalse.push(counter);
+                        qnidtruefalse.push(qnid);
                             
                         }
 
@@ -192,6 +192,7 @@ function load(){
 
 }
 
+
 function submit(){
 
      let obj = Object.fromEntries(new URLSearchParams(location.search));
@@ -202,69 +203,36 @@ function submit(){
         var classid= obj['classid'];
         
 
-        if(numoftruefalse.length != 0){
+        if(qnidtruefalse.length != 0){
 
           var truefalse="truefalse";
         //checking for length of True false question so to get the ID and value of the radio 
-        for(i=0; i<numoftruefalse.length; i++){
+        var truefalseanswerlist =[];
+        for(i=0; i<qnidtruefalse.length; i++){
 
-           var qnID= numoftruefalse[i];
+           
   
-           var trueradio= document.getElementById(`true${numoftruefalse[i]}`);
-           var falseradio= document.getElementById(`false${numoftruefalse[i]}`);
+           var trueradio= document.getElementById(`true${qnidtruefalse[i]}`);
+           var falseradio= document.getElementById(`false${qnidtruefalse[i]}`);
 
 
            if (trueradio.checked){
 
               var answer=trueradio.value;
 
-              var data = { "qnID":qnID, "answer":answer, "qnType": truefalse, "quizID":quizid, "learnerid":staffID}
+                 truefalseanswerlist.push(answer)
             
              
-                  $.ajax({
-                  url: 'http://localhost:5000/addAttempt',
-                  type: 'post',
-                  data: JSON.stringify(data),
-                  contentType: "application/json; charset=utf-8",
-                  processData: "json",
-                  success: function (response) {
-                  // console.log(response)
-                    if (response.code == "200") {
-    
-                    } else {
-                      //alert('failed');
-                    }
-
-                    
-                  },
-                  
-                });
+                
 
          }
 
            else{
 
               var answer=falseradio.value;
-              var data = { "qnID":qnID, "answer":answer, "qnType": truefalse, "quizID":quizid, "learnerid":staffID}
-
-               $.ajax({
-                  url: 'http://localhost:5000/addAttempt',
-                  type: 'post',
-                  data: JSON.stringify(data),
-                  contentType: "application/json; charset=utf-8",
-                  processData: "json",
-                  success: function (response) {
-                  // console.log(response)
-                    if (response.code == "200") {
-                         
-                    } else {
-                      //alert('failed');
-                    }
-
-                    
-                  },
-                  
-                });
+              
+              truefalseanswerlist.push(answer);
+              
 
          }
 
@@ -272,6 +240,15 @@ function submit(){
 
 
       alert("You have successfully submitted your quiz")
+
+        
+      sessionStorage.setItem("Answerlist", truefalseanswerlist);
+      sessionStorage.setItem("qnidtruefalse", qnidtruefalse);
+
+        var url= "QuizOutcomePage.html?id="+ staffID + "&quizid="+ quizid; 
+        location.href=url;
+
+
 
   }
 
