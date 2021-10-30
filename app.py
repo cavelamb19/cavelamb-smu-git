@@ -210,9 +210,10 @@ class Quizscore(db.Model):
         return {"qsID": self.qsID,"quizscore": self.quizscore,
         "quizID": self.quizID, "learnerID": self.learnerID}
 
-class Question(db.Model):
 
-    __tablename__ = 'Question'
+class QuestionTrueFalse(db.Model):
+
+    __tablename__ = 'QuestionTrueFalse'
 
     qnID = db.Column(db.Integer, primary_key=True)
     qn = db.Column(db.String(10000))
@@ -556,8 +557,8 @@ def get_quiz(quizID):
 
 #Question   
  
-#29102021 Post Question to question table
-@app.route("/addquestion", methods=['POST'])
+#29102021 Post Question truefalse to question table
+@app.route("/addquestiontruefalse", methods=['POST'])
 def add_question():
 
     questionlist = request.get_json()
@@ -577,7 +578,7 @@ def add_question():
     qntype=questionlist['qnType']
     lessonid=questionlist['lessonID']
 
-    question = Question(qnID=qnid, qn=questiondetails, ans=answer, ansID=qnid, qnType=qntype, quizID=lessonid )
+    question = QuestionTrueFalse(qnID=qnid, qn=questiondetails, ans=answer, ansID=qnid, qnType=qntype, quizID=lessonid )
 
     try:
         db.session.add(question)
@@ -595,11 +596,11 @@ def add_question():
                 }), 500
 
 
-#Find question
-@app.route("/question/quizID/<int:quizID>")
+#Find question for true false
+@app.route("/questiontruefalse/quizID/<int:quizID>")
 def get_question_by_quizID(quizID):
 
-    questionlist = Question.query.filter_by(quizID=quizID).all()
+    questionlist = QuestionTrueFalse.query.filter_by(quizID=quizID).all()
     if questionlist:
         return jsonify({
             "code": 200,

@@ -227,7 +227,7 @@ ALTER TABLE `Quizscore`
   ADD KEY `quizID` (`quizID`),
   ADD KEY `learnerID` (`learnerID`);
 
-ALTER TABLE `QueQuestionTrueFalsestion`
+ALTER TABLE `QuestionTrueFalse`
   ADD PRIMARY KEY (`qnID`),
   ADD KEY `quizID` (`quizID`);
 
@@ -259,7 +259,10 @@ ALTER TABLE `QuizAttempt`
 -- AUTO_INCREMENT for table QuizAttempt
 --
 ALTER TABLE  `QuizAttempt`
-  MODIFY `AttemptID` int(11) NOT NULL AUTO_INCREMENT;              
+  MODIFY `AttemptID` int(11) NOT NULL AUTO_INCREMENT; 
+
+ALTER TABLE  `QuestionTrueFalse`
+  MODIFY `qnID` int(11) NOT NULL AUTO_INCREMENT;            
 
 ALTER TABLE `Employee`
   ADD PRIMARY KEY (`StaffID`);
