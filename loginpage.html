@@ -23,9 +23,12 @@
 <br>
 <div style="text-align: center;">
     
-        <button style="margin-right:30px;" id="learner" type="button" class="btn btn-dark" value="3" onclick="loginlearner()">Learner</button>
-        <button style="margin-right:30px;" id="trainer" type="button" class="btn btn-dark" value="2" onclick="logintrainer()">Trainer</button>
-        <button style="margin-right:30px;" id="admin" type="button" class="btn btn-dark" value="1" onclick="loginadmin()">Administrator</button>
+        <button style="margin-right:30px;" id="learner3" type="button" class="btn btn-dark" value="3" onclick="loginlearner()">Learner Constance</button>
+        <button style="margin-right:30px;" id="learner4" type="button" class="btn btn-dark" value="4" onclick="loginlearner2()">Learner Johnson</button>
+        <button style="margin-right:30px;" id="learner6" type="button" class="btn btn-dark" value="6" onclick="loginlearner3()">Learner David</button>
+        <button style="margin-right:30px;" id="trainer2" type="button" class="btn btn-dark" value="2" onclick="logintrainer()">Trainer Roger</button>
+        <button style="margin-right:30px;" id="trainer7" type="button" class="btn btn-dark" value="7" onclick="logintrainer2()">Trainer John</button>
+        <button style="margin-right:30px;" id="admin1" type="button" class="btn btn-dark" value="1" onclick="loginadmin()">Administrator Henry</button>
         
 </div>
 
@@ -33,7 +36,59 @@
 <script>
 
     function loginlearner() {
-        var id =document.getElementById("learner").value;
+        var id =document.getElementById("learner3").value;
+        var service_URL="http://localhost:5000/employee/" + id
+
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                 
+                    // console.log(staffid);
+
+                    location.href="Learnerhomepage.html?id="+ staffid;
+                }
+                else{
+                  alert("something went wrong");
+                }
+            },  
+        });
+    }
+
+    function loginlearner2() {
+        var id =document.getElementById("learner4").value;
+        var service_URL="http://localhost:5000/employee/" + id
+
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                 
+                    // console.log(staffid);
+
+                    location.href="Learnerhomepage.html?id="+ staffid;
+                }
+                else{
+                  alert("something went wrong");
+                }
+            },  
+        });
+    }
+
+      function loginlearner3() {
+        var id =document.getElementById("learner6").value;
         var service_URL="http://localhost:5000/employee/" + id
 
          $.ajax({
@@ -59,7 +114,34 @@
     }
 
     function logintrainer() {
-        var id =document.getElementById("trainer").value;
+        var id =document.getElementById("trainer2").value;
+        var service_URL="http://localhost:5000/employee/" + id
+
+         $.ajax({
+            url: service_URL,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var data = response.data;
+                    var staffid= data.StaffID
+                 
+                    //console.log(staffid);
+
+                    location.href="trainerhomepage.html?id="+ staffid;
+                } 
+                else{
+                  alert("something went wrong");
+                }
+            },  
+        });
+    }
+
+
+     function logintrainer2() {
+        var id =document.getElementById("trainer7").value;
         var service_URL="http://localhost:5000/employee/" + id
 
          $.ajax({
@@ -85,7 +167,7 @@
     }
 
     function loginadmin() {
-        var id =document.getElementById("admin").value;
+        var id =document.getElementById("admin1").value;
         var service_URL="http://localhost:5000/employee/" + id
 
          $.ajax({

@@ -140,7 +140,8 @@ CREATE TABLE `Trainer` (
 --
 
 INSERT INTO `Trainer` (`id`, `coursesTeaching`) VALUES
-(2, 'IS212 Software Project Management G2');
+(2, 'IS212 Software Project Management G2'),
+(7, 'IS115 Computational Thinking G1');
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,8 @@ INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignatio
 (3, 'Constance TAN', 'cons','constan@gmail.com','Engineer','Learning','92130843','learner'),
 (4, 'Johnson sim', 'john','johnson@gmail.com','Engineer','Learning','90247788','learner'),
 (5, 'Mary lamb', 'Mar','Mar@gmail.com','Engineer','Learning','83425667','learner'),
-(6, 'David bee', 'bee','bee@gmail.com','Engineer','Learning','92358877','learner');
+(6, 'David bee', 'bee','bee@gmail.com','Engineer','Learning','92358877','learner'),
+(7, 'John Tan', 'Jo','johntan@gmail.com','Senior Engineer','Training','82335832','trainer');
 
 
 
