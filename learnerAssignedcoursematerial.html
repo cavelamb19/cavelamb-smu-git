@@ -287,7 +287,7 @@ function CourseMaterial(material, quizid ,lessonid){
                 var quizid= quizdata.quizID;
 
 
-                materialdetails += `<li style="font-size: 30px;"> <a href=""  target="_blank" onClick="takequiz('${quizid}')" >${quiztitle}</a></li> `
+                materialdetails += `<li style="font-size: 20px;"> <a href=""  target="_blank" onClick="takequiz('${quizid}')" >${quiztitle}</a></li> `
                 
 
                 document.getElementById("status").innerHTML = ""; 
@@ -314,7 +314,7 @@ function CourseMaterial(material, quizid ,lessonid){
 
         document.getElementById("material").innerHTML =""; 
 
-        materialdetails= `<li> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank">${material}</a></li> ` ;
+        materialdetails= `<li style="font-size: 20px;"> <a href="../cavelamb-smu-git/CourseMaterial/${material}" target="_blank">${material}</a></li> ` ;
         
           downloaddetails= `<a href="../cavelamb-smu-git/CourseMaterial/${material}" download>
                            <img src="../cavelamb-smu-git/images/download.png" width= 30px; height=20px;>
@@ -345,7 +345,7 @@ function CourseMaterial(material, quizid ,lessonid){
                 var quizid= quizdata.quizID;
 
 
-                materialdetails += `<li> <a href=""  target="_blank" onClick="takequiz('${quizid}')" >${quiztitle}</a></li> `
+                materialdetails += `<li style="font-size: 20px;"> <a href=""  target="_blank" onClick="takequiz('${quizid}')" >${quiztitle}</a></li> `
                 
 
               document.getElementById("status").innerHTML = ""; 
