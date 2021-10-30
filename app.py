@@ -634,7 +634,7 @@ def add_Attempt():
     quizID = Answerlist['quizID']
     learnerid = Answerlist['learnerid']
 
-    attempt = QuizAttempt(AttemptID=None, qn="", qnID=qnid, 
+    attempt = QuizAttempt(AttemptID=None, qnID=qnid, 
                         ans=answer, ansID=qnid, qnType=qntype, quizID=quizID, learnerID=learnerid)
 
     try:
