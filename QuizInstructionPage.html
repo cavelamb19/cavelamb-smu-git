@@ -186,7 +186,7 @@
                     document.getElementById("instruction").innerHTML +=`<h3> Instruction: ${instruction} </h3>`;
 
                     document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Begin Quiz</button>
-                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="pastattempts()">Past Attempts</button>`
+                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="pastattempts('${time}')">Past Attempts</button>`
                     
                 }
               }
@@ -204,6 +204,7 @@ function startquiz(time){
         var quizid= obj['quizid'];
         var CourseAssigned= obj['CourseAssigned'];
         var classid= obj['classid'];
+        
 
         
 
@@ -212,7 +213,7 @@ function startquiz(time){
 
 }
 
-function pastattempts(){
+function pastattempts(time){
 
         let obj = Object.fromEntries(new URLSearchParams(location.search));
   
@@ -220,10 +221,10 @@ function pastattempts(){
         var quizid= obj['quizid'];
         var CourseAssigned= obj['CourseAssigned'];
         var classid= obj['classid'];
-
+        console.log(time)
         
 
-        var url= "Quizviewscore.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid;  
+        var url= "Quizviewscore.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time;  
         location.href=url;
 }
 
