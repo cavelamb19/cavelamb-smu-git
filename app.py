@@ -674,7 +674,22 @@ def get_ans_for_questions_attempt(learnerID):
         }), 404
 
 
+# get quiz score for learner
+@app.route("/viewscore/<int:learnerID>")
+def viewscore(learnerID):
+    
+    Quizscorelist = Quizscore.query.filter_by(learnerID=learnerID).all()
+    if Quizscorelist:
+        return jsonify({
+            "code": 200,
+            "data": [Quizscore.json() for Quizscore in Quizscorelist]
 
+        }), 200
+
+    else:
+        return jsonify({
+            "message": "Quizscore not found."
+        }), 404
 
 
 
