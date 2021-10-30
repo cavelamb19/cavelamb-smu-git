@@ -185,8 +185,8 @@
 
                     document.getElementById("instruction").innerHTML +=`<h3> Instruction: ${instruction} </h3>`;
 
-                    document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}')">Begin Quiz</button>
-                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="pastattempts('${time}')">Past Attempts</button>`
+                    document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}', '${attempt}')">Begin Quiz</button>
+                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="pastattempts('${time}', '${attempt})">Past Attempts</button>`
                     
                 }
               }
@@ -196,7 +196,7 @@
 }
 
 
-function startquiz(time){
+function startquiz(time,attempt){
 
         let obj = Object.fromEntries(new URLSearchParams(location.search));
 
@@ -210,6 +210,79 @@ function startquiz(time){
 
         var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
         location.href=url;
+
+
+        var attempt= attempt;
+        
+        var attempt_list=[];
+        $.ajax({
+            url: "http://localhost:5000/viewscore/" + staffID,
+            type: 'get',
+            dataType: "json",
+            success: function (response) {
+            console.log(response)
+                if (response.code == "200") {
+
+                    var quizscorelist = response.data;
+                    
+                    var attempt_length= quizscorelist.length;
+
+
+                    if(attempt= "Unlimited"){
+
+                      var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                      location.href=url;
+                    }
+
+                    else if (attempt == 1){
+
+                      if(attempt == attempt_length){
+
+                        alert("You can only take the quiz once");
+
+                      }
+
+                    else if (attempt == 2){
+
+                      if(attempt != attempt_length){
+
+                      var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                      location.href=url;
+                      }
+
+                      else {
+                        alert("You can only take the quiz twice");
+                      }
+                    }
+
+                    else{
+
+                      if (attempt != attempt_length){
+                         var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                        location.href=url;
+                      }
+
+                      else{
+                        alert("You can only take the quiz thrice");
+                      }
+                    }
+
+                    }
+                
+                   
+                    
+                }
+              },
+
+      error: function(response){
+
+        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+        location.href=url;
+        
+       }
+            
+            });
+        
 
 }
 
