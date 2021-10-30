@@ -81,8 +81,6 @@ INSERT INTO `Lesson` (`lessonID`, `courseMaterial`,`classesID`) VALUES
 --
 CREATE TABLE `Quiz` (
   `quizID` int(11)  NOT NULL,
-  `StartTime` varchar(50) DEFAULT NULL,
-  `EndTime` varchar(50) DEFAULT NULL,
   `quizDuration` varchar(50) DEFAULT NULL,
   `attemptNo` varchar(50) DEFAULT NULL,
   `quizTitle`  varchar(50) DEFAULT NULL,
@@ -114,7 +112,6 @@ CREATE TABLE `Question` (
 
 CREATE TABLE `QuizAttempt` (
   `AttemptID` int(11)  NOT NULL,
-  `qn` varchar(10000) DEFAULT NULL,
   `qnID` int(11)  DEFAULT NULL,
   `ans` varchar(10000) DEFAULT NULL,
   `ansID` int(11) DEFAULT NULL,
