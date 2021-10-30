@@ -678,7 +678,7 @@ def self_enrolled():
             "message": "Unable to commit to database."
         }), 500
 
-#Terence add code 
+#+1
 @app.route("/currentEnrolled", methods=['POST'])
 def currentEnrolled():
 
