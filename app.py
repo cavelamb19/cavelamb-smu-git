@@ -681,7 +681,37 @@ def viewscore(learnerID):
 @app.route("/addscore", methods=['POST'])
 def add_score():
     
+    scorelist = request.get_json()
     
+    if not all(key in scorelist.keys() for
+               key in ('score','quizID','learnerid')):
+        return jsonify({
+            "message": "Incorrect JSON object provided."
+        }), 500
+        
+    quizscore = scorelist['score']
+    quizID = scorelist['quizID']
+    learnerID= scorelist['learnerID']
+    
+
+    score = Quizscore(qsID=None, quizscore=quizscore, quizID=quizID, learnerID=learnerID)
+
+    try:
+        db.session.add(score)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": score.json()
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify({
+            "message": "Unable to commit to database."
+        }), 500
+
+        
     
 
 ###########################################################

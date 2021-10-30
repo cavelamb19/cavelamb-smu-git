@@ -359,7 +359,8 @@ function load(){
     //show score
     var total_score= score + "/" + question_id.length 
     document.getElementById("score").innerHTML += `<h3 style="font-weight:bold;"> Score: ${total_score} </h3>`
-         
+    
+    sessionStorage.setItem("score", score);
                 }
               }
           });
@@ -380,10 +381,35 @@ function submit(){
         var classid= obj['classid'];
         
 
-        var url= "learnerAssignedcoursematerial.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid;  
-        location.href=url;
+        var learner_score= sessionStorage.getItem("score");
 
-  }
+         var data = { "score": learner_score, "quizID":quizid, "learnerID":staffID}
+
+       
+
+        $.ajax({
+                  url: 'http://localhost:5000/addscore',
+                  type: 'post',
+                  data: JSON.stringify(data),
+                  contentType: "application/json; charset=utf-8",
+                  processData: "json",
+                  success: function (response) {
+                  // console.log(response)
+                    if (response.code == "200") {
+
+                      
+                    var url= "learnerAssignedcoursematerial.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid;  
+                    location.href=url;
+                  
+                    } else {
+                      //alert('failed');
+                    }
+
+                    
+                  },
+                  
+                });
+}
 
 
 
