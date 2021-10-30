@@ -56,10 +56,31 @@
           <br>
           <br>
 
+          <div class="container " id="time">
+            
+            <h2 style="font-weight: bold;">Quiz OutCome</h2>
+          
+          </div>
+
+          <br>
+          <br>
+          <br>
+          <br>
+
           <div class="container " id="question">
        
 
           </div>
+
+          <br>
+          <br>
+          <br>
+
+          <div class="container" id="score">
+
+           
+          </div>
+          
          
   
 
@@ -69,7 +90,7 @@
 
     
 
-        <button style="margin-right:30px;"  type="button" class="btn btn-secondary" onclick="submit()">Submit Quiz</button>
+        <button style="margin-right:30px;"  type="button" class="btn btn-secondary" onclick="submit()">Done</button>
               
               
 
@@ -79,8 +100,11 @@
 </div>
 <script>
 
-var numoftruefalse= []
+var question_id= [] ;
+var correctans= [] ;
+var allquestion= [];
 
+var score=0;
 function load(){
 
     let obj = Object.fromEntries(new URLSearchParams(location.search));
@@ -112,7 +136,7 @@ function load(){
 
 
             $.ajax({
-            url: "http://localhost:5000/question/quizID/" + quizid ,
+            url: "http://localhost:5000/questiontruefalse/quizID/" + quizid ,
             type: 'get',
             dataType: "json",
             success: function (response) {
@@ -125,7 +149,6 @@ function load(){
 
                     var questiondetails="";
                     
-                    
             
                     var counter= 1;
                     for(question of questionlist){
@@ -135,11 +158,8 @@ function load(){
                         var qn= question.qn;
                         var ans= question.ans;
 
+              
                         
-                   
-                      
-                        if( type == "truefalse"){
-
 
 
                           questiondetails += `
@@ -152,6 +172,7 @@ function load(){
                             <label class="form-check-label" for="true${qnid}" >
                              True
                             </label>
+                      
                             </div>  
                             
                              <div class="form-check">
@@ -165,9 +186,12 @@ function load(){
                           <br>
                           `
 
-                        numoftruefalse.push(counter);
+                        question_id.push(qnid);
+                        correctans.push(ans);
+                        allquestion.push(qn);
+                        
                             
-                        }
+                      
 
             
                     counter ++ ;
@@ -178,35 +202,173 @@ function load(){
 
                   
 
-                  var qnidtruefalse= sessionStorage.getItem("qnidtruefalse"); // get the qnid 
+                  
                    var answerlist= sessionStorage.getItem("Answerlist");  // get the Answer of the learner
                   
-                  var split_qnidtruefalse= qnidtruefalse.split(",");
-                  var split_answerlist = answerlist.split(",");
+                   var learner_answerlist = answerlist.split(",");
 
-                   for(i=0; i<split_qnidtruefalse.length; i++){
 
-                     if (split_answerlist[i] == "True"){
+                   var updated_question_details="";
 
-                      document.getElementById(`true${split_qnidtruefalse[i]}`).checked = true;
+                   var question_counter=1;
+                  
+                   
+                   // loop through to match learner answer with the correct ans
+                   for(i=0; i<question_id.length; i++){
+
+                     if (learner_answerlist[i] == "True"){
+
+                      //document.getElementById(`true${question_id[i]}`).checked = true;
+
+                      if(learner_answerlist[i] == correctans[i]){
+
+                         document.getElementById("question").innerHTML= "";
+
+                         score +=1;   // add score
+                         updated_question_details +=`
+
+                            <div>
+                              <h4>Q${question_counter}.${allquestion[i]}</h4>
+                            </div
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="true${question_id[i]}" value="True" checked>
+                            <label class="form-check-label" for="true${question_id[i]}" >
+                             True
+                             <span style="color:green; font-size:16px;">&#10003;</span>
+                            </label>
+                      
+                            </div>  
+                            
+                             <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="false${question_id[i]}" value="False">
+                            <label class="form-check-label" for="false${question_id[i]}">
+                             False
+                            </label>
+                            <span style="color:red; font-size:16px;">&#10006;</span>
+                            </div> 
+                           
+                          <br>
+                          <br> `
+                        
+                    }else{
+
+                        document.getElementById("question").innerHTML = "";
+
+                          updated_question_details +=`
+
+                            <div>
+                              <h4>Q${question_counter}.${allquestion[i]}</h4>
+                            </div
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="true${question_id[i]}" value="True" checked>
+                            <label class="form-check-label" for="true${question_id[i]}" >
+                             True
+                             <span style="color:red; font-size:16px;">&#10006;</span>
+                            </label>
+                      
+                            </div>  
+                            
+                             <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="false${question_id[i]}" value="False">
+                            <label class="form-check-label" for="false${question_id[i]}">
+                             False
+                            </label>
+                            <span style="color:green; font-size:16px;">&#10003;</span>
+                            </div> 
+                           
+                          <br>
+                          <br> `
+                        }
+
+                     } else{
+
+                      //document.getElementById(`false${question_id[i]}`).checked = true;
+
+                      if(learner_answerlist[i] == correctans[i]){
+
+                         score +=1; // add score
+                         document.getElementById("question").innerHTML= "";
+
+
+                         updated_question_details +=`
+
+                            <div>
+                              <h4>Q${question_counter}.${allquestion[i]}</h4>
+                            </div
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="true${question_id[i]}" value="True">
+                            <label class="form-check-label" for="true${question_id[i]}" >
+                             True
+                             <span style="color:red; font-size:16px;">&#10006;</span>
+                            </label>
+                      
+                            </div>  
+                            
+                             <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="false${question_id[i]}" value="False" checked>
+                            <label class="form-check-label" for="false${question_id[i]}">
+                             False
+                            </label>
+                            <span style="color:green; font-size:16px;">&#10003;</span>
+                            </div> 
+                           
+                          <br>
+                          <br> `
+
+                      }else{
+
+                        document.getElementById("question").innerHTML= "";
+
+
+                         updated_question_details +=`
+
+                            <div>
+                              <h4>Q${question_counter}.${allquestion[i]}</h4>
+                            </div
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="true${question_id[i]}" value="True">
+                            <label class="form-check-label" for="true${question_id[i]}" >
+                             True
+                             <span style="color:green; font-size:16px;">&#10003;</span>
+                            </label>
+                      
+                            </div>  
+                            
+                             <div class="form-check">
+                            <input class="form-check-input" type="radio" name="truefalse${question_id[i]}" id="false${question_id[i]}" value="False" checked>
+                            <label class="form-check-label" for="false${question_id[i]}">
+                             False
+                            </label>
+                             <span style="color:red; font-size:16px;">&#10006;</span>
+                            </div> 
+                           
+                          <br>
+                          <br> `
+
+
+                      }
 
                      }
-
-                     else{
-
-                      document.getElementById(`false${split_qnidtruefalse[i]}`).checked = true;
-                     }
+            question_counter++;
 
                    }
                     
-
-
-
+              document.getElementById("question").innerHTML += updated_question_details;
+    
+    
+    //show score
+    var total_score= score + "/" + question_id.length 
+    document.getElementById("score").innerHTML += `<h3 style="font-weight:bold;"> Score: ${total_score} </h3>`
+         
                 }
               }
           });
 
+    
+
 }
+
+
 
 function submit(){
 
@@ -218,12 +380,8 @@ function submit(){
         var classid= obj['classid'];
         
 
-        //checking for length of True false question so to get the ID and value of the radio 
-        for(i=0; i<numoftruefalse.length; i++){
-
-
-          
-        }
+        var url= "learnerAssignedcoursematerial.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid;  
+        location.href=url;
 
   }
 

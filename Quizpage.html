@@ -249,7 +249,7 @@ function submit(){
       sessionStorage.setItem("Answerlist", truefalseanswerlist);
       sessionStorage.setItem("qnidtruefalse", qnidtruefalse);
 
-        var url= "QuizOutcomePage.html?id="+ staffID + "&quizid="+ quizid; 
+        var url= "QuizOutcomePage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid; 
         location.href=url;
 
 
