@@ -235,38 +235,6 @@ class QuestionTrueFalse(db.Model):
         "ans": self.ans,"quizID": self.quizID}
 
 
-
-class QuizAttempt(db.Model):
-    
-      __tablename__ = 'QuizAttempt'
-      
-      AttemptID = db.Column(db.Integer, primary_key=True)
-      qnID = db.Column(db.Integer)
-      ans = db.Column(db.String(10000))
-      ansID = db.Column(db.Integer)
-      qnType = db.Column(db.String(50))
-      quizID = db.Column(db.Integer, db.ForeignKey('Quiz.quizID'))
-      learnerID = db.Column(db.Integer)
-      
-      def __init__(self,AttemptID,qnID,ans,ansID,qnType,quizID,learnerID):
-        
-        self.AttemptID= AttemptID
-        self.qnID = qnID
-        self.ans = ans
-        self.ansID = ansID
-        self.qnType = qnType
-        self.quizID = quizID
-        self.learnerID= learnerID
-        
-      def json(self):
-          return {"AttemptID": self.AttemptID,"qnID": self.qnID,
-        "ans": self.ans, "ansID": self.ansID,"qnType": self.qnType,"quizID": self.quizID,
-        "learnerID":self.learnerID}
-
-
-   
-    
-
 db.create_all()
 
 ###########################################################
@@ -610,47 +578,6 @@ def get_question_by_quizID(quizID):
             "message": "quiz not found."
         }), 404
 
-
-###########################################################
-
-#QuizAttempt
-@app.route("/addAttempt", methods=['POST'])
-def add_Attempt():
-
-    Answerlist = request.get_json()
-
-    #print(Answerlist)
-    if not all(key in Answerlist.keys() for
-               key in ('qnID', 'answer', 'qnType', 'quizID', 'learnerid')):
-        return jsonify({
-            "message": "Incorrect JSON object provided."
-        }), 500
-
-    
-
-    qnid = Answerlist['qnID']
-    answer = Answerlist['answer']
-    qntype = Answerlist['qnType']
-    quizID = Answerlist['quizID']
-    learnerid = Answerlist['learnerid']
-
-    attempt = QuizAttempt(AttemptID=None, qnID=qnid, 
-                        ans=answer, ansID=qnid, qnType=qntype, quizID=quizID, learnerID=learnerid)
-
-    try:
-        db.session.add(attempt)
-        db.session.commit()
-        return jsonify(
-            {
-                "code": 200,
-                "data": attempt.json()
-            }
-        ), 200
-
-    except Exception as e:
-        return jsonify({
-            "message": "Unable to commit to database."
-        }), 500
 
 
 ###########################################################

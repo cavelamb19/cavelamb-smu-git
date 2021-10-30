@@ -108,16 +108,6 @@ CREATE TABLE `QuestionTrueFalse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `QuizAttempt` (
-  `AttemptID` int(11)  NOT NULL,
-  `qnID` int(11)  DEFAULT NULL,
-  `ans` varchar(10000) DEFAULT NULL,
-  `ansID` int(11) NOT NULL,
-  `qnType` varchar(50) DEFAULT NULL,
-  `quizID` int(11) DEFAULT NULL,
-  `learnerID` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 --
@@ -230,9 +220,7 @@ ALTER TABLE `QuestionTrueFalse`
   ADD PRIMARY KEY (`qnID`),
   ADD KEY `quizID` (`quizID`);
 
-ALTER TABLE `QuizAttempt`
-  ADD PRIMARY KEY (`AttemptID`),
-  ADD KEY `quizID` (`quizID`);
+
 
   
 ALTER TABLE `Course`
@@ -250,15 +238,8 @@ ALTER TABLE `Quizscore`
 ALTER TABLE `QuestionTrueFalse`
   ADD CONSTRAINT `QuestionTrueFalse_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
 
-ALTER TABLE `QuizAttempt`
-  ADD CONSTRAINT `QuizAttempt_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `Quiz`(`quizID`);
-  
 
---
--- AUTO_INCREMENT for table QuizAttempt
---
-ALTER TABLE  `QuizAttempt`
-  MODIFY `AttemptID` int(11) NOT NULL AUTO_INCREMENT; 
+  
 
 ALTER TABLE  `QuestionTrueFalse`
   MODIFY `qnID` int(11) NOT NULL AUTO_INCREMENT; 

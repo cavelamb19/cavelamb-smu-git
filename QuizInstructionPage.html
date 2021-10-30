@@ -186,7 +186,7 @@
                     document.getElementById("instruction").innerHTML +=`<h3> Instruction: ${instruction} </h3>`;
 
                     document.getElementById("startquiz").innerHTML += `<button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="startquiz('${time}', '${attempt}')">Begin Quiz</button>
-                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="pastattempts('${time}', '${attempt})">Past Attempts</button>`
+                    <button style="margin-right:60px;" type="button" class="btn btn-secondary" onClick="pastattempts('${time}', '${attempt}')">Past Attempts</button>`
                     
                 }
               }
@@ -206,14 +206,11 @@ function startquiz(time,attempt){
         var classid= obj['classid'];
         
 
-        
-
-        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
-        location.href=url;
+      
 
 
-        var attempt= attempt;
-        
+        var attempt= Number(attempt);
+        //console.log(attempt);
         var attempt_list=[];
         $.ajax({
             url: "http://localhost:5000/viewscore/" + staffID,
@@ -228,7 +225,7 @@ function startquiz(time,attempt){
                     var attempt_length= quizscorelist.length;
 
 
-                    if(attempt= "Unlimited"){
+                    if(attempt == "Unlimited"){
 
                       var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
                       location.href=url;
@@ -241,7 +238,13 @@ function startquiz(time,attempt){
                         alert("You can only take the quiz once");
 
                       }
+                      else{
+                      
+                        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                       location.href=url;
 
+                      }
+                    }
                     else if (attempt == 2){
 
                       if(attempt != attempt_length){
@@ -271,8 +274,8 @@ function startquiz(time,attempt){
                 
                    
                     
-                }
-              },
+                },
+              
 
       error: function(response){
 
@@ -286,7 +289,7 @@ function startquiz(time,attempt){
 
 }
 
-function pastattempts(time){
+function pastattempts(time, attempt){
 
         let obj = Object.fromEntries(new URLSearchParams(location.search));
   
@@ -297,7 +300,7 @@ function pastattempts(time){
         console.log(time)
         
 
-        var url= "Quizviewscore.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time;  
+        var url= "Quizviewscore.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time + "&attempt=" + attempt;  
         location.href=url;
 }
 
