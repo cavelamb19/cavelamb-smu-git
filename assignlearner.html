@@ -363,13 +363,23 @@ function assign(){
                                   var CoursesEnrolled= learnerdata.CoursesEnrolled;
                                   var learner = learnerdata.id
                                   var learnername = learnerdata.Name
-                                  //console.log(response.data)
 
-                                  // console.log(CompletedCourses);
+                                  
+                                  var split_coursename= coursename.split(" ");
+                                  var split_completedcourse= CompletedCourses.split(" ");
+
+                                  //console.log(split_coursename);
+                                  //console.log(split_completedcourse);
+
 
                                   if (CoursesAssigned == coursename || CoursesEnrolled == coursename ){
                                     //count += 1;
                                     alert(`${learnername} has already enrolled in the course `)
+                                  }
+
+                                  else if (split_coursename[0] == split_completedcourse[0]) {
+                                    alert(`The ${learnername} has already completed the course.`)
+
                                   }
 
                                  else if(prereq == "NULL"){
@@ -421,6 +431,7 @@ function assign(){
                                         },
                                    });
                                   }
+
 
                                   else{
 
