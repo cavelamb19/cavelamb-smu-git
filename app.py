@@ -181,7 +181,7 @@ class Quiz(db.Model):
 
 class Quizscore(db.Model):
 
-    __tablename__ = 'QuizScore'
+    __tablename__ = 'Quizscore'
 
     qsID = db.Column(db.Integer, primary_key=True)
     quizscore = db.Column(db.Integer)
