@@ -15,7 +15,7 @@ CORS(app)
 
 
 class Employee(db.Model):
-    __tablename__ = 'employee'
+    __tablename__ = 'Employee'
 
     StaffID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(200))
@@ -27,7 +27,7 @@ class Employee(db.Model):
     Role = db.Column(db.String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'employee'
+        'polymorphic_identity': 'Employee'
     }
 
     def to_dict(self):
@@ -43,10 +43,10 @@ class Employee(db.Model):
 
 
 class Learner(Employee):
-    __tablename__ = 'learner'
+    __tablename__ = 'Learner'
 
     id = db.Column(db.Integer, db.ForeignKey(
-        'employee.StaffID'), primary_key=True)
+        'Employee.StaffID'), primary_key=True)
     CoursesAssigned = db.Column(db.String(50))
     CompletedCourses = db.Column(db.String(50))
     CoursesEnrolled = db.Column(db.String(50))
@@ -57,10 +57,10 @@ class Learner(Employee):
 
 
 class Trainer(Employee):
-    __tablename__ = 'trainer'
+    __tablename__ = 'Trainer'
 
     id = db.Column(db.Integer, db.ForeignKey(
-        'employee.StaffID'), primary_key=True)
+        'Employee.StaffID'), primary_key=True)
     coursesTeaching = db.Column(db.String(50))
 
     __mapper_args__ = {
@@ -69,10 +69,10 @@ class Trainer(Employee):
 
 
 class Administrator(Employee):
-    __tablename__ = 'administrator'
+    __tablename__ = 'Administrator'
 
     id = db.Column(db.Integer, db.ForeignKey(
-        'employee.StaffID'), primary_key=True)
+        'Employee.StaffID'), primary_key=True)
 
     __mapper_args__ = {
         'polymorphic_identity': 'administrator'
@@ -81,7 +81,7 @@ class Administrator(Employee):
 
 class Course(db.Model):
 
-    __tablename__ = 'course'
+    __tablename__ = 'Course'
 
     courseID = db.Column(db.Integer, primary_key=True)
     courseName = db.Column(db.String(50))
@@ -103,7 +103,7 @@ class Course(db.Model):
 
 class Classes(db.Model):
 
-    __tablename__ = 'classes'
+    __tablename__ = 'Classes'
 
     classesID = db.Column(db.Integer, primary_key=True)
     startDate = db.Column(db.String(50))
@@ -138,7 +138,7 @@ class Classes(db.Model):
 
 class Lesson(db.Model):
 
-    __tablename__ = 'lesson'
+    __tablename__ = 'Lesson'
 
     lessonID = db.Column(db.Integer, primary_key=True)
     courseMaterial = db.Column(db.String(50))
@@ -156,7 +156,7 @@ class Lesson(db.Model):
 
 class Quiz(db.Model):
 
-    __tablename__ = 'quiz'
+    __tablename__ = 'Quiz'
 
     quizID = db.Column(db.Integer, primary_key=True)
     quizDuration = db.Column(db.String(50))
@@ -181,7 +181,7 @@ class Quiz(db.Model):
 
 class Quizscore(db.Model):
 
-    __tablename__ = 'quizscore'
+    __tablename__ = 'Quizscore'
 
     qsID = db.Column(db.Integer, primary_key=True)
     quizscore = db.Column(db.Integer)
@@ -201,7 +201,7 @@ class Quizscore(db.Model):
 
 class QuestionTrueFalse(db.Model):
 
-    __tablename__ = 'questiontruefalse'
+    __tablename__ = 'QuestionTrueFalse'
 
     qnID = db.Column(db.Integer, primary_key=True)
     qn = db.Column(db.String(10000))
