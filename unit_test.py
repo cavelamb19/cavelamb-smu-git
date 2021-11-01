@@ -30,24 +30,28 @@ class TestLearner(unittest.TestCase):
             'CurrentDesignation' : 'Engineer',
             'Department': 'Learning',
             'ContactNo' : '92130843',
-            'CompletedCourses' : 'IS214'
+            'CompletedCourses' : 'IS214',
+            'CoursesAssigned': None,
+            'CoursesEnrolled': None,
+            'Role': None
                        
         })
 
 class TestTrainer(unittest.TestCase):
     def testtrainer(self):
-        trainer = Trainer(StaffID = 2, Name = 'Arnold de Mari', Username = 'Dr', Email = 'Dr@gmail.com',
-        CurrentDesignation = 'trainer', Department = 'Training', ContactNo = '82329832', coursesTeaching = 'IS212')
+        trainer = Trainer(StaffID = 2, Name = 'Roger Ng', Username = 'Rog', Email = 'Rogng@gmail.com',
+        CurrentDesignation = 'Senior Engineer', Department = 'Training', ContactNo = '82329832', coursesTeaching = 'IS212 Software Project Management G2')
         self.assertEqual(trainer.to_dict(), {
             'StaffID' : 2,
             'id' : None,
-            'Name' : 'Arnold de Mari',
-            'Username' : 'Dr',
-            'Email' : 'Dr@gmail.com',
-            'CurrentDesignation' : 'trainer',
+            'Name' : 'Roger Ng',
+            'Username' : 'Rog',
+            'Email' : 'Rogng@gmail.com',
+            'CurrentDesignation' : 'Senior Engineer',
             'Department': 'Training',
             'ContactNo' : '82329832',
-            'coursesTeaching' : 'IS212'
+            'coursesTeaching' : 'IS212 Software Project Management G2',
+            'Role': None
         })
 
 class TestCourse(unittest.TestCase):
@@ -63,31 +67,36 @@ class TestCourse(unittest.TestCase):
         })
 
 class Testclasses(unittest.TestCase):
-      def testclasses(self):
-          classes= Classes(classesID= 1, startDate="2021-10-18", startTime="2021-10-18 06:30:00", 
-          endDate="2021-11-18", endTime="2021-11-18 06:30:00", classesSize= 50, trainerAssigned="Arnold de Mari", currentEnrolled="0")
-          self.assertEqual(classes.json(), {
-              'classesID' : 1,
-              'startDate' : '2021-10-18',
-              'startTime' : '2021-10-18 06:30:00',
-              'endDate' : '2021-11-18',
-              "endTime" : '2021-11-18 06:30:00',
-              "classesSize" : 50,
-              "trainerAssigned" : 'Arnold de Mari',
-              "currentEnrolled" : '0'
-          })
+    def testclasses(self):
+        classes= Classes(classesID= 1, startDate="August 18 2021", startTime="8am", 
+        endDate="November 5 2021", endTime="12pm", classesSize= 40, trainerAssigned="Roger Ng", currentEnrolled=0)
+        self.assertEqual(classes.json(), {
+            'classesID' : 1,
+            'startDate' : 'August 18 2021',
+            'startTime' : '8am',
+            'endDate' : 'November 5 2021',
+            "endTime" : '12pm',
+            "classesSize" : 40,
+            "trainerAssigned" : 'Roger Ng',
+            "currentEnrolled" : 0
+        })
 
-class Testlesson(unittest.TestCase):
-      def testlesson(self):
-          classes= Lesson(lessonID= 1, courseMaterial="Week1a-Introduction", quizID= 1, 
-          classesID= 1)
-          self.assertEqual(classes.json(), {
-              'lessonID' : 1,
-              'courseMaterial' : 'Week1a-Introduction',
-              'quizID' : 1,
-              'classesID' : 1,
-          })
+class Testclassessize(unittest.TestCase):
+    def increaseclasssize(self):
+        classes= Classes(classesID= 1, startDate="August 18 2021", startTime="8am", 
+        endDate="November 5 2021", endTime="12pm", classesSize= 40, trainerAssigned="Roger Ng", currentEnrolled=0)
+    
+        self.assertEqual(classes.json(), {
+            'classesID' : 1,
+            'startDate' : 'August 18 2021',
+            'startTime' : '8am',
+            'endDate' : 'November 5 2021',
+            "endTime" : '12pm',
+            "classesSize" : 40,
+            "trainerAssigned" : 'Roger Ng',
+            "currentEnrolled" : 0
+        })
 
-    
-        
-    
+        size = classes.increaseclasssize(1)
+        self.assertEqual(classes.currentEnrolled, 1)
+        #self.assertEqual(size, 4)
