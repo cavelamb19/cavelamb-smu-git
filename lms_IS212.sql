@@ -190,7 +190,7 @@ CREATE TABLE `Employee` (
 INSERT INTO `Employee` (`staffID`, `Name`, `Username`,`Email`,`CurrentDesignation`,`Department`,`ContactNo`,`Role`) VALUES
 (1, 'Henry loh', 'hen','henlow@gmail.com','Hr','hr','90227823','administrator'),
 (2, 'Roger Ng', 'Rog','Rogng@gmail.com','Senior Engineer','Training','82329832','trainer'),
-(3, 'Constance TAN', 'cons','constan@gmail.com','Engineer','Learning','92130843','learner'),
+(3, 'Constance Tan', 'cons','constan@gmail.com','Engineer','Learning','92130843','learner'),
 (4, 'Johnson sim', 'john','johnson@gmail.com','Engineer','Learning','90247788','learner'),
 (5, 'Mary lamb', 'Mar','Mar@gmail.com','Engineer','Learning','83425667','learner'),
 (6, 'David bee', 'bee','bee@gmail.com','Engineer','Learning','92358877','learner'),
