@@ -87,7 +87,7 @@ class Course(db.Model):
     courseName = db.Column(db.String(50))
     courseDesc = db.Column(db.String(50))
     preRequisites = db.Column(db.String(50))
-    classesID = db.Column(db.Integer, db.ForeignKey('classes.classesID'))
+    classesID = db.Column(db.Integer, db.ForeignKey('Classes.classesID'))
 
     def __init__(self, courseID, courseName, courseDesc, preRequisites, classesID):
         self.courseID = courseID
@@ -142,7 +142,7 @@ class Lesson(db.Model):
 
     lessonID = db.Column(db.Integer, primary_key=True)
     courseMaterial = db.Column(db.String(50))
-    classesID = db.Column(db.Integer, db.ForeignKey('classes.classesID'))
+    classesID = db.Column(db.Integer, db.ForeignKey('Classes.classesID'))
 
     def __init__(self, lessonID, courseMaterial, classesID):
         self.lessonID = lessonID
