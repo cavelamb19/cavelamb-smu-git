@@ -740,7 +740,7 @@ def assign_course():
 
     # print(enrollcourse)
     if not all(key in assign.keys() for
-               key in ('learnerid', 'enrolledCourses')):
+               key in ('learnerid', 'AssignedCourses')):
         return jsonify({
             "message": "Incorrect JSON object provided."
         }), 500
@@ -753,7 +753,7 @@ def assign_course():
                 "message": "learner not valid."
             }), 500
 
-        learner.CoursesAssigned = assign['enrolledCourses']
+        learner.CoursesAssigned = assign['AssignedCourses']
         # print(learner.enrolledCourses)
         db.session.commit()
         return jsonify(

@@ -386,7 +386,7 @@ function assign(){
                                  else if(prereq == "NULL"){
                                     count += 1;
 
-                                     var data = { "learnerid": learner, "enrolledCourses": coursename }
+                                     var data = { "learnerid": learner, "AssignedCourses": coursename }
 
                                      $.ajax({
                                         url: 'http://localhost:5000/assigncourses',
@@ -411,7 +411,7 @@ function assign(){
 
                                   else if ( prereq == CompletedCourses){
                                       count += 1;
-                                     var data = { "learnerid": learner, "enrolledCourses": coursename }
+                                     var data = { "learnerid": learner, "AssignedCourses": coursename }
 
                                      $.ajax({
                                         url: 'http://localhost:5000/assigncourses',
