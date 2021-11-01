@@ -17,7 +17,6 @@ class TestEmployee(unittest.TestCase):
             'Role' : 'Administrator'
         })
         
-
         
 
 class TestLearner(unittest.TestCase):
@@ -85,7 +84,7 @@ class Testclasses(unittest.TestCase):
         })
 
 class Testclassessize(unittest.TestCase):
-    def increaseclasssize(self):
+    def test_IncreaseCurrentEnrolled(self):
         classes= Classes(classesID= 1, startDate="August 18 2021", startTime="8am", 
         endDate="November 5 2021", endTime="12pm", classesSize= 40, trainerAssigned="Roger Ng", currentEnrolled=0)
     
@@ -100,6 +99,6 @@ class Testclassessize(unittest.TestCase):
             "currentEnrolled" : 0
         })
 
-        size = classes.increaseclasssize(1)
-        self.assertEqual(classes.currentEnrolled, 1)
+        size = classes.IncreaseCurrentEnrolled(2)
+        self.assertEqual(classes.currentEnrolled, 2)
         #self.assertEqual(size, 4)

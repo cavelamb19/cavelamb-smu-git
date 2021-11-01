@@ -43,6 +43,7 @@ class TestSelfEnrolled(TestApp):
         self.assertEqual(response.status_code, 200)
         
         
+    
     def test_self_enrolled_invalid_learner(self):
         
        
@@ -58,7 +59,7 @@ class TestSelfEnrolled(TestApp):
 
         self.assertEqual(response.status_code, 500)
         self.assertEqual(response.json, {
-            'message': 'Learner not valid.'
+            'message': 'learner not valid.'
         })
         
         

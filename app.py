@@ -129,9 +129,9 @@ class Classes(db.Model):
                 "startTime": self.startTime, "endDate": self.endDate,
                 "endTime": self.endTime, "classesSize": self.classesSize, "trainerAssigned": self.trainerAssigned, "currentEnrolled": self.currentEnrolled}
 
-    def increaseclasssize(self, num_people, currentEnrolled, classesSize):
-        if (currentEnrolled + num_people) < classesSize:
-            currentEnrolled = currentEnrolled + num_people
+    def IncreaseCurrentEnrolled(self, num_people):
+        if (self.currentEnrolled + num_people) < self.classesSize:
+            self.currentEnrolled += num_people
         else:
             raise Exception("Class is full.")
 
