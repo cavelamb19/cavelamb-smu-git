@@ -655,9 +655,8 @@ def self_enrolled():
             "message": "Unable to commit to database."
         }), 500
 
+
 # +1
-
-
 @app.route("/currentEnrolled", methods=['POST'])
 def currentEnrolled():
 
@@ -693,9 +692,9 @@ def currentEnrolled():
             "message": "Unable to commit to database."
         }), 500
 
+
+
 # The following withdraw learner from course  (1 course)  - POST
-
-
 @app.route("/withdrawCourses", methods=['POST'])
 def withdraw_course():
 
