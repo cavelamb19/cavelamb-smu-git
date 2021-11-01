@@ -83,7 +83,7 @@ class Testclasses(unittest.TestCase):
             "currentEnrolled" : 0
         })
 
-class Testclassessize(unittest.TestCase):
+
     def test_IncreaseCurrentEnrolled(self):
         classes= Classes(classesID= 1, startDate="August 18 2021", startTime="8am", 
         endDate="November 5 2021", endTime="12pm", classesSize= 40, trainerAssigned="Roger Ng", currentEnrolled=0)
