@@ -19,24 +19,85 @@ class TestApp(flask_testing.TestCase):
         db.session.remove()
         db.drop_all()
         
+
+class TestSelfEnrolled(TestApp):
+
+    def test_self_enrolled(self):
+
+        learner = Learner(StaffID=3, Name='Constance Tan', Username='cons', Email='constan@gmail.com',
+                          CurrentDesignation='Engineer', Department='Learning', ContactNo='92130843', CompletedCourses='IS214')
+
+        db.session.add(learner)
+        db.session.commit()
+
+        request_body = {
+            'learnerid': learner.StaffID,
+            'enrolledCourses': "IS212 Software Project Management G2"
+            
+         }
+
+        response = self.client.post("/enrolledCourses",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
         
         
+    def test_self_enrolled_invalid_learner(self):
+        
+       
+        request_body = {
+            'learnerid': 10,
+            'enrolledCourses': "IS212 Software Project Management G2"
+
+        }
+
+        response = self.client.post("/enrolledCourses",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json')
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.json, {
+            'message': 'Learner not valid.'
+        })
+        
+        
+        
+
+class TestWithdrawSelfEnrolled(TestApp):
+    
+      def test_withdraw_self_enrolled_courses(self):
+        
+         learner = Learner(StaffID=3, Name='Constance Tan', Username='cons', Email='constan@gmail.com',
+                            CurrentDesignation='Engineer', Department='Learning', ContactNo='92130843', CompletedCourses='IS214')
+
+         db.session.add(learner)
+         db.session.commit()
+
+         request_body = {
+                'learnerid': learner.StaffID,
+                'enrolledCourses': "IS212 Software Project Management G2"
+
+            }
+
+         response = self.client.post("/withdrawCourses",
+                                        data=json.dumps(request_body),
+                                        content_type='application/json')
+
+         self.assertEqual(response.status_code, 200)
+        
+    
+
+
 class TestCreateTrueFalseQuestion(TestApp):
       
       def test_create_True_False_question(self):
         
-          q1 = QuestionTrueFalse(
-              qnID=None, qn="Software Project Management module will teach you about agile process",
-              ans="True", quizID=1)
-          
-          
-          db.session.add(q1)
-          db.session.commit()
           
           request_body = {
-              'question': q1.qn,
-              'answer': q1.ans,
-              'lessonID': q1.quizID,
+              'question': "Software Project Management module will teach you about agile process",
+              'answer': "True",
+              'lessonID': 1,
               
           }
           
