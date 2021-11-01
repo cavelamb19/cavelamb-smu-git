@@ -4,33 +4,33 @@ from app import Administrator, Employee, Learner, Trainer, Course, Classes, Less
 
 class TestEmployee(unittest.TestCase):
     def testemployee(self):
-        employee = Employee(StaffID = 1, Name = 'Phris Coskitt', Username = 'csok', Email = 'csoki@gmail.com', 
-        CurrentDesignation = 'administrator', Department ='hr', ContactNo = '90227823')
+        employee = Employee(StaffID = 1, Name = 'Henry loh', Username = 'hen', Email = 'henlow@gmail.com', 
+        CurrentDesignation = 'Hr', Department ='hr', ContactNo = '90227823', Role = 'Administrator')
         self.assertEqual(employee.to_dict(), {
             'StaffID' : 1,
-            'Name' : 'Phris Coskitt',
-            'Username' : 'csok',
-            'Email' : 'csoki@gmail.com',
-            'CurrentDesignation' : 'administrator',
+            'Name' : 'Henry loh',
+            'Username' : 'hen',
+            'Email' : 'henlow@gmail.com',
+            'CurrentDesignation' : 'Hr',
             'Department' : 'hr',
-            'ContactNo' : '90227823'
+            'ContactNo' : '90227823',
+            'Role' : 'Administrator'
         })
 
 class TestLearner(unittest.TestCase):
     def testlearner(self):
-        learner = Learner(StaffID = 3, Name = 'Constance Wilkinson', Username = 'cons', Email = 'cons@gmail.com',
-        CurrentDesignation = 'learner', Department = 'Learning', ContactNo = '92130843', CoursesTaking = 'IS212', CompletedCourses = 'IS214')
+        learner = Learner(StaffID = 3, Name = 'Constance Tan', Username = 'cons', Email = 'constan@gmail.com',
+        CurrentDesignation = 'Engineer', Department = 'Learning', ContactNo = '92130843',CompletedCourses = 'IS214')
         self.assertEqual(learner.to_dict(), {
             'StaffID' : 3,
             'id' : None,
-            'Name' : 'Constance Wilkinson',
+            'Name' : 'Constance Tan',
             'Username' : 'cons',
-            'Email' : 'cons@gmail.com',
-            'CurrentDesignation' : 'learner',
+            'Email' : 'constan@gmail.com',
+            'CurrentDesignation' : 'Engineer',
             'Department': 'Learning',
             'ContactNo' : '92130843',
-            'CoursesTaking' : 'IS212',
-            'CompletedCourses' : 'IS214',
+            'CompletedCourses' : 'IS214'
                        
         })
 
@@ -73,7 +73,7 @@ class Testclasses(unittest.TestCase):
               'endDate' : '2021-11-18',
               "endTime" : '2021-11-18 06:30:00',
               "classesSize" : 50,
-              "trainerAssigned" : 'Arnold de Mari'
+              "trainerAssigned" : 'Arnold de Mari',
               "currentEnrolled" : '0'
           })
 
