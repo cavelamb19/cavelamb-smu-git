@@ -224,10 +224,11 @@ function startquiz(time,attempt){
                     
                     var attempt_length= quizscorelist.length;
 
+                    console.log(attempt_length);
 
                     if(attempt == "Unlimited"){
 
-                      var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                      var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
                       location.href=url;
                     }
 
@@ -240,7 +241,7 @@ function startquiz(time,attempt){
                       }
                       else{
                       
-                        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                        var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
                        location.href=url;
 
                       }
@@ -249,7 +250,7 @@ function startquiz(time,attempt){
 
                       if(attempt != attempt_length){
 
-                      var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                      var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
                       location.href=url;
                       }
 
@@ -261,7 +262,7 @@ function startquiz(time,attempt){
                     else{
 
                       if (attempt != attempt_length){
-                         var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+                         var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
                         location.href=url;
                       }
 
@@ -279,7 +280,7 @@ function startquiz(time,attempt){
 
       error: function(response){
 
-        var url= "QuizPage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+        var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
         location.href=url;
         
        }
