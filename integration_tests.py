@@ -46,7 +46,7 @@ class TestSelfEnrolled(TestApp):
 
         self.assertEqual.__self__.maxDiff = None
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {'CompletedCourses': 'IS214 System Design',
+        self.assertEqual(response.json, {'code':200, 'data':{ 'CompletedCourses': 'IS214 System Design',
                                           'ContactNo': '92130843',
                                           'CoursesAssigned': '',
                                           'CoursesEnrolled': 'IS212 Software Project Management G2',
@@ -57,7 +57,7 @@ class TestSelfEnrolled(TestApp):
                                             'Role': 'learner',
                                             'StaffID': 3,
                                             'Username': 'cons',
-                                            'id': 3})
+                                            'id': 3 } })
     
     
     def test_self_enrolled_invalid_learner(self):
