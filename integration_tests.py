@@ -57,7 +57,7 @@ class TestSelfEnrolled(TestApp):
                                             'Role': 'learner',
                                             'StaffID': 3,
                                             'Username': 'cons',
-                                            'id': 3 } })
+                                            'id': 3 }})
     
     
     def test_self_enrolled_invalid_learner(self):
