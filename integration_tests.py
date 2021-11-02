@@ -24,12 +24,16 @@ class TestSelfEnrolled(TestApp):
 
     def test_self_enrolled(self):
 
-        learner = Learner(StaffID=3, Name='Constance Tan', Username='cons', Email='constan@gmail.com',
-                          CurrentDesignation='Engineer', Department='Learning', ContactNo='92130843', CompletedCourses='IS214')
+        learner = Learner(
+            CompletedCourses="IS214 System Design", ContactNo="92130843", CoursesAssigned="",
+            CoursesEnrolled="", CurrentDesignation="Engineer", Department="Learning",
+            Email="constan@gmail.com", Name="Constance TAN", Role="learner",
+            StaffID=3, Username="cons", id=3)
+
 
         db.session.add(learner)
         db.session.commit()
-
+       
         request_body = {
             'learnerid': learner.StaffID,
             'enrolledCourses': "IS212 Software Project Management G2"
@@ -40,9 +44,21 @@ class TestSelfEnrolled(TestApp):
                                     data=json.dumps(request_body),
                                     content_type='application/json')
 
+        self.assertEqual.__self__.maxDiff = None
         self.assertEqual(response.status_code, 200)
-        
-        
+        self.assertEqual(response.json, {'CompletedCourses': 'IS214 System Design',
+                                          'ContactNo': '92130843',
+                                          'CoursesAssigned': '',
+                                          'CoursesEnrolled': 'IS212 Software Project Management G2',
+                                          'CurrentDesignation': 'Engineer',
+                                           'Department': 'Learning',
+                                           'Email': 'constan@gmail.com',
+                                            'Name': 'Constance TAN',
+                                            'Role': 'learner',
+                                            'StaffID': 3,
+                                            'Username': 'cons',
+                                            'id': 3})
+    
     
     def test_self_enrolled_invalid_learner(self):
         
@@ -87,7 +103,10 @@ class TestWithdrawSelfEnrolled(TestApp):
 
          self.assertEqual(response.status_code, 200)
         
-    
+ 
+
+        
+        
 
 
 class TestCreateTrueFalseQuestion(TestApp):
