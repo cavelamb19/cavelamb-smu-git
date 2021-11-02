@@ -85,24 +85,41 @@ class TestWithdrawSelfEnrolled(TestApp):
     
       def test_withdraw_self_enrolled_courses(self):
         
-         learner = Learner(StaffID=3, Name='Constance Tan', Username='cons', Email='constan@gmail.com',
-                            CurrentDesignation='Engineer', Department='Learning', ContactNo='92130843', CompletedCourses='IS214')
+          learner = Learner(
+              CompletedCourses="IS214 System Design", ContactNo="92130843", CoursesAssigned="",
+              CoursesEnrolled="", CurrentDesignation="Engineer", Department="Learning",
+              Email="constan@gmail.com", Name="Constance TAN", Role="learner",
+              StaffID=3, Username="cons", id=3)
 
-         db.session.add(learner)
-         db.session.commit()
+          db.session.add(learner)
+          db.session.commit()
 
-         request_body = {
+          request_body = {
                 'learnerid': learner.StaffID,
                 'enrolledCourses': "IS212 Software Project Management G2"
 
             }
 
-         response = self.client.post("/withdrawCourses",
+          response = self.client.post("/withdrawCourses",
                                         data=json.dumps(request_body),
                                         content_type='application/json')
 
-         self.assertEqual(response.status_code, 200)
-        
+          self.assertEqual.__self__.maxDiff = None
+          self.assertEqual(response.status_code, 200)
+          self.assertEqual(response.json, {'code':200, 'data':{ 'CompletedCourses': 'IS214 System Design',
+                                            'ContactNo': '92130843',
+                                            'CoursesAssigned': '',
+                                            'CoursesEnrolled': '',
+                                            'CurrentDesignation': 'Engineer',
+                                            'Department': 'Learning',
+                                            'Email': 'constan@gmail.com',
+                                                'Name': 'Constance TAN',
+                                                'Role': 'learner',
+                                                'StaffID': 3,
+                                                'Username': 'cons',
+                                                'id': 3 }})
+    
+         
  
 
         
