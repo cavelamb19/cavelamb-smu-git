@@ -28,7 +28,7 @@ class TestSelfEnrolled(TestApp):
             CompletedCourses="IS214 System Design", ContactNo="92130843", CoursesAssigned="",
             CoursesEnrolled="", CurrentDesignation="Engineer", Department="Learning",
             Email="constan@gmail.com", Name="Constance TAN", Role="learner",
-            StaffID=3, Username="cons", id=3)
+            StaffID=1, Username="cons", id=1)
 
 
         db.session.add(learner)
@@ -55,9 +55,9 @@ class TestSelfEnrolled(TestApp):
                                            'Email': 'constan@gmail.com',
                                             'Name': 'Constance TAN',
                                             'Role': 'learner',
-                                            'StaffID': 3,
+                                            'StaffID': 1,
                                             'Username': 'cons',
-                                            'id': 3 }})
+                                            'id': 1 }})
     
     
     def test_self_enrolled_invalid_learner(self):
@@ -79,51 +79,121 @@ class TestSelfEnrolled(TestApp):
         })
         
         
-        
-
-class TestWithdrawSelfEnrolled(TestApp):
-    
-      def test_withdraw_self_enrolled_courses(self):
-        
-          learner = Learner(
-              CompletedCourses="IS214 System Design", ContactNo="92130843", CoursesAssigned="",
-              CoursesEnrolled="", CurrentDesignation="Engineer", Department="Learning",
-              Email="constan@gmail.com", Name="Constance TAN", Role="learner",
-              StaffID=3, Username="cons", id=3)
-
-          db.session.add(learner)
-          db.session.commit()
-
-          request_body = {
-                'learnerid': learner.StaffID,
-                'enrolledCourses': "IS212 Software Project Management G2"
-
-            }
-
-          response = self.client.post("/withdrawCourses",
-                                        data=json.dumps(request_body),
-                                        content_type='application/json')
-
-          self.assertEqual.__self__.maxDiff = None
-          self.assertEqual(response.status_code, 200)
-          self.assertEqual(response.json, {'code':200, 'data':{ 'CompletedCourses': 'IS214 System Design',
-                                            'ContactNo': '92130843',
-                                            'CoursesAssigned': '',
-                                            'CoursesEnrolled': '',
-                                            'CurrentDesignation': 'Engineer',
-                                            'Department': 'Learning',
-                                            'Email': 'constan@gmail.com',
-                                                'Name': 'Constance TAN',
-                                                'Role': 'learner',
-                                                'StaffID': 3,
-                                                'Username': 'cons',
-                                                'id': 3 }})
     
          
- 
+class TestWithdrawSelfEnrolled(TestApp):
 
-      
+    def test_withdraw_self_enrolled_courses(self):
 
+        learner = Learner(
+            CompletedCourses="IS214 System Design", ContactNo="92130843", CoursesAssigned="",
+            CoursesEnrolled="", CurrentDesignation="Engineer", Department="Learning",
+            Email="constan@gmail.com", Name="Constance TAN", Role="learner",
+            StaffID=1, Username="cons", id=1)
+
+        db.session.add(learner)
+        db.session.commit()
+
+        request_body = {
+            'learnerid': learner.StaffID,
+            'enrolledCourses': "IS212 Software Project Management G2"
+
+        }
+
+        response = self.client.post("/withdrawCourses",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json')
+
+        self.assertEqual.__self__.maxDiff = None
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'code': 200, 'data': {'CompletedCourses': 'IS214 System Design',
+                                                               'ContactNo': '92130843',
+                                                               'CoursesAssigned': '',
+                                                               'CoursesEnrolled': '',
+                                                               'CurrentDesignation': 'Engineer',
+                                                               'Department': 'Learning',
+                                                               'Email': 'constan@gmail.com',
+                                                               'Name': 'Constance TAN',
+                                                               'Role': 'learner',
+                                                               'StaffID': 1,
+                                                               'Username': 'cons',
+                                                               'id': 1}})
+
+
+class TestAssignLearner(TestApp):
+
+    def test_assign_learner(self):
+
+        learner = Learner(
+            CompletedCourses="IS214 System Design", ContactNo="92130843", CoursesAssigned="",
+            CoursesEnrolled="", CurrentDesignation="Engineer", Department="Learning",
+            Email="constan@gmail.com", Name="Constance TAN", Role="learner",
+            StaffID=1, Username="cons", id=1)
+
+        db.session.add(learner)
+        db.session.commit()
+
+        request_body = {
+            'learnerid': learner.StaffID,
+            'AssignedCourses': "IS212 Software Project Management G2"
+
+        }
+
+        response = self.client.post("/assigncourses",
+                                    data=json.dumps(request_body),
+                                    content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'code': 200, 'data': {'CompletedCourses': 'IS214 System Design',
+                                                               'ContactNo': '92130843',
+                                                               'CoursesAssigned': 'IS212 Software Project Management G2',
+                                                               'CoursesEnrolled': '',
+                                                               'CurrentDesignation': 'Engineer',
+                                                               'Department': 'Learning',
+                                                               'Email': 'constan@gmail.com',
+                                                               'Name': 'Constance TAN',
+                                                               'Role': 'learner',
+                                                               'StaffID': 1,
+                                                               'Username': 'cons',
+                                                               'id': 1}})
+class TestCreateQuizInfo(TestApp):
+    
+      def test_create_quiz_info(self):
+          
+          classes = Classes(classesID=1, startDate="August 18 2021", startTime="8am",
+                            endDate="November 5 2021", endTime="12pm", classesSize=40, trainerAssigned="Roger Ng", currentEnrolled=0)
+          lesson = Lesson(lessonID=1, courseMaterial="week1a introduction",classesID=1)
+          
+          db.session.add(classes)
+          db.session.add(lesson)
+          db.session.commit()
+          
+
+          request_body = {
+              'lessonID': lesson.lessonID,
+              'title': "Week1 Quiz",
+              'time':"15 minutes",
+              'instruction':"No calculator",
+              'attempt':"1"
+             
+
+          }
+          
+          response = self.client.post("/addquizInfo",
+                                      data=json.dumps(request_body),
+                                      content_type='application/json')
+
+          self.assertEqual(response.status_code, 200)
+          self.assertEqual(response.json, {"code": 200,"data": {
+                                                "attemptNo": "1",
+                                                "lessonID": 1,
+                                                "quizDesc": "No calculator",
+                                                "quizDuration": "15 minutes",
+                                                "quizID": 1,
+                                                "quizTitle": "Week1 Quiz"
+                                                     }})
+          
+          
 
 class TestCreateTrueFalseQuestion(TestApp):
       
@@ -169,5 +239,4 @@ class TestCreateTrueFalseQuestion(TestApp):
                                                                      'qnID': 1,
                                                                      'quizID': 1}]})
               
-
               
