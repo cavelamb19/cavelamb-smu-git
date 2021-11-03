@@ -122,8 +122,7 @@ class TestWithdrawSelfEnrolled(TestApp):
          
  
 
-        
-        
+      
 
 
 class TestCreateTrueFalseQuestion(TestApp):
@@ -143,5 +142,32 @@ class TestCreateTrueFalseQuestion(TestApp):
                                     content_type='application/json')
           
           self.assertEqual(response.status_code, 200)
-         
-         
+          self.assertEqual(response.json, {'code': 200, 'data': {'ans' : "True",
+                                                                 'qn': "Software Project Management module will teach you about agile process",
+                                                                 'qnID':1,
+                                                                 'quizID': 1}})
+          
+        
+      def test_find_True_False_question_by_quizID(self):
+              
+              quiz = Quiz(quizID= 1, quizDuration="15 mins", attemptNo= "Unlimited", quizTitle="Week 1", quizDesc="No Calculator", lessonID="1")
+              
+              question = QuestionTrueFalse(
+                  qnID=1, qn="Software Project Management module will teach you about agile process", ans="True",
+                  quizID=1)
+                  
+
+              db.session.add(quiz)
+              db.session.add(question)
+              db.session.commit()
+
+
+              response = self.client.get("/questiontruefalse/quizID/1")
+              self.assertEqual(response.status_code, 200)
+              self.assertEqual(response.json, {'code': 200, 'data': [{'ans': "True",
+                                                                     'qn': "Software Project Management module will teach you about agile process",
+                                                                     'qnID': 1,
+                                                                     'quizID': 1}]})
+              
+
+              
