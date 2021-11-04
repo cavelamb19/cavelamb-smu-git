@@ -19,6 +19,54 @@ class TestApp(flask_testing.TestCase):
         db.session.remove()
         db.drop_all()
         
+        
+class Testgetcourses(TestApp):
+    
+      def test_get_all_courses(self):
+          
+          course1 = Course(
+          courseID=1, courseName="IS212 Software Project Management G2", courseDesc="agile methods", preRequisites="NULL", classesID=1)
+
+          classes1 = Classes(classesID=1, startDate="August 18 2021", startTime="8am",
+                          endDate="November 5 2021", endTime="12pm", classesSize=40, trainerAssigned="Roger Ng", currentEnrolled=0)
+          
+          course2 = Course(
+              courseID=2, courseName="IS115 Computational Thinking G1", courseDesc="Math and coding", preRequisites="IS112 Business applications", classesID=2)
+
+          classes2 = Classes(classesID=2, startDate="August 18 2021", startTime="8am",
+                             endDate="November 5 2021", endTime="12pm", classesSize=40, trainerAssigned="John Tan", currentEnrolled=0)
+
+          
+          db.session.add(course1)
+          db.session.add(course2)
+          db.session.add(classes1)
+          db.session.add(classes2)
+          db.session.commit()
+          
+          response = self.client.get("/course/")
+          
+          self.assertEqual.__self__.maxDiff = None
+          self.assertEqual(response.status_code, 200)
+          self.assertEqual(response.json, {'code': 200, 'data': {"course": [
+              
+                {
+                    "classesID": 1, 
+                    "courseDesc": "agile methods", 
+                    "courseID": 1, 
+                    "courseName": "IS212 Software Project Management G2", 
+                    "preRequisites": "NULL"
+                }, 
+                {
+                    "classesID": 2, 
+                    "courseDesc": "Math and coding", 
+                    "courseID": 2, 
+                    "courseName": "IS115 Computational Thinking G1", 
+                    "preRequisites": "IS112 Business applications"
+                }
+            
+          ] }})
+
+        
 
 class TestgetLearners(TestApp):
     
