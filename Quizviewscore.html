@@ -248,87 +248,8 @@ function startquiz(time){
         var attempt=obj['attempt'];
         var time= obj['time'];
         
-
-      
-
-
-        var attempt= Number(attempt);
-        //console.log(attempt);
-        var attempt_list=[];
-        $.ajax({
-            url: "http://localhost:5000/viewscore/" + staffID,
-            type: 'get',
-            dataType: "json",
-            success: function (response) {
-            console.log(response)
-                if (response.code == "200") {
-
-                    var quizscorelist = response.data;
-                    
-                    var attempt_length= quizscorelist.length;
-
-
-                    if(attempt == "Unlimited"){
-
-                      var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
-                      location.href=url;
-                    }
-
-                    else if (attempt == 1){
-
-                      if(attempt == attempt_length){
-
-                        alert("You can only take the quiz once");
-
-                      }
-                      else{
-                      
-                        var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
-                       location.href=url;
-
-                      }
-                    }
-                    else if (attempt == 2){
-
-                      if(attempt != attempt_length){
-
-                      var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
-                      location.href=url;
-                      }
-
-                      else {
-                        alert("You can only take the quiz twice");
-                      }
-                    }
-
-                    else{
-
-                      if (attempt != attempt_length){
-                         var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
-                        location.href=url;
-                      }
-
-                      else{
-                        alert("You can only take the quiz thrice");
-                      }
-                    }
-
-                    }
-                
-                   
-                    
-                },
-              
-
-      error: function(response){
-
-        var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
+         var url= "Quizpage.html?id="+ staffID + "&quizid="+ quizid +"&CourseAssigned=" +CourseAssigned + "&classid=" + classid + "&time=" + time ; 
         location.href=url;
-        
-       }
-            
-            });
-        
 
 }
 
