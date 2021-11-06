@@ -90,7 +90,12 @@
               <div id="status" style="padding-left:20px;"> 
               
               </div>
+              
+             <div id="quizstatus" style="padding-left:40px;">
+                 
 
+             </div>
+               
            
        
          
@@ -203,14 +208,14 @@
 
                       var lessonid= lesson.lessonID;
                       var material= lesson.courseMaterial;
-                      var quizid= lesson.quizID;
+                      
 
                       
                     lessondetails += `
                     
                     
                   <li class="nav-item">
-                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" id="${lessonid}" onClick="CourseMaterial('${material}','${quizid}', '${lessonid}')">Week ${lesson_count}</a>
+                  <a class="nav-link" style="padding-left: 70px; padding-top: 40px;" id="${lessonid}" onClick="CourseMaterial('${material}','${lessonid}')">Week ${lesson_count}</a>
                   </li>
                     
                      
@@ -247,12 +252,13 @@
 
 
 
-function CourseMaterial(material, quizid ,lessonid){
+function CourseMaterial(material,lessonid){
         
         
           let obj = Object.fromEntries(new URLSearchParams(location.search));
           var staffID= obj['id']; 
 
+          
         // check whether the lesson material in that lesson had been clicked before by the learner
         if(sessionStorage.getItem(lessonid) != "1" || sessionStorage.getItem(staffID) != staffID){
 
@@ -291,7 +297,7 @@ function CourseMaterial(material, quizid ,lessonid){
                 var quizid= quizdata.quizID;
 
 
-                materialdetails += `<li style="font-size: 20px;"> <a href=""  target="_blank" onClick="takequiz('${quizid}')" >${quiztitle}</a></li> `
+                materialdetails += `<li style="font-size: 20px;"> <a href=""  target="_blank" onClick="takequiz('${quizid}')" >${quiztitle}</a></li>`
                 
 
                 document.getElementById("status").innerHTML = ""; 
@@ -309,9 +315,48 @@ function CourseMaterial(material, quizid ,lessonid){
               
             });
         
+        // check if quiz has been attempted by learner before to indicate completion
+        $.ajax({
+        url:  "http://localhost:5000/viewscore/" + staffID,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+        console.log(response)
+            if (response.code == "200") {
+             
+             
+              var quizscorelist = response.data;
+                  
+              for (quiz of quizscorelist){
+
+
+                      var quiz_id=quiz.quizID
+                      
+
+                      if (quiz_id == lessonid){
+
+                        document.getElementById("quizstatus").innerHTML = `<span style="color:blue"> &#10003 Completed</span>` ;
+                      }
+
+                        else{
+
+                          document.getElementById("quizstatus").innerHTML ="" ;
+                      }
+
+              
+                 }
+              
+              }
+        }      
+              
+            });
+
+     
+        
        
         
       }
+
       else{
 
         var learning_material= material;
@@ -369,8 +414,43 @@ function CourseMaterial(material, quizid ,lessonid){
 
       }  
 
+      // check if quiz has been attempted by learner before to indicate completion
+       $.ajax({
+        url:  "http://localhost:5000/viewscore/" + staffID,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+        console.log(response)
+            if (response.code == "200") {
+             
+             
+              var quizscorelist = response.data;
+                  
+              for (quiz of quizscorelist){
 
-        
+
+                      var quiz_id=quiz.quizID
+                      
+
+                      if (quiz_id == lessonid){
+
+                        document.getElementById("quizstatus").innerHTML = `<span style="color:blue"> &#10003 Completed</span>` ;
+                      }
+
+                      else{
+
+                          document.getElementById("quizstatus").innerHTML ="" ;
+                      }
+
+                
+              
+                 }
+              
+              }
+        }      
+              
+            });
+     
 
 }
 
