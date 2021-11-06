@@ -315,8 +315,8 @@ function CourseMaterial(material,lessonid){
               
             });
         
-        // check if quiz has been attempted by learner before to indicate completion
-        $.ajax({
+       // check if quiz has been attempted by learner before to indicate completion
+       $.ajax({
         url:  "http://localhost:5000/viewscore/" + staffID,
         type: 'get',
         dataType: "json",
@@ -327,30 +327,31 @@ function CourseMaterial(material,lessonid){
              
               var quizscorelist = response.data;
                   
+
+              var quiz_id_list=[];
               for (quiz of quizscorelist){
 
 
                       var quiz_id=quiz.quizID
-                      
-
-                      if (quiz_id == lessonid){
-
-                        document.getElementById("quizstatus").innerHTML = `<span style="color:blue"> &#10003 Completed</span>` ;
-                      }
-
-                     
-
+                      quiz_id_list.push(Number(quiz_id));
               
-                 }
+              }
+
+
+             if(quiz_id_list.includes(Number((lessonid)))== true){
+
+              document.getElementById("quizstatus").innerHTML =`<span style="color:blue"> &#10003 Completed</span>`;
+             }
+            else{
+
+              document.getElementById("quizstatus").innerHTML ="";
+             }
               
               }
         }      
               
             });
-
-     
-        
-       
+         
         
       }
 
@@ -423,20 +424,27 @@ function CourseMaterial(material,lessonid){
              
               var quizscorelist = response.data;
                   
+
+              var quiz_id_list1=[];
               for (quiz of quizscorelist){
 
 
                       var quiz_id=quiz.quizID
-                      
-
-                      if (quiz_id == lessonid){
-
-                        document.getElementById("quizstatus").innerHTML = `<span style="color:blue"> &#10003 Completed</span>` ;
-                      }
-
-                
+                      quiz_id_list1.push(Number(quiz_id));
               
-                 }
+              }
+
+              console.log(quiz_id_list1);
+
+             if(quiz_id_list1.includes(Number((lessonid)))== true){
+
+              document.getElementById("quizstatus").innerHTML =`<span style="color:blue"> &#10003 Completed</span>`;
+             }
+
+             else{
+
+              document.getElementById("quizstatus").innerHTML ="";
+             }
               
               }
         }      
