@@ -260,7 +260,7 @@ function CourseMaterial(material,lessonid){
 
           
         // check whether the lesson material in that lesson had been clicked before by the learner
-        if(sessionStorage.getItem(lessonid) != "1" || sessionStorage.getItem(staffID) != staffID){
+        if(sessionStorage.getItem(lessonid) != staffID || sessionStorage.getItem(staffID) != staffID){
 
          var learning_material= material;
 
@@ -315,7 +315,7 @@ function CourseMaterial(material,lessonid){
               
             });
         
-       // check if quiz has been attempted by learner before to indicate completion
+       // check if quiz had been attempted by learner before to indicate completion
        $.ajax({
         url:  "http://localhost:5000/viewscore/" + staffID,
         type: 'get',
@@ -412,7 +412,7 @@ function CourseMaterial(material,lessonid){
 
       }  
 
-      // check if quiz has been attempted by learner before to indicate completion
+      // check if quiz had been attempted by learner before to indicate completion
        $.ajax({
         url:  "http://localhost:5000/viewscore/" + staffID,
         type: 'get',
@@ -464,7 +464,8 @@ function CompleteCourse(lessonid){
          // This function will only happen if the lesson material is click first time.
          // store the lessonid as key and value as 1 to indicate that the lessonid material has been clicked
          // store the staff ID as well to indicate the learner has click the lesson material before
-         sessionStorage.setItem(lessonid, "1") ;
+
+         sessionStorage.setItem(lessonid, staffID) ;
          sessionStorage.setItem(staffID, staffID);
 
 }
