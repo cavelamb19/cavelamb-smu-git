@@ -99,6 +99,6 @@ class Testclasses(unittest.TestCase):
             "currentEnrolled" : 0
         })
 
-        size = classes.IncreaseCurrentEnrolled(2)
+        classes.IncreaseCurrentEnrolled(2)
         self.assertEqual(classes.currentEnrolled, 2)
-        #self.assertEqual(size, 4)
+        
